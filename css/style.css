@@ -1,0 +1,25 @@
+.wrapper{
+    border-top: 03px solid green;
+}
+
+.wrapper a {
+    text-decoration:none;
+    color:blue;
+}
+
+.landing {
+    background-color: #666666;
+    background-image: url('https://cdn.pixabay.com/photo/2016/08/16/06/29/coconut-1597233_1280.png');
+    background-position: left top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 30%;
+    position: relative;
+    top: 50px;
+    right: 10px;
+    left: 10px;
+    bottom: 300px;
+
+}
+
+ 
