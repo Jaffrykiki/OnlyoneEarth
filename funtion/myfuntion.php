@@ -9,6 +9,14 @@ function getAll($table)
 
 }
 
+function getByID($table, $id)
+{
+    global $connection;
+    $query = "SELECT * FROM $table WHERE Cat_id ='$id' ";
+    return $query_run = mysqli_query($connection, $query);
+
+}
+
 function redirect($url, $message) 
 {
     $_SESSION['message'] = $message;

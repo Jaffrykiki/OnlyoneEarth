@@ -24,34 +24,34 @@ include('../funtion/myfuntion.php')
                         <tr>
                             <th>ID</th>
                             <th>name</th>
-                            <th>Edit</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php  
-                                $category = getAll("table_product_category");
+                        <?php
+                        $category = getAll("table_product_category");
 
-                                if(mysqli_num_rows($category) > 0 )
-                                {
-                                    foreach($category as $item)
-                                    {
-                                        ?>
-                                        <tr>
-                                        <td> <?= $item['Cat_id'];  ?></td>
-                                        <td> <?= $item['Name'];  ?></td>
-                                        <td>
-                                            <a href="edit-category.php?id=<?= $item['Cat_id'];  ?>" class="btn btn-primary">Edit</a>
-                                        </td>
-                                        </tr>
-                                        <?php
-                                    }
-                                }
-                                else
-                                {
-                                    echo "No record found";
-                                }
+                        if (mysqli_num_rows($category) > 0) {
+                            foreach ($category as $item) {
                         ?>
-                        
+                                <tr>
+                                    <td> <?= $item['Cat_id'];  ?></td>
+                                    <td> <?= $item['Name'];  ?></td>
+                                    <td>
+                                        <a href="edit-category.php?id=<?= $item['Cat_id'];  ?>" class="btn btn-primary">Edit</a>
+                                        <form action="code.php" method="POST">
+                                            <input type="hidden" name="category_id" value="<?= $item['Cat_id']; ?>">
+                                            <button type="submit" class="btn btn-danger" name="delete_category_btn">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                        <?php
+                            }
+                        } else {
+                            echo "No record found";
+                        }
+                        ?>
+
                     </tbody>
                 </table>
             </div>

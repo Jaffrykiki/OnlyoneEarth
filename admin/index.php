@@ -1,5 +1,5 @@
 <?php
-$page_title = "Admin Login Form";
+
 session_start();
 
 if (isset($_SESSION['authenticated'])) {
@@ -8,7 +8,7 @@ if (isset($_SESSION['authenticated'])) {
     exit(0);
 }
 
-include('includes/header.php');
+// include('includes/header.php');
 
 
 ?>
@@ -19,7 +19,7 @@ include('includes/header.php');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login admin</title>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
 </head>
 

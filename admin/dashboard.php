@@ -1,4 +1,7 @@
-<?php include("sidebar.php");  ?>
+<?php 
+include("sidebar.php");  
+include("includes/header.php"); 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
