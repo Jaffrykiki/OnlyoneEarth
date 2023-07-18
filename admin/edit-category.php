@@ -15,7 +15,7 @@ include('../funtion/myfuntion.php')
 </head>
 
 <body>
-    <div class="card-body">
+    <div class="card-body" style="width: 70%; position: absolute; right: 0;">
         <?php
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
