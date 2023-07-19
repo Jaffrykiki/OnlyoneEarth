@@ -2,69 +2,105 @@
 
 session_start();
 
-if (isset($_SESSION['authenticated'])) {
-    $_SESSION['status'] = "You are already Logged In";
-    header('Location: dashboard.php');
-    exit(0);
-}
+// if (isset($_SESSION['authenticated'])) {
+//     $_SESSION['status'] = "You are already Logged In";
+//     header('Location: dashboard.php');
+//     exit(0);
+// }
 
 // include('includes/header.php');
 
-
+include('includes/header.php');
 ?>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-lg-7 position-relative z-index-2">
+                    <div class="row">
+                        <div class="col-lg-5 col-sm-5">
+                            <div class="card  mb-2">
+                                <div class="card-header p-3 pt-2">
+                                    <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
+                                        <i class="material-icons opacity-10">weekend</i>
+                                    </div>
+                                    <div class="text-end pt-1">
+                                        <p class="text-sm mb-0 text-capitalize">Bookings</p>
+                                        <h4 class="mb-0">281</h4>
+                                    </div>
+                                </div>
 
-<!DOCTYPE html>
-<html lang="en">
+                                <hr class="dark horizontal my-0">
+                                <div class="card-footer p-3">
+                                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55%
+                                        </span>than last week</p>
+                                </div>
+                            </div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login admin</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-</head>
+                            <div class="card  mb-2">
+                                <div class="card-header p-3 pt-2">
+                                    <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
+                                        <i class="material-icons opacity-10">leaderboard</i>
+                                    </div>
+                                    <div class="text-end pt-1">
+                                        <p class="text-sm mb-0 text-capitalize">Today's Users</p>
+                                        <h4 class="mb-0">2,300</h4>
+                                    </div>
+                                </div>
 
-<body>
-    <div class="container">
-        <div class="row mt-5">
-            <div class="col-lg-4 m-auto rounded-top wrapper">
-                <h2 class="text-center pt-3">Admin Login Page</h2>
-                <p class="text-center text-muted lead ">
-                    <font size="2">Please enter your e-mail and password:</font>
-                </p>
+                                <hr class="dark horizontal my-0">
+                                <div class="card-footer p-3">
+                                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+3%
+                                        </span>than last month</p>
+                                </div>
+                            </div>
 
-                <?php
-                if (isset($_SESSION['status'])) {
-                ?>
-                    <div class="alert alert-success">
-                        <h5><?= $_SESSION['status']; ?></h5>
+                        </div>
+                        <div class="col-lg-5 col-sm-5 mt-sm-0 mt-4">
+                            <div class="card  mb-2">
+                                <div class="card-header p-3 pt-2 bg-transparent">
+                                    <div class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                                        <i class="material-icons opacity-10">store</i>
+                                    </div>
+                                    <div class="text-end pt-1">
+                                        <p class="text-sm mb-0 text-capitalize ">Revenue</p>
+                                        <h4 class="mb-0 ">34k</h4>
+                                    </div>
+                                </div>
+
+                                <hr class="horizontal my-0 dark">
+                                <div class="card-footer p-3">
+                                    <p class="mb-0 "><span class="text-success text-sm font-weight-bolder">+1%
+                                        </span>than yesterday</p>
+                                </div>
+                            </div>
+
+                            <div class="card ">
+                                <div class="card-header p-3 pt-2 bg-transparent">
+                                    <div class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
+                                        <i class="material-icons opacity-10">person_add</i>
+                                    </div>
+                                    <div class="text-end pt-1">
+                                        <p class="text-sm mb-0 text-capitalize ">Followers</p>
+                                        <h4 class="mb-0 ">+91</h4>
+                                    </div>
+                                </div>
+
+                                <hr class="horizontal my-0 dark">
+                                <div class="card-footer p-3">
+                                    <p class="mb-0 ">Just updated</p>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                <?php
-                    unset($_SESSION['status']);
-                }
-                ?>
-
-                <!-- Form Start -->
-                <form action="../funtion/authcode.php" method="POST">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text "><i class="fa fa-envelope"></i></span>
-                        <input type="text" name="email" class="form-control" placeholder="E-mail">
-                    </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text "><i class="fa fa-lock"></i></span>
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" name="login_admin_btn" class="btn btn-success">Login</button>
-                        
-                    </div>
-                </form>
-                <!-- Form close -->
+                </div>
             </div>
         </div>
     </div>
+</div>
 
-</body>
 
 
-</html>
-<?php include("includes/script.php"); ?>
+
+<?php include('includes/footer.php') ?>
