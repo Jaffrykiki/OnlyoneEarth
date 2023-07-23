@@ -1,4 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow">
+  <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+      <a class="nav-link active" href="register_seller.php">เริ่มต้นเป็นผู้ขาย</a>
+    </li>
+  </ul>
   <div class="container">
     <a class="navbar-brand" href="index.php">Only One Earth</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,7 +17,7 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Features</a>
         </li>
-        <?php 
+        <?php
         if (isset($_SESSION['auth'])) {
         ?>
           <li class="nav-item dropdown">
@@ -34,9 +39,9 @@
           <li class="nav-item">
             <a class="nav-link" href="login.php">เข้าสู่ระบบ</a>
           </li>
-          <?php
+        <?php
         }
-      ?>
+        ?>
 
 
       </ul>

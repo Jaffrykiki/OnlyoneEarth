@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-if(isset($_SESSION['auth']))
-{
-    $_SESSION['message'] = "คุณเข้าสู่ระบบแล้ว";
-    header('Location:index.php');
-}
+// if(isset($_SESSION['auth']))
+// {
+//     $_SESSION['message'] = "คุณเข้าสู่ระบบแล้ว";
+//     header('Location:index.php');
+// }
 
 
 include('includes/header.php');
@@ -19,7 +19,7 @@ include('includes/header.php');
                 <?php
                 if (isset($_SESSION['message'])) {
                 ?>
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>Status:</strong> <?= $_SESSION['message']; ?>.
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>

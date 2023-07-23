@@ -2,7 +2,53 @@
 session_start();
 
 include('../connection/dbcon.php');
+include('myfuntion.php');
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+
+//Load Composer's autoloader
+require '../vendor/autoload.php';
+
+function sendemail_verify($name,$email,$verify_token)
+{
+    $mail = new PHPMailer(true);
+    $mail->isSMTP();
+    $mail->SMTPAuth   = true;
+    
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->Username   = 'jaffry8426@gmail.com';
+    $mail->Password   = 'oeopsrzbqwfycrpj';
+
+    $mail->SMTPSecure = "tls";
+    $mail->Port       = 587;
+
+    $mail->setFrom('jaffry8426@gmail.com', $name);
+    $mail->addAddress($email); 
+
+    $mail->isHTML(true); 
+    $mail->Subject = 'Email verification From Only One Earth';
+
+    $email_templace =" 
+    <h2>คุณได้ลงทะเบียนกับ Only One Earth</h2>
+    <h5>ยืนยันที่อยู่อีเมลของคุณเพื่อเข้าสู่ระบบด้วยลิงค์ด้านล่าง</h5>
+    <br/><br/>
+    <a href='http://localhost/onlyoneearth/funtion/verify-email.php?token=$verify_token'> คลิ๊กที่นี้ </a>
+    ";
+
+
+
+    $mail->Body    = $email_templace;
+    $mail->send();
+    echo 'ส่งข้อความแล้ว';
+}
+
+
+
+
+//สมัครสมาชิกทั่วไป
 if (isset($_POST['register_btn'])) 
 {
     $name = mysqli_real_escape_string($connection, $_POST['name']);
@@ -11,11 +57,11 @@ if (isset($_POST['register_btn']))
     $password = mysqli_real_escape_string($connection, $_POST['password']);
     $cpassword = mysqli_real_escape_string($connection, $_POST['cpassword']);
 
-    //check if email already registered
-    $check_email_query = "SELECT COUNT(email) FROM users WHERE email='$email' > 0";
+    //ตรวจสอบว่าอีเมลลงทะเบียนแล้วหรือไม่
+    $check_email_query = "SELECT email FROM users WHERE email='$email' ";
     $check_email_query_run = mysqli_query($connection, $check_email_query);
-
-    if ($check_email_query_run > 0) 
+    
+    if (mysqli_num_rows($check_email_query_run) >0 ) 
     {
         $_SESSION['message'] = "อีเมล์ของท่านเคยทำการลงทะเบียนแล้ว";
         header('Location: ../register.php');
@@ -25,7 +71,7 @@ if (isset($_POST['register_btn']))
         if ($password == $cpassword) 
         {
             //insert user date 
-            $insert_query = "INSERT INTO users (name,email,phone,password) VALUE ('$name',' $email','$phone','$password')";
+            $insert_query = "INSERT INTO users (name,email,phone,password) VALUE ('$name','$email','$phone','$password')";
             $insert_query_run = mysqli_query($connection, $insert_query);
 
             if ($insert_query_run) {
@@ -43,6 +89,57 @@ if (isset($_POST['register_btn']))
         }
     }
 }
+//สมัครผู้ขาย
+else if (isset($_POST['register_seller_btn'])) 
+{
+    $name = mysqli_real_escape_string($connection, $_POST['name']);
+    $phone = mysqli_real_escape_string($connection, $_POST['phone']);
+    $email = mysqli_real_escape_string($connection, $_POST['email']);
+    $password = mysqli_real_escape_string($connection, $_POST['password']);
+    $cpassword = mysqli_real_escape_string($connection, $_POST['cpassword']);
+    $verify_token = md5(rand());
+
+
+    //ตรวจสอบว่าอีเมลลงทะเบียนแล้วหรือไม่
+    $check_email_query = "SELECT email FROM users WHERE email='$email' ";
+    $check_email_query_run = mysqli_query($connection, $check_email_query);
+    
+    if (mysqli_num_rows($check_email_query_run) >0 ) 
+    {
+        $_SESSION['message'] = "อีเมล์ของท่านเคยทำการลงทะเบียนแล้ว";
+        header('Location: ../register.php');
+    } 
+    else 
+    {    
+        if ($password == $cpassword) 
+        {
+            //insert user date 
+            $insert_query = "INSERT INTO users (name,email,phone,password,verify_token,role_as) VALUE ('$name','$email','$phone','$password','$verify_token','2')";
+            $insert_query_run = mysqli_query($connection, $insert_query);
+            
+            echo $insert_query_run;
+
+            if ($insert_query_run) 
+            {
+                sendemail_verify("$name","$email","$verify_token");
+
+                $_SESSION['message'] = "ลงทะเบียนเรียบร้อยแล้ว โปรดยืนยันการลงทะเบียนผ่านอีเมล์อีกครั้ง";
+                header('Location: ../register_seller.php');
+            } 
+            else 
+            {
+                $_SESSION['message'] = "มีบางอย่างผิดพลาด";
+                header('Location: ../register_seller.php');
+            }
+        } 
+        else 
+        {
+            $_SESSION['message'] = "รหัสผ่านไม่ตรงกัน";
+            header('Location: ../register.php');
+        }
+    }
+}
+//ล็อกอิน
 else if(isset($_POST['login_btn'])) 
 {
     $email = mysqli_real_escape_string($connection , $_POST['email']);
@@ -58,20 +155,39 @@ else if(isset($_POST['login_btn']))
         $userdate = mysqli_fetch_array($login_query_run); 
         $username = $userdate['name'];
         $useremail = $userdate['email'];
+        $role_as = $userdate['role_as'];
 
         $_SESSION['auth_user'] = [
             'name' => $username,
             'email' => $useremail
         ];
 
-        $_SESSION['message']= "เข้าสู่ระบบสำเร็จ";
-        header('Location: ../index.php');
-    }
+        $_SESSION['role_as'] = $role_as;
+        
+        if($role_as == 1)
+        {
+            redirect("../admin/index.php","ยินดีต้อนรับเข้าสู่แดชบอร์ด");
+
+        }
+        else if($userdate['verify_status'] == "1")
+        {
+            $_SESSION['authenticated'] = true;
+                $_SESSION['auth_seller'] = [
+                    'username' => $userdate['name'],
+                    'phone' => $userdate['phone'],
+                    'email' => $userdate['email'],
+                ];
+                
+                $_SESSION['message'] = "เข้าสู่ระบบสำเร็จแล้ว";
+
+                redirect("../seller/index.php","ยินดีต้อนรับเข้าสู่แดชบอร์ด");
+        }
+    
     else
     {
         $_SESSION['message'] = "ข้อมูลไม่ถูกต้อง";
         header('Location: ../login.php');
     }
-
+}
 }
 ?>
