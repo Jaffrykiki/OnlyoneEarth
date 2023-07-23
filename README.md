@@ -1,2 +1,2 @@
 # OnlyoneEarth
- Projecy
+ Project
