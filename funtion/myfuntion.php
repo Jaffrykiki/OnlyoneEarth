@@ -1,13 +1,12 @@
 <?php 
 include('../connection/dbcon.php');
 
-// function getAll($table)
-// {
-//     global $connection;
-//     $query = "SELECT * FROM $table";
-//     return $query_run = mysqli_query($connection, $query);
-
-// }
+function getAll($table)
+{
+    global $connection;
+    $query = "SELECT * FROM $table";
+    return $query_run = mysqli_query($connection, $query);
+}
 
 // function getByID($table, $id)
 // {

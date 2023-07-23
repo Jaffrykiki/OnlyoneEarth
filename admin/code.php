@@ -8,7 +8,7 @@ if(isset($_POST['add_category_btn']))
 {
     $name = $_POST['name'];
 
-    $cate_query =  "INSERT INTO table_product_category (name) VALUES ('$name') ";
+    $cate_query =  "INSERT INTO category (name) VALUES ('$name') ";
 
     $cate_query_run = mysqli_query($connection, $cate_query);
 

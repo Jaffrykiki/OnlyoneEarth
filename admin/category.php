@@ -1,66 +1,58 @@
 <?php
-include("sidebar.php");
-include("includes/header.php");
-include('../funtion/myfuntion.php')
+include('includes/header.php');
+include('../middleware/adminMiddleware.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-</head>
-
-<body>
-    <div class="card" >
-        <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
-            <h1 class="h5">Category</h1>
-            <div class="card-body" style="width: 70%; position: absolute; right: 0;">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>name</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $category = getAll("table_product_category");
-
-                        if (mysqli_num_rows($category) > 0) {
-                            foreach ($category as $item) {
-                        ?>
-                                <tr>
-                                    <td> <?= $item['Cat_id'];  ?></td>
-                                    <td> <?= $item['Name'];  ?></td>
-                                    <td>
-                                        <a href="edit-category.php?id=<?= $item['Cat_id'];  ?>" class="btn btn-primary">Edit</a>
-                                        <form action="code.php" method="POST">
-                                            <input type="hidden" name="category_id" value="<?= $item['Cat_id']; ?>">
-                                            <button type="submit" class="btn btn-danger" name="delete_category_btn">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                        <?php
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Categories</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $category = getAll("category");
+                            if(mysqli_num_rows($category) > 0) 
+                            {
+                                foreach ($category as $item) 
+                                {
+                                    ?>
+                                    <tr>
+                                        <td><?= $item['id']; ?></td>
+                                        <td><?= $item['name']; ?></td>
+                                        <td>
+                                            <a href="" class="btn btn-primary">แก้ไข</a>
+                                        </td>
+                                    </tr>
+                            <?php
+                                }
+                            } 
+                            else 
+                            {
+                                echo "ไม่พบบันทึก";
                             }
-                        } else {
-                            echo "No record found";
-                        }
-                        ?>
+                            ?>
 
-                    </tbody>
-                </table>
+                        </tbody>
+
+                    </table>
+                </div>
             </div>
-        </main>
+        </div>
     </div>
-                    </div>
+</div>
 
-</body>
 
-</html>
 
-<?php include("includes/script.php"); ?>
+
+<?php include('includes/footer.php') ?>

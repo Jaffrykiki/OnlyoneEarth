@@ -156,38 +156,41 @@ else if(isset($_POST['login_btn']))
         $username = $userdate['name'];
         $useremail = $userdate['email'];
         $role_as = $userdate['role_as'];
+        $verify_status = $userdate['verify_status'];
 
-        $_SESSION['auth_user'] = [
+        $_SESSION['auth_user'] =[
             'name' => $username,
-            'email' => $useremail
+            'emmail' => $username
         ];
 
         $_SESSION['role_as'] = $role_as;
-        
-        if($role_as == 1)
+        if ($role_as == 0) {
+            $_SESSION['message'] = 
+            redirect("../index.php" ,"ยินดีต้อนรับเข้าสู่ระบบ");
+        }
+        else if($role_as == 1)
         {
+            $_SESSION['message'] = 
             redirect("../admin/index.php","ยินดีต้อนรับเข้าสู่แดชบอร์ด");
-
-        }
-        else if($userdate['verify_status'] == "1")
-        {
-            $_SESSION['authenticated'] = true;
-                $_SESSION['auth_seller'] = [
-                    'username' => $userdate['name'],
-                    'phone' => $userdate['phone'],
-                    'email' => $userdate['email'],
-                ];
-                
-                $_SESSION['message'] = "เข้าสู่ระบบสำเร็จแล้ว";
-
+        } else  {
+            $_SESSION['verify_status'] = $verify_status;
+        
+            if($verify_status == 1)
+            {
+                $_SESSION['message'] = 
                 redirect("../seller/index.php","ยินดีต้อนรับเข้าสู่แดชบอร์ด");
+            }
+            else  
+            {
+                $_SESSION['message'] = 
+                redirect("../index.php" ,"ยินดีต้อนรับเข้าสู่ระบบ");
+            }
         }
-    
-    else
-    {
-        $_SESSION['message'] = "ข้อมูลไม่ถูกต้อง";
-        header('Location: ../login.php');
     }
-}
+    else
+        {
+        $_SESSION['message'] = "";
+        redirect("../login.php" ,"ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
+        }
 }
 ?>

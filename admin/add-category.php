@@ -1,36 +1,37 @@
-<?php 
-include("sidebar.php");  
-include("includes/header.php");
+<?php
+
+include('includes/header.php');
+include('../middleware/adminMiddleware.php');
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-</head>
-
-<body>
-    <div class="card-body">
-        <form action="code.php" method="POST" enctype="multipart/form-data">
-            <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
-                <h1 class="h2">Add Category</h1>
-                <div class="mb-3">
-                    <label for="" class="form-label">ชื่อหมวดหมู่</label>
-                    <input type="text" name="name" class="form-control" placeholder="ป้อนชื่อหมวดหมู่ที่คุณต้องการสร้าง">
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Add Category</h4>
                 </div>
-                <button type="submit" class="btn btn-success" name="add_category_btn">Save</button>
-        </form>
-        </main>
+                <div class="card-body">
+                    <form action="code.php" method="POST" enctype="multipart/form-data">
+                        <div class="row mb-3">
+                            <div class="col-md-5">
+                                <label for="">Name</label>
+                                <input type="text" name="name" placeholder="ป้อนชื่อหมวดหมู่" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary" name="add_category_btn">บันทึก</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
- 
-
-</body>
-</html>
+</div>
 
 
-<?php include("includes/script.php");?>
 
+
+<?php include('includes/footer.php') ?>

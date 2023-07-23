@@ -17,11 +17,19 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white " href="../pages/tables.html">
+        <a class="nav-link text-white " href="category.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">table_view</i>
           </div>
-          <span class="nav-link-text ms-1">Second Page</span>
+          <span class="nav-link-text ms-1">ALL Categories</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white " href="add-category.php">
+          <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="material-icons opacity-10">table_view</i>
+          </div>
+          <span class="nav-link-text ms-1">Add Category</span>
         </a>
       </li>
     </ul>
