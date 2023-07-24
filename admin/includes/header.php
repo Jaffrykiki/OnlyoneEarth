@@ -26,6 +26,10 @@
       border: 2px solid #b3a1a1 !important;
       padding: 8px 20px;
     }
+    .form-select {
+      border: 2px solid #b3a1a1 !important;
+      padding: 8px 20px;
+    }
   </style>
 
 </head>

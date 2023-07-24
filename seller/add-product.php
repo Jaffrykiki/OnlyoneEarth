@@ -1,74 +1,74 @@
 <?php
-include("sidebar.php");
-include("includes/header.php");
-include('../funtion/myfuntion.php')
+
+include('includes/header.php');
+include('../middleware/sellerMiddleware.php');
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Add Product</h4>
+                </div>
+                <div class="card-body" style="margin-top: -40px;">
+                    <form action="code.php" method="POST" enctype="multipart/form-data">
+                        <div class="row mb-4">
+                            <div class="col-md-5">
+                                <label class="mb-0">เลือกหมวดหมู่</label>
+                                <select name ="category_id" class="form-select mb-2">
+                                    <option selected>เลือกหมวดหมู่</option>
+                                    <?php
+                                    $categories = getAll("category");
 
-</head>
-
-<body>
-    <div class="card-body">
-        <form action="code.php" method="POST" enctype="multipart/form-data">
-            <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4">
-                <h1 class="h2">Add Product</h1>
-                <div class="mb-3">
-                    <label for="" class="form-label">หมวดหมู่สินค้า</label>
-                    <select class="form-select" >
-                        <?php 
-                            $category = getAll("table_product_category");
-
-                            if(mysqli_num_rows($category) > 0 )
-                            {
-                                foreach ($category as $item) {
+                                    if (mysqli_num_rows($categories) > 0) 
+                                    {
+                                        foreach ($categories as $item) {
                                     ?>
-                                 <option value="<?=$item['Cat_id'];?>"><?=$item['Name']; ?></option>
-                                 <?php
-                                }
-                            }
-                            else 
-                            {
-                                echo"No category Avilable";
-                            }
-                        ?>
-                    </select>
+                                            <option value="<?= $item['id']; ?>"><?= $item['name']; ?></option>
+                                    <?php
+                                        }
+                                    }
+                                    else
+                                    {
+                                        echo "ไม่มีหมวดหมู่";
+                                    }
+
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="mb-0">ชื่อ</label>
+                                <input type="text" required name="name" placeholder="ป้อนชื่อหมวดหมู่" class="form-control mb-2">
+                            </div>
+                            <div class="col-md-12">
+                                <label class="mb-0">รายละเอียดสินค้า</label>
+                               
+                               <textarea row="3" required name="detail" placeholder="ป้อนรายละเอียดสินค้า" class="form-control mb-2"  ></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="mb-0">อัปโหลดรูปภาพสินค้า</label>
+                                <input  type="file" required name="image" class="form-control mb-2">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="mb-0">ราคา</label>
+                                <input type="text" required name="price" placeholder="ป้อนราคาสินค้า" class="form-control mb-2">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="mb-0">จำนวน</label>
+                                <input type="number" required name="num" placeholder="ป้อนจำนวนสินค้า" class="form-control mb-2">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary" name="add_product_btn">บันทึก</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label for="" class="form-label">ชื่อสินค้า</label>
-                    <input type="text" name="name" class="form-control" placeholder="ป้อนชื่อหมวดหมู่ที่คุณต้องการสร้าง">
-                </div>
-                <div class="mb-3">
-                    <label for="" class="form-label">รายละเอียดสินค้า</label>
-                    <input type="text" name="name" class="form-control" placeholder="ป้อนรายละเอียดสินค้าที่คุณต้องการสร้าง">
-                </div>
-                <div class="mb-3">
-                    <label for="" class="form-label">ราคา</label>
-                    <input type="text" name="name" class="form-control" placeholder="ป้อนราคาสินค้าที่คุณต้องการสร้าง">
-                </div>
-                <div class="mb-3">
-                    <label for="" class="form-label">จำนวน</label>
-                    <input type="text" name="name" class="form-control" placeholder="ป้อนจำนวนสินค้าที่คุณต้องการสร้าง">
-                </div>
-                <div class="mb-3">
-                    <label for="" class="form-label">รูปภาพสินค้า</label>
-                    <input type="file" required name="image" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-success" name="add_category_btn">Save</button>
-        </form>
-        </main>
+            </div>
+        </div>
     </div>
+</div>
 
-
-</body>
-
-</html>
-
-
-<?php include("includes/script.php"); ?>
+<?php include('includes/footer.php') ?>

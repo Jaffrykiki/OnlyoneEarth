@@ -16,7 +16,7 @@ include('../middleware/adminMiddleware.php');
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
-                                <th>Edit</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,7 +31,11 @@ include('../middleware/adminMiddleware.php');
                                         <td><?= $item['id']; ?></td>
                                         <td><?= $item['name']; ?></td>
                                         <td>
-                                            <a href="" class="btn btn-primary">แก้ไข</a>
+                                            <a href="edit-category.php?id=<?= $item['id']; ?>" class="btn btn-primary">แก้ไข</a>
+                                            <form action="code.php" method="POST">
+                                                <input type="hidden" name="category_id" value="<?= $item['id']; ?>">
+                                            <button type="submit" class="btn btn-danger" name="delete_category_btn">ลบ</button>
+                                            </form>
                                         </td>
                                     </tr>
                             <?php

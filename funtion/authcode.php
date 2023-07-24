@@ -155,12 +155,14 @@ else if(isset($_POST['login_btn']))
         $userdate = mysqli_fetch_array($login_query_run); 
         $username = $userdate['name'];
         $useremail = $userdate['email'];
+        $users_id = $userdate['id'];
         $role_as = $userdate['role_as'];
         $verify_status = $userdate['verify_status'];
 
         $_SESSION['auth_user'] =[
             'name' => $username,
-            'emmail' => $username
+            'emmail' => $username,
+            'id' => $users_id
         ];
 
         $_SESSION['role_as'] = $role_as;
