@@ -86,5 +86,36 @@ else if (isset($_POST['add_product_btn']))
         redirect("add-product.php", "all fields are mandatory");
     }
 }
+else if (isset($_POST['update_product_btn']))
+{
+    $category_id = $_POST['category_id'];
+    $name = $_POST['name'];
+    $detail = $_POST['detail'];
+    $price = $_POST['price'];
+    $num = $_POST['num'];
+
+    $path = "../uploads";
+
+    $new_image = $_FILES['image']['name'];
+    $old_image = $_POST['old_image'];
+
+    if($new_image != "")
+    {
+        //update_filename =$new_image;
+        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
+        $update_filenname = time().'.'.$image_ext;
+    }
+    else
+    {
+        $update_filenname = $old_image;
+    }
+
+    $update_product_query ="UPDATE products";
+
+}
+else
+{
+    header('Location : ../index.php');
+}
 
 ?>

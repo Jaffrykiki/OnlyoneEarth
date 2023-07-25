@@ -16,33 +16,32 @@ include('../middleware/adminMiddleware.php');
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
-                                <th>Action</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             $category = getAll("category");
-                            if(mysqli_num_rows($category) > 0) 
-                            {
-                                foreach ($category as $item) 
-                                {
-                                    ?>
+                            if (mysqli_num_rows($category) > 0) {
+                                foreach ($category as $item) {
+                            ?>
                                     <tr>
                                         <td><?= $item['id']; ?></td>
                                         <td><?= $item['name']; ?></td>
                                         <td>
                                             <a href="edit-category.php?id=<?= $item['id']; ?>" class="btn btn-primary">แก้ไข</a>
+                                        </td>
+                                        <td>
                                             <form action="code.php" method="POST">
                                                 <input type="hidden" name="category_id" value="<?= $item['id']; ?>">
-                                            <button type="submit" class="btn btn-danger" name="delete_category_btn">ลบ</button>
+                                                <button type="submit" class="btn btn-sm btn-danger" name="delete_category_btn">ลบ</button>
                                             </form>
                                         </td>
                                     </tr>
                             <?php
                                 }
-                            } 
-                            else 
-                            {
+                            } else {
                                 echo "ไม่พบบันทึก";
                             }
                             ?>
