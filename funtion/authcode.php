@@ -46,8 +46,6 @@ function sendemail_verify($name,$email,$verify_token)
 }
 
 
-
-
 //สมัครสมาชิกทั่วไป
 if (isset($_POST['register_btn'])) 
 {

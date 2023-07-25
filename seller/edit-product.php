@@ -1,7 +1,7 @@
 <?php
 
 include('includes/header.php');
-include('../middleware/adminMiddleware.php');
+include('../middleware/sellerMiddleware.php');
 
 ?>
 
@@ -25,7 +25,8 @@ include('../middleware/adminMiddleware.php');
                     <div class="card">
                         <div class="card-header">
                             <h4>Edit Product
-                                <a href="products.php" class="btn btn-primary float-end">กลับ</a>
+                            <a href="products.php" class="btn btn-primary float-end">กลับ</a>
+                            </h4>
                             </h4>
                         </div>
                         <div class="card-body" style="margin-top: -40px;">

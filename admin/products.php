@@ -15,7 +15,7 @@ include('../middleware/adminMiddleware.php');
                         <thead>
                             <tr>
                                 <th>Id Product</th>
-                                <th>Id_Users</th>
+                                <th>Id Users</th>
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th>Edit</th>

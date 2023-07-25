@@ -15,7 +15,6 @@ include('../middleware/sellerMiddleware.php');
                         <thead>
                             <tr>
                                 <th>Id_Product</th>
-                                <th>Id_Users</th>
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th>Edit</th>
@@ -30,7 +29,6 @@ include('../middleware/sellerMiddleware.php');
                             ?>
                                     <tr>
                                         <td><?= $item['id']; ?></td>
-                                        <td><?= $item['users_id']; ?></td>
                                         <td><?= $item['name']; ?></td>
                                         <td>
                                             <img src="../uploads/<?= $item['image']; ?>" width="130px" height="130px" alt="<?= $item['name']; ?>">

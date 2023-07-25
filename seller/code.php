@@ -44,5 +44,56 @@ include('../funtion/myfuntion.php');
         redirect("add-product.php", "all fields are mandatory");
     }
 }
+else if (isset($_POST['update_product_btn']))
+{
+    $product_id = $_POST['product_id'];
+    $category_id = $_POST['category_id'];
 
+    $name = $_POST['name'];
+    $detail = $_POST['detail'];
+    $price = $_POST['price'];
+    $num = $_POST['num'];
+
+    $path = "../uploads";
+
+    $new_image = $_FILES['image']['name'];
+    $old_image = $_POST['old_image'];
+
+    if($new_image != "")
+    {
+        //update_filename =$new_image;
+        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
+        $update_filenname = time().'.'.$image_ext;
+    }
+    else
+    {
+        $update_filenname = $old_image;
+    }
+
+    $update_product_query ="UPDATE products SET category_id='$category_id',name='$name',detail='$detail',price='$price',num='$num',image='$update_filenname' 
+    WHERE  id ='$product_id'";
+    $update_product_query_run = mysqli_query($connection, $update_product_query);
+
+
+    if ($update_product_query_run) 
+    {
+        if($_FILES['image']['name'] != "")
+        {
+            move_uploaded_file($_FILES['image']['tmp_name'], $path. '/' .$update_filenname);
+            if(file_exists("../uploads/".$old_image))
+            {
+                unlink("../uploads/".$old_image);
+            }
+        }
+        redirect("edit-product.php?id=$product_id", "อัปเดตสินค้าเรียบร้อยแล้ว");
+    }
+    else
+    {
+        redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
+    }
+}
+else
+{
+    header('Location : ../index.php');
+}
 ?>

@@ -27,9 +27,12 @@ else if (isset($_POST['update_category_btn']))
 
     $update_query_run = mysqli_query($connection, $update_query);
 
-    if ($update_query_run) {
+    if ($update_query_run) 
+    {
         redirect("edit-category.php?id=$category_id", "อัปเดตหมวดหมู่เรียบร้อยแล้ว");
-    } else {
+    } 
+    else 
+    {
         redirect("edit-category.php", "บางอย่างผิดพลาด");
     }
 } 
@@ -88,7 +91,9 @@ else if (isset($_POST['add_product_btn']))
 }
 else if (isset($_POST['update_product_btn']))
 {
+    $product_id = $_POST['product_id'];
     $category_id = $_POST['category_id'];
+
     $name = $_POST['name'];
     $detail = $_POST['detail'];
     $price = $_POST['price'];
@@ -110,8 +115,27 @@ else if (isset($_POST['update_product_btn']))
         $update_filenname = $old_image;
     }
 
-    $update_product_query ="UPDATE products";
+    $update_product_query ="UPDATE products SET category_id='$category_id',name='$name',detail='$detail',price='$price',num='$num',image='$update_filenname' 
+    WHERE  id ='$product_id'";
+    $update_product_query_run = mysqli_query($connection, $update_product_query);
 
+
+    if ($update_product_query_run) 
+    {
+        if($_FILES['image']['name'] != "")
+        {
+            move_uploaded_file($_FILES['image']['tmp_name'], $path. '/' .$update_filenname);
+            if(file_exists("../uploads/".$old_image))
+            {
+                unlink("../uploads/".$old_image);
+            }
+        }
+        redirect("edit-product.php?id=$product_id", "อัปเดตสินค้าเรียบร้อยแล้ว");
+    }
+    else
+    {
+        redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
+    }
 }
 else
 {
