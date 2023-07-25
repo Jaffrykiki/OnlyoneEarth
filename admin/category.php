@@ -1,6 +1,8 @@
 <?php
-include('includes/header.php');
+
 include('../middleware/adminMiddleware.php');
+include('includes/header.php');
+
 ?>
 
 <div class="container">
@@ -10,13 +12,13 @@ include('../middleware/adminMiddleware.php');
                 <div class="card-header">
                     <h4>Categories</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="category_table">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Id</th>
                                 <th>Name</th>
-                                <th>Edit</th>
+                                <th>edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
@@ -31,12 +33,13 @@ include('../middleware/adminMiddleware.php');
                                         <td><?= $item['name']; ?></td>
                                         <td>
                                             <a href="edit-category.php?id=<?= $item['id']; ?>" class="btn btn-primary">แก้ไข</a>
-                                        </td>
-                                        <td>
-                                            <form action="code.php" method="POST">
+                                            <!-- <form action="code.php" method="POST">
                                                 <input type="hidden" name="category_id" value="<?= $item['id']; ?>">
                                                 <button type="submit" class="btn btn-sm btn-danger" name="delete_category_btn">ลบ</button>
-                                            </form>
+                                            </form> -->
+                                        </td>
+                                        <td>
+                                        <button type="button" class="btn btn-sm btn-danger delete_category_btn" value="<?= $item['id']; ?>">ลบ</button>
                                         </td>
                                     </tr>
                             <?php

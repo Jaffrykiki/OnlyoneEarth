@@ -22,9 +22,15 @@
 </footer>
 </main>
 
-<script src="../assets/js/bootstrap.bundle.min.js"></script>
-<script src="../assets/js/perfect-scrollbar.min.js"></script>
-<script src="../assets/js/smooth-scrollbar.min.js"></script>
+
+        <script src="assets/js/jquery-3.7.0.min.js"></script>
+        <script src="assets/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/perfect-scrollbar.min.js"></script>
+        <script src="assets/js/smooth-scrollbar.min.js"></script>
+
+            <!-- CDN -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="assets/js/custom.js"></script>
 
 
 

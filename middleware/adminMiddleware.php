@@ -1,4 +1,5 @@
 <?php
+
 include ('../funtion/myfuntion.php'); 
 
 if(isset($_SESSION['auth']))

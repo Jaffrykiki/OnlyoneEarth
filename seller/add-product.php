@@ -1,7 +1,8 @@
 <?php
 
-include('includes/header.php');
 include('../middleware/sellerMiddleware.php');
+include('includes/header.php');
+
 
 ?>
 

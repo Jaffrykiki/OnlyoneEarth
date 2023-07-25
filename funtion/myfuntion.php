@@ -1,4 +1,5 @@
 <?php 
+session_start();
 include('../connection/dbcon.php');
 
 function getAll($table, $where = false)
