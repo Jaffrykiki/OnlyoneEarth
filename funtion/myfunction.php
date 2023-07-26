@@ -24,7 +24,6 @@ function getByID($table, $id)
     return $query_run = mysqli_query($connection, $query);
 
 }
-
 function redirect($url, $message) 
 {
     $_SESSION['message'] = $message;

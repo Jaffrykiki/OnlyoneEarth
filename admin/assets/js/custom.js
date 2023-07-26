@@ -27,12 +27,12 @@ $(document).ready(function () {
                 success: function (responce) {
                     if(responce == 200)
                     {
-                        swal("สำเร็จแล้ว!", "ลบสินค้ารียบร้อยแล้ว!", "สำเร็จแล้ว");
+                        swal("สำเร็จแล้ว!", "ลบสินค้ารียบร้อยแล้ว!", "success");
                         $("#products_table").load(location.href + " #products_table");
                     }
                     else if(responce == 500)
                     {
-                        swal("ผิดพลาด!", "มีบางอย่างผิดพลาด!", "ผิดพลาด");
+                        swal("ผิดพลาด!", "มีบางอย่างผิดพลาด!", "warning");
                     }
                 }
               });
@@ -67,12 +67,12 @@ $(document).ready(function () {
                 success: function (responce) {
                     if(responce == 200)
                     {
-                        swal("สำเร็จแล้ว!", "ลบสินค้ารียบร้อยแล้ว!", "สำเร็จแล้ว");
+                        swal("สำเร็จแล้ว!", "ลบสินค้ารียบร้อยแล้ว!", "success");
                         $("#category_table").load(location.href + " #category_table");
                     }
                     else if(responce == 500)
                     {
-                        swal("ผิดพลาด!", "มีบางอย่างผิดพลาด!", "ผิดพลาด");
+                        swal("ผิดพลาด!", "มีบางอย่างผิดพลาด!", "warning");
                     }
                 }
               });

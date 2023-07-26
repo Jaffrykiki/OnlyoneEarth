@@ -1,5 +1,5 @@
 <?php 
-session_start();
+session_start(); 
 include('includes/header.php');
 
 ?>
@@ -8,6 +8,7 @@ include('includes/header.php');
     <div class="container">
         <div class="row">
             <div class="col-md-6">
+                <!-- แจ้งเดือนหลังจากเข้าสู่ระบบ -->
                 <?php
                 if (isset($_SESSION['message'])) {
                 ?>
@@ -19,7 +20,7 @@ include('includes/header.php');
                     unset($_SESSION['message']);
                 }
                 ?>
-                <h1>Hello, world!</h1>
+                <h1>Hello, world! <i class="fa fa-user"></i></h1>
                 <button class="btn btn-primary">เทส </button>
             </div>
         </div>

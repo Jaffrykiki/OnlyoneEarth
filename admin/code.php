@@ -1,8 +1,9 @@
 <?php
 
 include('../connection/dbcon.php');
-include('../funtion/myfuntion.php');
+include('../funtion/myfunction.php');
 
+//เพิ่มหมวดหมู่สินค้า
 if (isset($_POST['add_category_btn'])) 
 {
     $name = $_POST['name'];
@@ -17,6 +18,7 @@ if (isset($_POST['add_category_btn']))
         redirect("add-category.php", "Something Went Wrong");
     }
 } 
+//แก้หมวดหมู่
 else if (isset($_POST['update_category_btn'])) 
 {
     $category_id = $_POST['category_id'];
@@ -34,7 +36,8 @@ else if (isset($_POST['update_category_btn']))
     {
         redirect("edit-category.php", "บางอย่างผิดพลาด");
     }
-} 
+}
+//ลบหมวดหมู่สินค้า 
 else if (isset($_POST['delete_category_btn'])) 
 {
     $category_id = mysqli_real_escape_string($connection, $_POST['category_id']);
@@ -50,6 +53,7 @@ else if (isset($_POST['delete_category_btn']))
         echo 500;
     }
 } 
+//เพิ่มสินค้า
 else if (isset($_POST['add_product_btn'])) 
 {
     $category_id = $_POST['category_id'];
@@ -90,6 +94,7 @@ else if (isset($_POST['add_product_btn']))
         redirect("add-product.php", "all fields are mandatory");
     }
 }
+//แก้ไขสินค้า
 else if (isset($_POST['update_product_btn']))
 {
     $product_id = $_POST['product_id'];
@@ -138,6 +143,7 @@ else if (isset($_POST['update_product_btn']))
         redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
     }
 }
+//ลบสินค้า
 else if(isset($_POST['delete_product_btn']))
 {
     $product_id = mysqli_real_escape_string($connection, $_POST['product_id']);
@@ -169,6 +175,7 @@ else if(isset($_POST['delete_product_btn']))
     }
 
 }
+//ไม่เข้าเงื่อนไขอะไรด้านบนเลย
 else
 {
     header('Location : ../index.php');

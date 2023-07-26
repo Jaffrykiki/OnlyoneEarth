@@ -12,6 +12,7 @@ use PHPMailer\PHPMailer\Exception;
 //Load Composer's autoloader
 require '../vendor/autoload.php';
 
+//SendEmail_verify
 function sendemail_verify($name,$email,$verify_token)
 {
     $mail = new PHPMailer(true);
@@ -143,6 +144,8 @@ else if(isset($_POST['login_btn']))
     $email = mysqli_real_escape_string($connection , $_POST['email']);
     $password = mysqli_real_escape_string($connection , $_POST['password']);
 
+
+    //queryข้อมูลจากฐานข้อมูล
     $login_query = "SELECT * FROM users WHERE email='$email' AND password='$password' ";
     $login_query_run = mysqli_query($connection, $login_query);
 
@@ -162,7 +165,8 @@ else if(isset($_POST['login_btn']))
             'emmail' => $username,
             'id' => $users_id
         ];
-
+        
+        //เช็คบทบาทของการเข้าสู่ระบบ
         $_SESSION['role_as'] = $role_as;
         if ($role_as == 0) {
             $_SESSION['message'] = 
@@ -189,6 +193,7 @@ else if(isset($_POST['login_btn']))
     }
     else
         {
+            //ไม่เข้าเงื่อนไขด้านบน
         $_SESSION['message'] = "";
         redirect("../login.php" ,"ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
         }

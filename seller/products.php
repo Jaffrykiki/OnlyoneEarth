@@ -1,5 +1,4 @@
 <?php
-
 include('../middleware/sellerMiddleware.php');
 include('includes/header.php');
 
@@ -40,7 +39,7 @@ include('includes/header.php');
 
                                         </td>
                                         <td>
-                                                <button type="button" class="btn btn-sm btn-danger delete_product_btn" value="<?= $item['id']; ?>">ลบ</button>
+                                        <button type="button" class="btn btn-sm btn-danger delete_product_btn" value="<?= $item['id']; ?>">ลบ</button>
                                         </td>
                                     </tr>
                             <?php

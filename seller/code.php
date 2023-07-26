@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 include('../connection/dbcon.php');
 include('../funtion/myfuntion.php');
 
@@ -91,6 +89,37 @@ else if (isset($_POST['update_product_btn']))
     {
         redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
     }
+}
+else if(isset($_POST['delete_product_btn']))
+{
+    $product_id = mysqli_real_escape_string($connection, $_POST['product_id']);
+
+    $product_query = "SELECT * FROM products WHERE id='$product_id'" ;
+    $product_query_run  = mysqli_query($connection, $product_query);
+    $product_data = mysqli_fetch_array($product_query_run);
+    $image = $product_data['image'];
+
+    $delete_query = "DELETE FROM products WHERE id='$product_id' ";
+    $delete_query_run  = mysqli_query($connection, $delete_query);
+
+
+
+    if ($delete_query_run) 
+    {
+        if(file_exists("../uploads/".$image))
+        {
+            unlink("../uploads/".$image);
+        }
+
+        // redirect("products.php", "ลบสินค้ารียบร้อยแล้ว");
+        echo 200;
+    } 
+    else 
+    {
+        // redirect("products.php", "บางอย่างผิดพลาด");
+        echo 700;
+    }
+
 }
 else
 {
