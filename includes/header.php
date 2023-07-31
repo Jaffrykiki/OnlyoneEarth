@@ -6,14 +6,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap - CSS -->
   <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-  <!-- google font -->
   <link href="assets/css/custom.css" rel="stylesheet">
+
   <!-- font awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <title>Hello, world!</title>
+  <title>Only One Earth</title>
 
   <!-- Font Noto Sans Thai -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

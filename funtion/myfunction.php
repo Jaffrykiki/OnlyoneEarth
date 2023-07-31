@@ -2,6 +2,7 @@
 session_start();
 include('../connection/dbcon.php');
 
+//เพิ่่ม
 function getAll($table, $where = false)
 {  
     $query = "";
@@ -17,6 +18,7 @@ function getAll($table, $where = false)
     return $query_run = mysqli_query($connection, $query);
 }
 
+//แก้ไข
 function getByID($table, $id)
 {
     global $connection;
@@ -24,6 +26,9 @@ function getByID($table, $id)
     return $query_run = mysqli_query($connection, $query);
 
 }
+
+//ข้อความ
+
 function redirect($url, $message) 
 {
     $_SESSION['message'] = $message;

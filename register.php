@@ -3,7 +3,7 @@ session_start();
 
 if(isset($_SESSION['auth']))
 {
-    $_SESSION['message'] = "คุณเข้าสู่ระบบแล้ว";
+    $_SESSION['message'] = "คุณได้เข้าสู่ระบบแล้ว";
     header('Location:index.php');
 }
 

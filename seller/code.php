@@ -1,6 +1,6 @@
 <?php
 include('../connection/dbcon.php');
-include('../funtion/myfuntion.php');
+include('../funtion/myfunction.php');
 
  if (isset($_POST['add_product_btn'])) 
 {

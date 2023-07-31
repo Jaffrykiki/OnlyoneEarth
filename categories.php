@@ -6,9 +6,9 @@ include('includes/header.php');
 ?>
 
 <div class="py-3 bg-primary">
-     <div class="container">
+    <div class="container">
         <h7 class="text-white">หน้าแรก / หมวดหมู่ </h7>
-     </div>
+    </div>
 </div>
 
 <div class="py-5">
@@ -24,14 +24,16 @@ include('includes/header.php');
                         foreach ($caregories as $item) {
                     ?>
                             <div class="col-md-2 mb-3">
-                                <div class="btn btn-primary shadow">
-                                    <h4 class="text-center"></h4><?= $item['name'] ?> </h4>
-                                </div>
+                                <a href="products.php?category=<?= $item['name'] ?>">
+                                    <div class="btn btn-primary shadow">
+                                        <h4 class="text-center"></h4><?= $item['name'] ?> </h4>
+                                    </div>
+                                </a>
                             </div>
                     <?php
                         }
                     } else {
-                        echo "ไม่มีข้อมูลที่สามารถใช้ได้";
+                        echo "ยังไม่มีหมวดหมู่สินค้า";
                     }
                     ?>
                 </div>

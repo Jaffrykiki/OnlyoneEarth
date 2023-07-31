@@ -29,7 +29,7 @@ include('includes/header.php');
                     ?>
                 <div class="card">
                     <div class="card-header">
-                        <h4>แบบฟอร์มสมัครผู้ขาย</h4>
+                        <h4>แบบฟอร์มสำหรับสมัครผู้ขาย</h4>
                     </div>
                     <div class="card-body">
                         <form action="funtion/authcode.php" method="POST">

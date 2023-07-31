@@ -2,7 +2,7 @@
 session_start();
 
 include('../connection/dbcon.php');
-include('myfuntion.php');
+include('../funtion/myfunction.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
