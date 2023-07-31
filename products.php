@@ -22,8 +22,8 @@ if (isset($_GET['category']))
                     <a class="text-white" href="categories.php">
                         หมวดหมู่ /
                     </a>
-                    <?= $category['name']; ?>
-                </h7>
+                    <?= $category['name']; ?> </h7>
+                
             </div>
         </div>
 
@@ -44,7 +44,7 @@ if (isset($_GET['category']))
                                 foreach ($products as $item) {
                             ?>
                                     <div class="col-md-2 mb-2">
-                                        <a href="product-view.php?product=<?= $item['name'] ?> ">
+                                        <a href="product-view.php?product= <?= $item['name'] ?> ">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="shadow">
