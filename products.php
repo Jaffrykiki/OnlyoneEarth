@@ -44,12 +44,12 @@ if (isset($_GET['category']))
                                 foreach ($products as $item) {
                             ?>
                                     <div class="col-md-2 mb-2">
-                                        <a href="product-view.php?product= <?= $item['name'] ?> ">
+                                        <a href="product-view.php?product=<?= $item['name']; ?>">
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="shadow">
                                                         <img src="uploads/<?= $item['image']; ?>" alt="Product image" class="w-100">
-                                                        <h4 class="text-center" > <?= $item['name'] ?> </h4>
+                                                        <h4 class="text-center"><?= $item['name']; ?></h4>
                                                     </div>
                                                 </div>
                                             </div>
