@@ -33,7 +33,19 @@ include('includes/header.php');
                                 <label for="exampleInputPassword1" class="form-label">รหัสผ่าน</label>
                                 <input type="password" name="password" class="form-control" placeholder="ป้อนรหัสผ่านของคุณ" id="exampleInputPassword1">
                             </div>
-                            <button type="submit" name="login_btn" class="btn btn-success">เข้าสู่ระบบ</button>
+                            <button type="submit" name="login_btn" class="btn btn-success ">เข้าสู่ระบบ</button>
+                            <!-- Register buttons -->
+                            <div class="text-center mb-2">
+                                <p>เพิ่งเคยเข้ามาใน Only One Earth ใช่หรือไม่? </p>
+                                <a href="register.php" class="btn btn-secondary">สมัครใหม่</a>
+                                <p>หรือล็อกอินด้วย:</p>
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                </button>
+                                <button type="button" class="btn btn-link btn-floating mx-1">
+                                    <i class="fa fa-google" aria-hidden="true"></i>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

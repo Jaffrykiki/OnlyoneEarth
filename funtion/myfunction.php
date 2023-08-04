@@ -2,7 +2,7 @@
 session_start();
 include('../connection/dbcon.php');
 
-//เพิ่่ม
+//เพิ่่ม //เรียกดูสินค้า
 function getAll($table, $where = false)
 {  
     $query = "";

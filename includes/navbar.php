@@ -17,6 +17,9 @@
         <li class="nav-item">
           <a class="nav-link" href="categories.php">หมวดหมู่สินค้า</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="cart.php"><i class="fa fa-shopping-cart fa-1x" aria-hidden="true"></i></a>
+        </li>
         <?php
         if (isset($_SESSION['auth'])) {
         ?>

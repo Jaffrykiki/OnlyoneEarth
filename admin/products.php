@@ -12,7 +12,7 @@ include('includes/header.php');
                     <h4>Products</h4>
                 </div>
                 <div class="card-body" id="products_table">
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-dark table-striped">
                         <thead>
                             <tr>
                                 <th>Id Product</th>
@@ -38,7 +38,6 @@ include('includes/header.php');
                                         </td>
                                         <td>
                                             <a href="edit-product.php?id=<?= $item['id']; ?>" class="btn btn-primary">แก้ไข</a>
-
                                         </td>
                                         <td>
                                                 <button type="button" class="btn btn-sm btn-danger delete_product_btn" value="<?= $item['id']; ?>">ลบ</button>

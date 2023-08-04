@@ -48,7 +48,7 @@ if (isset($_GET['product'])) {
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
-                                <h5>ผู้ขาย:<span class="text-success fw-bold">สมถุย ร้อยแรงม้า</span> </h5>
+                                <h5>รหัสผู้ขาย:<span class="text-success fw-bold"><?= $product['users_id']; ?></span> </h5>
                             </div>
                         </div>
 

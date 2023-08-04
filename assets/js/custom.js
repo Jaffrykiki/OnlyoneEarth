@@ -1,7 +1,8 @@
 $(document).ready(function ()  {
 
     //เพิ่มจำนวนสินค้า
-    $('.increment-btn').click(function (e) {
+    $(document).on('click','.increment-btn', function (e) {
+
         e.preventDefault();
 
         var qty = $(this).closest('.product_data').find('.input-qty').val();
@@ -16,8 +17,7 @@ $(document).ready(function ()  {
     });
 
     //ลดจำนวนสินค้า
-
-    $('.decrement-btn').click(function (e) {
+        $(document).on('click','.decrement-btn', function (e) {   
         e.preventDefault();
 
         var qty = $(this).closest('.product_data').find('.input-qty').val();
@@ -32,7 +32,8 @@ $(document).ready(function ()  {
     });
 
     //เพิ่มสินค้าลงตระกร้า
-    $('.addToCartBtn').click(function (e) {
+        $(document).on('click','.addToCartBtn', function (e) {   
+        
         e.preventDefault();
 
         var qty = $(this).closest('.product_data').find('.input-qty').val();
@@ -67,4 +68,50 @@ $(document).ready(function ()  {
             },            
         });
     });
+
+    //เพิ่ม ลด จำนวนสินค้าในตระกร้า
+    $(document).on('click','.updateQty', function () {
+
+        var qty = $(this).closest('.product_data').find('.input-qty').val();
+        var prod_id = $(this).closest('.product_data').find('.prodId').val();
+
+        $.ajax({
+            method: "POST",
+            url: "funtion/handlecart.php",
+            data: {
+                "prod_id": prod_id,
+                "prod_qty": qty,
+                "scope": "update"
+            },
+            success: function (response) {
+                // alert(response);
+            }
+        });
+    });
+
+    //ลบสินค้าในตระกร้า
+    $(document).on('click','.deleteItem' , function () {
+        var cart_id = $(this).val();
+        // alert(cart_id);
+
+        $.ajax({
+            method: "POST",
+            url: "funtion/handlecart.php",
+            data: {
+                "cart_id": cart_id,
+                "scope": "delete"
+            },
+            success: function (response) {
+                if(response == 200)
+                {
+                    alertify.success("ลบสินค้าในตระกร้าเรียบร้อยแล้ว");
+                    $('#mycart').load(location.href + " #mycart");
+                }else{
+                    alertify.success(response);
+                }
+            }
+        });
+        
+    });
+
 });

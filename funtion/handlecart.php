@@ -1,54 +1,92 @@
-<?php 
+<?php
 
 
 session_start();
 include('../connection/dbcon.php');
 
-if(isset($_SESSION['auth']))
-{
-    if(isset($_POST['scope']))
-    {
-    $scope  = $_POST['scope'];
-    switch ($scope)
-    {
-        case "add":
-            $prod_id = $_POST['prod_id'];
-            $prod_qty = $_POST['prod_qty'];
+if (isset($_SESSION['auth'])) {
+    if (isset($_POST['scope'])) {
+        $scope  = $_POST['scope'];
+        switch ($scope) {
+                //เพิ่มสินค้าเข้าไปในตระกร้า
+            case "add":
+                $prod_id = $_POST['prod_id'];
+                $prod_qty = $_POST['prod_qty'];
 
-            $user_id = $_SESSION['auth_user']['id'];
-            
-            //เช็คว่ามีสินค้านั้นในตระกร้าหรือยัง
-            $chk_existing_cart = "SELECT * FROM carts WHERE prod_id='$prod_id' AND user_id='$user_id' ";
-            $chk_existing_cart_run = mysqli_query($connection, $chk_existing_cart) ;
+                //เช็คว่ามีสินค้านั้นในตระกร้าหรือยัง
+                $user_id = $_SESSION['auth_user']['id'];
 
-            
-            if(mysqli_num_rows($chk_existing_cart_run) > 0 )
-            {
+                $chk_existing_cart = "SELECT * FROM carts WHERE prod_id='$prod_id' AND user_id='$user_id' ";
+                $chk_existing_cart_run = mysqli_query($connection, $chk_existing_cart);
+
+                if (mysqli_num_rows($chk_existing_cart_run) > 0) {
                     echo "existing";
-            }
-            else
-            {
-            $insert_query =  "INSERT INTO carts (user_id, prod_id, prod_qty) VALUES ('$user_id','$prod_id','$prod_qty') ";
-            $insert_query_run = mysqli_query($connection, $insert_query);
-            
-            if($insert_query_run)
-            {
-                echo 201;
-            }
-            else
-            {
+                } else {
+                    $insert_query =  "INSERT INTO carts (user_id, prod_id, prod_qty) VALUES ('$user_id','$prod_id','$prod_qty') ";
+                    $insert_query_run = mysqli_query($connection, $insert_query);
+
+                    if ($insert_query_run) {
+                        echo 201;
+                    } else {
+                        echo 500;
+                    }
+                }
+                break;
+
+                //อัปเดดจำนวนสินค้าในตระกร้า
+            case "update":
+                $prod_id = $_POST['prod_id'];
+                $prod_qty = $_POST['prod_qty'];
+
+                //เช็คว่ามีสินค้านั้นในตระกร้าหรือยัง
+                $user_id = $_SESSION['auth_user']['id'];
+
+                $chk_existing_cart = "SELECT * FROM carts WHERE prod_id='$prod_id' AND user_id='$user_id' ";
+                $chk_existing_cart_run = mysqli_query($connection, $chk_existing_cart);
+
+                if (mysqli_num_rows($chk_existing_cart_run) > 0) {
+                    $update_query = "UPDATE carts SET prod_qty='$prod_qty' WHERE prod_id='$prod_id' AND user_id='$user_id' ";
+                    $update_query_run = mysqli_query($connection, $update_query);
+                    if ($update_query_run) {
+                        echo 200;
+                    } else {
+                        echo 500;
+                    }
+                } else {
+                    echo "มีบางอย่างผิดพลาด ติดต่อแอดมินสมถุย";
+                }
+                break;
+
+                //ลบสินค้าในตระกร้า
+            case "delete":
+                $cart_id = $_POST['cart_id'];
+
+                //เช็คว่ามีสินค้านั้นในตระกร้าหรือยัง
+                $user_id = $_SESSION['auth_user']['id'];
+
+
+                $chk_existing_cart = "SELECT * FROM carts WHERE id='$cart_id' AND user_id='$user_id' ";
+                $chk_existing_cart_run = mysqli_query($connection, $chk_existing_cart);
+
+                if (mysqli_num_rows($chk_existing_cart_run) > 0) {
+                    $delete_query = "DELETE FROM carts WHERE id='$cart_id' ";
+                    $delete_query_run = mysqli_query($connection, $delete_query);
+                    if ($delete_query_run) {
+                        echo 200;
+                    } else {
+                        echo "มีบางอย่างผิดพลาด ติดต่อแอดมินสมถุย";
+                    }
+                } else {
+                    echo "มีบางอย่างผิดพลาด ติดต่อแอดมินสมถุย";
+                }
+                break;
+
+            default:
                 echo 500;
-            }
         }
-            break;
-
-        default:
-            echo 500;
     }
-}
-
-}
-else
+} 
+else 
 {
     echo 401;
 }

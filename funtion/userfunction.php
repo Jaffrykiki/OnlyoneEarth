@@ -35,6 +35,16 @@ function getIDActive($table, $id)
 
 }
 
+//แสดงรายการสินค้าในตระกร้า
+function getCartItems()
+{
+    global $connection;
+    $userId = $_SESSION['auth_user']['id'];
+    $query = "SELECT c.id as cid, c.prod_id, c.prod_qty, p.id as pid, p.name, p.image, p.price 
+     FROM carts c, products p WHERE c.prod_id=p.id AND c.user_id='$userId' ORDER BY c.id DESC  ";
+     return $query_run = mysqli_query($connection, $query);
+}
+
 //เก็บข้อความ
 function redirect($url, $message) 
 {

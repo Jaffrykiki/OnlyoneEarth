@@ -19,20 +19,28 @@
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
       </li>
+            <li class="nav-item">
+        <a class="nav-link text-white <?= $page == "manage_users.php"? 'bg-gradient-primary':''; ?>" href="manage_users.php">
+          <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="material-icons opacity-10">dashboard</i>
+          </div>
+          <span class="nav-link-text ms-1">จัดการผู้ใช้</span>
+        </a>
+      </li>
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "category.php"? 'bg-gradient-primary':''; ?>" href="category.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">table_view</i>
+            <i class="material-icons opacity-10">category</i>
           </div>
-          <span class="nav-link-text ms-1">ALL Categories</span>
+          <span class="nav-link-text ms-1">หมวดหมู่ทั้งหมด</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "add-category.php"? 'bg-gradient-primary':''; ?> " href="add-category.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">table_view</i>
+            <i class="material-icons opacity-10">add</i>
           </div>
-          <span class="nav-link-text ms-1">Add Category</span>
+          <span class="nav-link-text ms-1">เพิ่มหมวดหมู่สินค้า</span>
         </a>
       </li>
       <li class="nav-item">
@@ -40,15 +48,15 @@
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">table_view</i>
           </div>
-          <span class="nav-link-text ms-1">ALL Product</span>
+          <span class="nav-link-text ms-1">สินค้าทั้งหมด</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "add-product.php"? 'bg-gradient-primary':''; ?>" href="add-product.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">table_view</i>
+            <i class="material-icons opacity-10">add_shopping_cart</i>
           </div>
-          <span class="nav-link-text ms-1">Add Product</span>
+          <span class="nav-link-text ms-1">เพิ่มสินค้า</span>
         </a>
       </li>
     </ul>

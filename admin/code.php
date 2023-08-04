@@ -164,14 +164,88 @@ else if(isset($_POST['delete_product_btn']))
         {
             unlink("../uploads/".$image);
         }
+        // redirect("manage_users.php", "ลบสินข้อมูลผู้ใช้เรียบร้อยแล้ว");
+        echo 200;
+    } 
+    else 
+    {
+        // redirect("products.php", "บางอย่างผิดพลาด");
+        echo 500;
+    }
 
+}
+//แก้ไขผู้ใช้
+else if (isset($_POST['update_users_btn']))
+{
+    $users_id = $_POST['users_id'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $password = $_POST['password'];
+
+    $path = "../uploads";
+
+    $new_image = $_FILES['img']['name'];
+    $old_image = $_POST['old_image'];
+
+    if($new_image != "")
+    {
+        //update_filename =$new_image;
+        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
+        $update_filenname = time().'.'.$image_ext;
+    }
+    else
+    {
+        $update_filenname = $old_image;
+    }
+
+    $update_user_query ="UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`password`='$password',`img`=' $update_filenname' WHERE id ='$users_id'" ;
+    $update_user_query_run = mysqli_query($connection, $update_user_query);
+
+
+    if ($update_user_query_run) 
+    {
+        if($_FILES['img']['name'] != "")
+        {
+            move_uploaded_file($_FILES['img']['tmp_name'], $path. '/' .$update_filenname);
+            if(file_exists("../uploads/".$old_image))
+            {
+                unlink("../uploads/".$old_image);
+            }
+        }
+        redirect("edit-users.php?id=$users_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
+    }
+    else
+    {
+        redirect("edit-users.php?id=$users_id", "มีบางอย่างผิดพลาด");
+    }
+}
+//ลบผู้ใช้
+else if(isset($_POST['delete_users_btn']))
+{
+    $users_id = mysqli_real_escape_string($connection, $_POST['users_id']);
+
+    $user_query = "SELECT * FROM users WHERE id='$users_id'" ;
+    $user_query_run = mysqli_query($connection, $user_query);
+    $user_data = mysqli_fetch_array($user_query_run);
+    $img = $user_data['img'];
+
+    $delete_query = "DELETE FROM users WHERE id='$users_id' ";
+    $delete_query_run  = mysqli_query($connection, $delete_query);
+
+    if ($delete_query_run) 
+    {
+        if(file_exists("../uploads/".$img))
+        {
+            unlink("../uploads/".$img);
+        }
         // redirect("products.php", "ลบสินค้ารียบร้อยแล้ว");
         echo 200;
     } 
     else 
     {
         // redirect("products.php", "บางอย่างผิดพลาด");
-        echo 700;
+        echo 500;
     }
 
 }
