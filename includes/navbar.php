@@ -28,8 +28,8 @@
               <?= $_SESSION['auth_user']['name']; ?>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">บัญชีของฉัน</a></li>
+              <li><a class="dropdown-item" href="#">การซื้อของฉัน</a></li>
               <li><a class="dropdown-item" href="logout.php">ออกจากระบบ</a></li>
             </ul>
           </li>

@@ -4,7 +4,8 @@
 session_start();
 include('../connection/dbcon.php');
 
-if (isset($_SESSION['auth'])) {
+if (isset($_SESSION['auth'])) 
+{
     if (isset($_POST['scope'])) {
         $scope  = $_POST['scope'];
         switch ($scope) {
