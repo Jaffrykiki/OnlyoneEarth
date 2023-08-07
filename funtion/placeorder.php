@@ -46,11 +46,10 @@ if (isset($_SESSION['auth']))
             $totalPrice += $citem['price'] * $citem['prod_qty'];
         }
 
-       
+       //เพิ่มข้อมูลเข้าไปใน ออเดอร์
         $tracking_no = "Somtuy".rand(1111,9999).substr($phone,2);
         $insert_query = "INSERT INTO orders (user_id, tracking_no, name, email, phone, address, pincode, total_price, payment_mode, payment_id ) VALUES ('$userId','$tracking_no', '$name', '$email', '$phone', '$address', '$pincode', '$totalPrice', '$payment_mode', '$payment_id') ";
         $insert_query_run = mysqli_query($connection, $insert_query);
-        echo $insert_query;
        
 
         if($insert_query_run)
@@ -65,6 +64,17 @@ if (isset($_SESSION['auth']))
                 $insert_items_qurty = "INSERT INTO order_items (order_id, prod_id, qty, price) VALUES 
                 ('$order_id', '$prod_id', '$prod_qty', '$price') ";
                 $insert_items_qurty_run = mysqli_query($connection, $insert_items_qurty);
+
+                $product_query = "SELECT * FROM products WHERE id='$prod_id' LIMIT 1 ";
+                $product_query_run = mysqli_query($connection, $product_query);
+
+                $productData = mysqli_fetch_array($product_query_run);
+                $current_qty = $productData['num'];
+
+                $new_qty = $current_qty - $prod_qty;
+
+                $updateQty_query = "UPDATE products SET num='$new_qty' WHERE id='$prod_id'";
+                $updateQty_query_run = mysqli_query($connection, $updateQty_query);
             }
 
             $deleteCartQuery = "DELETE FROM carts WHERE user_id='$userId'";

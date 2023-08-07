@@ -61,6 +61,7 @@ else if (isset($_POST['add_product_btn']))
     $detail = $_POST['detail'];
     $price = $_POST['price'];
     $num = $_POST['num'];
+    $trending = isset($_POST['trending']) ? '1':'0';
 
 
     $image = $_FILES['image']['name'];
@@ -73,8 +74,8 @@ else if (isset($_POST['add_product_btn']))
     if ($name != "" && $detail != "") 
     {
         $users_id = $_SESSION['auth_user']['id'];
-        $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,image) VALUES 
-        ('$category_id', $users_id ,'$name','$detail','$price','$num','$filename') ";
+        $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,trending,image) VALUES 
+        ('$category_id', $users_id ,'$name','$detail','$price','$num','$trending','$filename') ";
 
         $product_query_run = mysqli_query($connection, $product_query);
 
@@ -104,6 +105,7 @@ else if (isset($_POST['update_product_btn']))
     $detail = $_POST['detail'];
     $price = $_POST['price'];
     $num = $_POST['num'];
+    $trending = isset($_POST['trending']) ? '1':'0';
 
     $path = "../uploads";
 
@@ -121,7 +123,7 @@ else if (isset($_POST['update_product_btn']))
         $update_filenname = $old_image;
     }
 
-    $update_product_query ="UPDATE products SET category_id='$category_id',name='$name',detail='$detail',price='$price',num='$num',image='$update_filenname' 
+    $update_product_query ="UPDATE products SET category_id='$category_id',name='$name',detail='$detail',price='$price',num='$num',trending='$trending',image='$update_filenname' 
     WHERE  id ='$product_id'";
     $update_product_query_run = mysqli_query($connection, $update_product_query);
 
@@ -148,7 +150,7 @@ else if(isset($_POST['delete_product_btn']))
 {
     $product_id = mysqli_real_escape_string($connection, $_POST['product_id']);
 
-    $product_query = "SELECT * FROM products WHERE id='$product_id'" ;
+    $product_query = "SELECT * FROM products WHERE id='$product_id'";
     $product_query_run  = mysqli_query($connection, $product_query);
     $product_data = mysqli_fetch_array($product_query_run);
     $image = $product_data['image'];

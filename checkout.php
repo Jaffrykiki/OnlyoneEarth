@@ -50,6 +50,10 @@ include('authenticate.php');
                                     <label class="fw-bold">ที่อยู่</label>
                                     <textarea name="address" required placeholder="ป้อนที่อยู่ของของคุณ" class="form-control" rows="6"></textarea>
                                 </div>
+                                <!-- <div class="col-md-12 mb-">
+                                    <label class="mb-0">อัปโหลดหลักฐานการชำระเงิน</label>
+                                    <input type="file" required name="image" class="form-control mb-2">
+                                </div> -->
                             </div>
                         </div>
                         <div class="col-md-5">

@@ -11,6 +11,14 @@ function getAllActive($table)
     return $query_run = mysqli_query($connection, $query);
 }
 
+//เรียกดูรายการสินค้าที่กำลังมาแรง
+function getAllTrending()
+{  
+    global $connection;
+    $query = "SELECT * FROM products WHERE trending= '1' ";  
+    return $query_run = mysqli_query($connection, $query);
+}
+
 //ชื่อหมวดหมู่สินค้า
 function getNameActive($table, $name)
 {
@@ -46,12 +54,35 @@ function getCartItems()
      return $query_run = mysqli_query($connection, $query);
 }
 
+//แสดงออเดอร์
+function getOrders()
+{
+    global $connection;
+    $userId = $_SESSION['auth_user']['id'];
+
+    $query = "SELECT * FROM orders WHERE user_id='$userId'";
+    return $query_run = mysqli_query($connection, $query);
+
+}
+
 //เก็บข้อความ
 function redirect($url, $message) 
 {
     $_SESSION['message'] = $message;
     header('Location: '.$url);
     exit();
+}
+
+//ตรวจสอบว่ามีหมายเลขติดตามนั้นอยู่หรือไม่
+function checkTrackingNoValid($trackingNo)
+{
+    global $connection;
+    $userId = $_SESSION['auth_user']['id'];
+
+    $query  = "SELECT * FROM orders WHERE tracking_no='$trackingNo' AND user_id='$userId' ";
+    return  mysqli_query($connection, $query);
+
+
 }
 
 

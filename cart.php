@@ -22,7 +22,7 @@ include('authenticate.php');
 
 <div class="py-5">
     <div class="container">
-        <div class="card card-body shadow ">
+        <div class="card card-body shadow">
             <div class="row">
                 <div class="col-md-12">
                     <div id="mycart">
@@ -52,7 +52,7 @@ include('authenticate.php');
                                     <div class="card product_data shadow-sm mb-3">
                                         <div class="row align-items-center">
                                             <div class="col-md-2">
-                                                <img src="uploads/<?= $citem['image']; ?>" alt="Image" width="80px">
+                                                <img src="uploads/<?= $citem['image']; ?>" alt="Image" width="160" height="160" >
                                             </div>
                                             <div class="col-md-3">
                                                 <h5><?= $citem['name']; ?></h5>

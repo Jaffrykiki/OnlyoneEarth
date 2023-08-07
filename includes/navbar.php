@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow">
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-success shadow">
   <ul class="navbar-nav ms-auto">
     <li class="nav-item">
       <a class="nav-link active" href="register_seller.php">เริ่มต้นเป็นผู้ขาย</a>
@@ -29,7 +29,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="#">บัญชีของฉัน</a></li>
-              <li><a class="dropdown-item" href="#">การซื้อของฉัน</a></li>
+              <li><a class="dropdown-item" href="my-orders.php">การซื้อของฉัน</a></li>
               <li><a class="dropdown-item" href="logout.php">ออกจากระบบ</a></li>
             </ul>
           </li>

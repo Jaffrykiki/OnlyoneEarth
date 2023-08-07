@@ -61,6 +61,10 @@ include('includes/header.php');
                                 <label class="mb-0">จำนวน</label>
                                 <input type="number" required name="num" placeholder="ป้อนจำนวนสินค้า" class="form-control mb-2">
                             </div>
+                            <div class="col-md-3">
+                                <label class="mb-0">กำลังมาแรง</label>
+                                <input type="checkbox" required name="trending">
+                            </div>
                         </div>
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary" name="add_product_btn">บันทึก</button>

@@ -18,8 +18,7 @@ include('includes/header.php');
 
                 $product = getByID("products", $id);
 
-                if (mysqli_num_rows($product) > 0) 
-                {
+                if (mysqli_num_rows($product) > 0) {
                     $data = mysqli_fetch_array($product);
 
             ?>
@@ -42,7 +41,7 @@ include('includes/header.php');
                                             if (mysqli_num_rows($categories) > 0) {
                                                 foreach ($categories as $item) {
                                             ?>
-                                                    <option value="<?= $item['id']; ?>" <?= $data['category_id'] == $item['id']?'selected':''?> ><?= $item['name']; ?></option>
+                                                    <option value="<?= $item['id']; ?>" <?= $data['category_id'] == $item['id'] ? 'selected' : '' ?>><?= $item['name']; ?></option>
                                             <?php
                                                 }
                                             } else {
@@ -67,15 +66,19 @@ include('includes/header.php');
                                         <input type="hidden" name="old_image" value="<?= $data['image']; ?>">
                                         <input type="file" name="image" class="form-control mb-2">
                                         <label class="mb-0">ภาพปัจจุบัน</label>
-                                        <img src="../uploads/<?= $data['image']; ?>"  alt="Product image" height="150px" width="150px">
+                                        <img src="../uploads/<?= $data['image']; ?>" alt="Product image" height="150px" width="150px">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="mb-0">ราคา</label>
-                                        <input type="text" required name="price" value="<?= $data['price']; ?>"  placeholder="ป้อนราคาสินค้า" class="form-control mb-2">
+                                        <input type="text" required name="price" value="<?= $data['price']; ?>" placeholder="ป้อนราคาสินค้า" class="form-control mb-2">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="mb-0">จำนวน</label>
-                                        <input type="number" required name="num" value="<?= $data['num']; ?>"  placeholder="ป้อนจำนวนสินค้า" class="form-control mb-2">
+                                        <input type="number" required name="num" value="<?= $data['num']; ?>" placeholder="ป้อนจำนวนสินค้า" class="form-control mb-2">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="mb-0">กำลังมาแรง</label>
+                                        <input type="checkbox" name="trending" <?=$data['trending'] == '0' ?'':'checked'?>>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -85,14 +88,10 @@ include('includes/header.php');
                         </div>
                     </div>
             <?php
-                } 
-                else 
-                {
+                } else {
                     echo "ไม่พบผลิตภัณฑ์ที่ระบุรหัส";
                 }
-            } 
-            else 
-            {
+            } else {
                 echo "Id missing from url";
             }
             ?>

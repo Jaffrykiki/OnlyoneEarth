@@ -9,6 +9,7 @@ include('../funtion/myfunction.php');
     $detail = $_POST['detail'];
     $price = $_POST['price'];
     $num = $_POST['num'];
+    $trending = isset($_POST['trending']) ? '1':'0';
 
 
     $image = $_FILES['image']['name'];
@@ -21,8 +22,8 @@ include('../funtion/myfunction.php');
     if ($name != "" && $detail != "") 
     {
         $users_id = $_SESSION['auth_user']['id'];
-        $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,image) VALUES 
-        ('$category_id', $users_id ,'$name','$detail','$price','$num','$filename') ";
+        $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,trending,image) VALUES 
+        ('$category_id', $users_id ,'$name','$detail','$price','$num','$trending','$filename') ";
 
         $product_query_run = mysqli_query($connection, $product_query);
 

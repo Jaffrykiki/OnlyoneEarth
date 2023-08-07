@@ -35,7 +35,9 @@ if (isset($_GET['product'])) {
                         </div>
                     </div>
                     <div class="col-md-8">
-                        <h4 class="fw-bold"><?= $product['name']; ?> </h4>
+                        <h4 class="fw-bold"><?= $product['name']; ?> 
+                            <span class="float-end text-danger"><?php if($product['trending']){ echo "กำลังมาแรง";} ?></span>
+                    </h4>
                         <hr>
                         <h6>รายละเอียดสินค้า:</h6>
                         <p> <?= $product['detail']; ?> </p>
