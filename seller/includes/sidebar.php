@@ -24,15 +24,23 @@
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">table_view</i>
           </div>
-          <span class="nav-link-text ms-1">ALL Product</span>
+          <span class="nav-link-text ms-1">สินค้าทั้งหมด</span>
         </a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "add-product.php"? 'bg-gradient-primary':''; ?>" href="add-product.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="material-icons opacity-10">add_shopping_cart</i>
+          </div>
+          <span class="nav-link-text ms-1">เพิ่มสินค้า</span>
+        </a>
+      </li>
+            <li class="nav-item">
+        <a class="nav-link text-white <?= $page == "orders.php"? 'bg-gradient-primary':''; ?>" href="orders.php">
+          <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">table_view</i>
           </div>
-          <span class="nav-link-text ms-1">Add Product</span>
+          <span class="nav-link-text ms-1">ออเดอร์</span>
         </a>
       </li>
     </ul>

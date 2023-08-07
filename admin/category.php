@@ -10,7 +10,7 @@ include('includes/header.php');
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Categories</h4>
+                    <h4>หมวดหมู่สินค้า</h4>
                 </div>
                 <div class="card-body" id="category_table">
                     <table class="table table-success table-striped">

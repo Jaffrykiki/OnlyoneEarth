@@ -66,7 +66,7 @@ include('includes/slider.php');
                 <a href="index.php" class="text-white"> <i class="fa fa-angle-right"></i> หน้าแรก </a> <br>
                 <a href="#" class="text-white"> <i class="fa fa-angle-right"></i> เกี่ยวกับฉัน </a><br>
                 <a href="cart.php" class="text-white"> <i class="fa fa-angle-right"></i> ตระกร้าสินค้าของฉัน </a><br>
-                <a href="categories.php" class="text-white"> <i class="fa fa-angle-right"></i> หมวดหมู่ </a>
+                <a href="categories.php" class="text-white"> <i class="fa fa-angle-right"></i> หมวดหมู่สินค้า </a>
             </div>
             <div class="col-md-3">
                 <h4 class="text-white">ที่ตั้งของเรา</h4>

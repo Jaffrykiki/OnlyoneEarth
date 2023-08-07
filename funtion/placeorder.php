@@ -51,7 +51,6 @@ if (isset($_SESSION['auth']))
         $insert_query = "INSERT INTO orders (user_id, tracking_no, name, email, phone, address, pincode, total_price, payment_mode, payment_id ) VALUES ('$userId','$tracking_no', '$name', '$email', '$phone', '$address', '$pincode', '$totalPrice', '$payment_mode', '$payment_id') ";
         $insert_query_run = mysqli_query($connection, $insert_query);
        
-
         if($insert_query_run)
         {
             $order_id = mysqli_insert_id($connection);

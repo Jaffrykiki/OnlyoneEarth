@@ -159,9 +159,9 @@ $data = mysqli_fetch_array($orderData);
 
                                         <?php
                                         if ($data['status'] == 0) {
-                                            echo "ยังไม่ดำเนินการ";
+                                            echo "อยู่ระหว่างดำเนินการ";
                                         } else if ($data['status'] == 1) {
-                                            echo "สำเร็จแล้ว";
+                                            echo "ดำเนินการแล้ว";
                                         } else if ($data['status'] == 2) {
                                             echo "ยกเลิกแล้ว";
                                         }

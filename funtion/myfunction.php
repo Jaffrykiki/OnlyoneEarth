@@ -36,6 +36,31 @@ function redirect($url, $message)
     exit();
 }
 
+//ดูคำสั่งซื้อที่สถานะยังไม่ดำเนินการ
+function getAllOrders()
+{  
+    global $connection;
+    $query = "SELECT * FROM orders  WHERE status='0'";
+    return $query_run = mysqli_query($connection, $query);
+}
+//ดูคำสั่งซื้อที่สำเร็จแล้ว
+function getOrderHistroy()
+{  
+    global $connection;
+    $query = "SELECT * FROM orders  WHERE status !='0'";
+    return $query_run = mysqli_query($connection, $query);
+}
+
+//เช็คว่ามีเลขพัสดุหรือไม่
+function checkTrackingNoValid($trackingNo)
+{
+    global $connection;
+    $query  = "SELECT * FROM orders WHERE tracking_no='$trackingNo'";
+    return  mysqli_query($connection, $query);
+}
+
+
+
 
 
 
