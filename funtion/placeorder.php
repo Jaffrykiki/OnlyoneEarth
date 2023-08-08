@@ -34,7 +34,7 @@ if (isset($_SESSION['auth']))
 
         $userId = $_SESSION['auth_user']['id'];
 
-        $query = "SELECT c.id as cid, c.prod_id, c.prod_qty, p.id as pid, p.name, p.image, p.price 
+        $query = "SELECT c.id as cid, c.prod_id, c.prod_qty, p.id as pid, p.name, p.image, p.price, p.users_id 
             FROM carts c, products p WHERE c.prod_id=p.id AND c.user_id='$userId' ORDER BY c.id DESC  ";
 
         $query_run = mysqli_query($connection, $query);
@@ -57,11 +57,12 @@ if (isset($_SESSION['auth']))
             foreach ($query_run as $citem) 
             {
                 $prod_id = $citem['prod_id'];
+                $user_id = $citem['users_id'];
                 $prod_qty = $citem['prod_qty'];
                 $price = $citem['price'];
 
-                $insert_items_qurty = "INSERT INTO order_items (order_id, prod_id, qty, price) VALUES 
-                ('$order_id', '$prod_id', '$prod_qty', '$price') ";
+                $insert_items_qurty = "INSERT INTO order_items (order_id, prod_id,user_id,qty, price) VALUES 
+                ('$order_id', '$prod_id','$user_id', '$prod_qty', '$price') ";
                 $insert_items_qurty_run = mysqli_query($connection, $insert_items_qurty);
 
                 $product_query = "SELECT * FROM products WHERE id='$prod_id' LIMIT 1 ";

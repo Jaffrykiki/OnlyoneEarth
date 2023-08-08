@@ -7,7 +7,7 @@ include('includes/header.php');
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="card" style="width: 70rem;" >
+            <div class="card" style="width: 70rem;">
                 <div class="card-header">
                     <h4>Users</h4>
                 </div>
@@ -33,8 +33,21 @@ include('includes/header.php');
                                 foreach ($users as $item) {
                             ?>
                                     <tr>
-                                        <td width="50px" height="50px" ><?= $item['id']; ?></td>
-                                        <td width="50px" height="50px" ><?= $item['role_as']; ?></td>
+                                        <td width="50px" height="50px"><?= $item['id']; ?></td>
+                                        <td width="50px" height="50px">
+                                            <?php
+                                            if ($item['role_as'] == 0) {
+                                                echo "ผู้ซื้อ";
+                                            } elseif ($item['role_as'] == 1) {
+                                                echo "แอดมิน";
+                                            } elseif ($item['role_as'] == 2) {
+                                                echo "ผู้ขาย";
+                                            } else {
+                                                echo "ค่าไม่ตรงกับที่คาดหวัง";
+                                            }
+                                            ?>
+                                        </td>
+
                                         <td><?= $item['name']; ?></td>
                                         <td><?= $item['email']; ?></td>
                                         <td><?= $item['phone']; ?></td>
@@ -47,7 +60,7 @@ include('includes/header.php');
 
                                         </td>
                                         <td>
-                                                <button type="button" class="btn btn-sm btn-danger delete_users_btn" value="<?= $item['id']; ?>">ลบ</button>
+                                            <button type="button" class="btn btn-sm btn-danger delete_users_btn" value="<?= $item['id']; ?>">ลบ</button>
                                         </td>
                                     </tr>
                             <?php

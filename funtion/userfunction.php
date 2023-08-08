@@ -59,10 +59,8 @@ function getOrders()
 {
     global $connection;
     $userId = $_SESSION['auth_user']['id'];
-
     $query = "SELECT * FROM orders WHERE user_id='$userId'";
     return $query_run = mysqli_query($connection, $query);
-
 }
 
 //เก็บข้อความ
@@ -83,6 +81,15 @@ function checkTrackingNoValid($trackingNo)
     return  mysqli_query($connection, $query);
 
 
+}
+
+// แสดงข้อมูลผู้ใช้
+function getUsers()
+{
+    global $connection;
+    $userId = $_SESSION['auth_user']['id'];
+    $query = "SELECT * FROM users WHERE id ='$userId'";
+    return $query_run = mysqli_query($connection, $query);
 }
 
 

@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+          <a class="nav-link active" aria-current="page" href="index.php">หน้าแรก</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="categories.php">หมวดหมู่สินค้า</a>
@@ -25,10 +25,11 @@
         ?>
           <li class="nav-item dropdown " >
             <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="uploads/<?= $_SESSION['auth_user']['img']; ?>" alt="Profile Image" class="user-profile-image" style="border-radius:50%;" width="30" height="30">
               <?= $_SESSION['auth_user']['name']; ?>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="#">บัญชีของฉัน</a></li>
+              <li><a class="dropdown-item" href="profile.php">บัญชีของฉัน</a></li>
               <li><a class="dropdown-item" href="my-orders.php">การซื้อของฉัน</a></li>
               <li><a class="dropdown-item" href="logout.php">ออกจากระบบ</a></li>
             </ul>

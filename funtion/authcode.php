@@ -159,11 +159,14 @@ else if(isset($_POST['login_btn']))
         $users_id = $userdate['id'];
         $role_as = $userdate['role_as'];
         $verify_status = $userdate['verify_status'];
+        $img =$userdate['img'];
+
 
         $_SESSION['auth_user'] =[
             'name' => $username,
             'emmail' => $username,
-            'id' => $users_id
+            'id' => $users_id,
+            'img' => $img
         ];
         
         //เช็คบทบาทของการเข้าสู่ระบบ
@@ -197,5 +200,51 @@ else if(isset($_POST['login_btn']))
         $_SESSION['message'] = "";
         redirect("../login.php" ,"ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
         }
+}
+//แก้ข้อมูลส่วนตัว
+else if(isset($_POST['update_profile_btn']))
+{
+    $user_id = $_SESSION['auth_user']['id'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+
+    $path = "../uploads";
+
+    $new_image = $_FILES['img']['name'];
+    $old_image = $_POST['old_image'];
+    if($new_image != "")
+    { 
+        //update_filename =$new_image;
+        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
+        $update_filenname = time().'.'.$image_ext;
+    }
+    else
+    {
+        $update_filenname = $old_image;
+    }
+   
+    echo "filename=".$update_filenname ; 
+    $update_user_query ="UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`img`='$update_filenname' WHERE id ='$user_id'" ;
+    echo $update_user_query;
+    $update_user_query_run = mysqli_query($connection, $update_user_query);
+
+    if ($update_user_query_run) 
+    {
+        if($_FILES['img']['name'] != "")
+        {
+            move_uploaded_file($_FILES['img']['tmp_name'], $path. '/' .$update_filenname);
+            if(file_exists("../uploads/".$old_image))
+            {
+                unlink("../uploads/".$old_image);
+            }
+        }
+        redirect("../profile.php?id=$user_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
+    }
+    else
+    {
+        redirect("../profile.php?id=$user_id", "มีบางอย่างผิดพลาด");
+    }
+
 }
 ?>
