@@ -6,11 +6,13 @@ include('includes/header.php');
 include('authenticate.php');
 
 //ตรวจสอบว่ามีเลขพัสดุอยู่หรือไม่
-if (isset($_GET['t'])) {
+if (isset($_GET['t'])) 
+{
     $tracking_no = $_GET['t'];
 
     $orderData = checkTrackingNoValid($tracking_no);
-    if (mysqli_num_rows($orderData) < 0) {
+    if (mysqli_num_rows($orderData) < 0) 
+    {
 ?>
         <h4>มีบางอย่างผิดพลาด โปรดติดต่อแอดมินสมถุย</h4>
     <?php
@@ -167,6 +169,11 @@ $data = mysqli_fetch_array($orderData);
                                         }
                                         ?>
                                     </div>
+                                    <form action="funtion/placeorder.php" method="POST">
+                                    <input type="hidden" name="status" value="2">
+                                    <input type="hidden" name="tracking_no" value="<?= $tracking_no ?>">
+                                    <button type="submit" name="cancel_order" class="btn btn-danger mt-3">ยกเลิกคำสั่งซื้อ</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

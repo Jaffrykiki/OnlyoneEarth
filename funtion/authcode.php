@@ -36,7 +36,7 @@ function sendemail_verify($name,$email,$verify_token)
     <h2>คุณได้ลงทะเบียนกับ Only One Earth</h2>
     <h5>ยืนยันที่อยู่อีเมลของคุณเพื่อเข้าสู่ระบบด้วยลิงค์ด้านล่าง</h5>
     <br/><br/>
-    <a href='http://localhost/onlyoneearth/funtion/verify-email.php?token=$verify_token'> คลิ๊กที่นี้ </a>
+    <a href='http://localhost/onlyoneearth/funtion/verify-email.php?token=$verify_token'> คลิ๊กที่นี้ เพื่อยืนยันการลงทะเบียน </a>
     ";
 
 

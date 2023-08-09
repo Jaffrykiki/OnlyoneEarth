@@ -79,14 +79,34 @@ if (isset($_SESSION['auth']))
 
             $deleteCartQuery = "DELETE FROM carts WHERE user_id='$userId'";
             $deleteCartQuery_run = mysqli_query($connection , $deleteCartQuery);
-
-            $_SESSION['message'] = "สั่งซื้อสินค้าเรียบร้อยแล้ว";
-            header('Location: ../my-orders.php');
-            die();
-
+            
+            if($payment_mode == "COD")
+            {
+                $_SESSION['message'] = "สั่งซื้อสินค้าเรียบร้อยแล้ว";
+                header('Location: ../my-orders.php');
+                die();
+            }else{
+                echo 201;
+            }
         }
     }
+}
+else if(isset($_POST['cancel_order'])) {
 
+    $tracking_no = $_POST["tracking_no"];
+    $newStatus = $_POST["status"];
+
+    $update_query = "UPDATE orders SET status = $newStatus WHERE tracking_no = '$tracking_no'";
+
+    $update_query_run = mysqli_query($connection, $update_query);
+    if($update_query_run){
+        $_SESSION['message'] = "ยกเลิกคำสั่งซื้อเรียบร้อยแล้ว";
+        header('Location: ../my-orders.php');
+        die();
+    }
+    else {
+        redirect("../view-order.php?t=$tracking_no", "เกิดข้อผิดพลาด");
+    }
 }
 else  {
     header('Location: ../index.php');
