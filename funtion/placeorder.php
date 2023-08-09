@@ -8,7 +8,7 @@ include('../connection/dbcon.php');
 if (isset($_SESSION['auth'])) 
 {
 
-    $payment_id = null;
+    // $payment_id = null;
     if(isset($_POST['placeOrderBtn']))
     {   
         $name = mysqli_real_escape_string($connection, $_POST['name']);
@@ -17,12 +17,12 @@ if (isset($_SESSION['auth']))
         $pincode = mysqli_real_escape_string($connection, $_POST['pincode']);
         $address = mysqli_real_escape_string($connection, $_POST['address']);
         $payment_mode = mysqli_real_escape_string($connection, $_POST['payment_mode']);
-        // $payment_id = mysqli_real_escape_string($connection, $_POST['payment_id']);
-        if ($payment_id === null) {
-            $payment_id = "null"; // เปลี่ยนเป็นสตริงที่ถูกต้อง
-        } else {
-            $payment_id = mysqli_real_escape_string($connection, $_POST['payment_id']);
-        }
+        $payment_id = mysqli_real_escape_string($connection, $_POST['payment_id']);
+        // if ($payment_id === null) {
+        //     $payment_id = "null"; // เปลี่ยนเป็นสตริงที่ถูกต้อง
+        // } else {
+        //     $payment_id = mysqli_real_escape_string($connection, $_POST['payment_id']);
+        // }
         
 
         if($name == "" || $email == "" || $phone == "" || $pincode == "" || $address == "")
