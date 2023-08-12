@@ -1,14 +1,15 @@
 <?php 
 session_start();
 
+// ตรวจสอบว่ามีเซสชันที่เก็บข้อมูลการเข้าสู่ระบบหรือไม่
 if(isset($_SESSION['auth']))
 {
-    unset($_SESSION['auth']); 
-    unset($_SESSION['auth_user']); 
-    $_SESSION['message'] = "ออกจากระบบสำเร็จ";
+    unset($_SESSION['auth']); // เคลียร์ค่าสถานะการเข้าสู่ระบบ
+    unset($_SESSION['auth_user']);  // เคลียร์ข้อมูลผู้ใช้ที่เข้าสู่ระบบ
+    $_SESSION['message'] = "ออกจากระบบสำเร็จ";// ตั้งค่าข้อความเซสชันสำหรับแสดงในหน้าที่ผู้ใช้เข้าออกจากระบบ
 
 }
-
+// ส่ง header เพื่อเปลี่ยนเส้นทางไปยังหน้า index.php หลังจากทำการล็อกเอาท์สำเร็จ
 header('Location: index.php');
 
 

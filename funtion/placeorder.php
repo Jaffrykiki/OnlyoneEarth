@@ -4,13 +4,30 @@ session_start();
 
 include('../connection/dbcon.php');
 
+if(isset($_POST['cancel_order'])) {
 
-if (isset($_SESSION['auth'])) 
+    $tracking_no = $_POST["tracking_no"];
+    $newStatus = $_POST["status"];
+
+    $update_query = "UPDATE orders SET status = $newStatus WHERE tracking_no = '$tracking_no'";
+
+    $update_query_run = mysqli_query($connection, $update_query);
+    if($update_query_run){
+        $_SESSION['message'] = "ยกเลิกคำสั่งซื้อเรียบร้อยแล้ว";
+        header('Location: ../view-order.php?t='.$tracking_no);
+        die();
+    }
+    else {
+        redirect("../view-order.php?t=$tracking_no", "เกิดข้อผิดพลาด");
+    }
+}
+
+else if (isset($_SESSION['auth'])) 
 {
-
     // $payment_id = null;
     if(isset($_POST['placeOrderBtn']))
     {   
+
         $name = mysqli_real_escape_string($connection, $_POST['name']);
         $email = mysqli_real_escape_string($connection, $_POST['email']);
         $phone = mysqli_real_escape_string($connection, $_POST['phone']);
@@ -91,23 +108,7 @@ if (isset($_SESSION['auth']))
         }
     }
 }
-else if(isset($_POST['cancel_order'])) {
 
-    $tracking_no = $_POST["tracking_no"];
-    $newStatus = $_POST["status"];
-
-    $update_query = "UPDATE orders SET status = $newStatus WHERE tracking_no = '$tracking_no'";
-
-    $update_query_run = mysqli_query($connection, $update_query);
-    if($update_query_run){
-        $_SESSION['message'] = "ยกเลิกคำสั่งซื้อเรียบร้อยแล้ว";
-        header('Location: ../my-orders.php');
-        die();
-    }
-    else {
-        redirect("../view-order.php?t=$tracking_no", "เกิดข้อผิดพลาด");
-    }
-}
 else  {
     header('Location: ../index.php');
 }

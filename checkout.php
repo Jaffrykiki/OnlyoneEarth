@@ -5,11 +5,11 @@ include('includes/header.php');
 
 include('authenticate.php');
 
-$cartItems = getCartItems();
+$cartItems = getCartItems(); // ดึงข้อมูลสินค้าในตะกร้าสินค้า
 
 if(mysqli_num_rows($cartItems) ==0 )
 {
-    header('Location: index.php');
+    header('Location: index.php'); // ถ้าไม่มีสินค้าในตะกร้า ให้เปลี่ยนเส้นทางไปยังหน้า index.php
 }
 
 ?>
@@ -39,6 +39,7 @@ if(mysqli_num_rows($cartItems) ==0 )
                         <div class="col-md-7">
                             <h5>ที่อยู่ในการจัดส่ง</h5>
                             <hr>
+                             <!-- ส่วนของการป้อนข้อมูลที่อยู่ในการจัดส่ง -->
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="fw-bold">ชื่อ</label>
@@ -74,7 +75,9 @@ if(mysqli_num_rows($cartItems) ==0 )
                         <div class="col-md-5">
                             <h5>รายละเอียดการสั่งซื้อ</h5>
                             <hr>
-                            <?php $items = getCartItems();
+                            <!-- ส่วนของการแสดงรายละเอียดการสั่งซื้อ -->
+                            <?php 
+                            $items = getCartItems(); // ดึงข้อมูลสินค้าในตะกร้าสินค้า
                             $totalPrice = 0;
                             foreach ($items as $citem) {
                             ?>
@@ -94,17 +97,18 @@ if(mysqli_num_rows($cartItems) ==0 )
                                         </div>
                                     </div>
                                 </div>
-
+                             
                             <?php
+                                    //แสดงรายละเอียดของสินค้าที่เลือกในตะกร้า 
                                 $totalPrice += $citem['price'] * $citem['prod_qty'];
                             }
                             ?>
                             <hr>
                             <h5>ราคารวม : <span class="float-end fw-bold"><?= $totalPrice ?></span></h5>
                             <div class="">
-                                <input type="hidden" name="payment_mode" value="COD">
+                                <input type="hidden" name="payment_mode" value="COD"> <!-- ตั้งค่าวิธีการชำระเงินเป็น COD (Cash on Delivery) -->
                                 <button type="submit" name="placeOrderBtn" class="btn btn-success w-100">สั่งซื้อสินค้า | ชำระเงินปลายทาง</button>
-                                <!-- Set up a container element for the button -->
+                                <!-- กำหนดส่วนที่จะแสดงปุ่ม PayPal -->
                                 <div id="paypal-button-container" class="mt-3"></div>
                             </div>
                         </div>
@@ -120,11 +124,13 @@ if(mysqli_num_rows($cartItems) ==0 )
 
 <?php include('includes/footer.php'); ?>
 
-<!-- Replace "test" with your own sandbox Business account app client ID -->
+<!-- โหลดสคริปต์ของ PayPal SDK โดยใช้ client-id ของบัญชีธุรกิจ PayPal และสกุลเงิน USD -->
 <script src="https://www.paypal.com/sdk/js?client-id=AbFdqnQlPD3JEvVi1AM-SMgpmgwa9IFVZ_dLnFS8KrPqZWuaBfk5DnqVoGn9uONFhztlTUrqIg75U-pF&currency=USD"></script>
 
 <script>
+    // สร้างปุ่ม PayPal Checkout
     paypal.Buttons({
+        // การตรวจสอบข้อมูลก่อนการกดปุ่ม PayPal
         onClick() {     
             var name = $('#name').val();
             var email = $('#email').val();
@@ -163,7 +169,7 @@ if(mysqli_num_rows($cartItems) ==0 )
             }
 
         },
-        // Render the PayPal button into #paypal-button-container
+        // ส่วนการสร้างคำสั่งการชำระเงิน PayPal
         createOrder: function(data, actions) { 
 
             return actions.order.create({
@@ -174,11 +180,9 @@ if(mysqli_num_rows($cartItems) ==0 )
                 }]
             });
         },
-        // Finalize the transaction
+        // ส่วนการจัดการเมื่อชำระเงิน PayPal เสร็จสิ้น
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(orderData) {
-                // Successful capture! For demo purposes:
-                // console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                 const transaction = orderData.purchase_units[0].payments.captures[0];
 
                 var name = $('#name').val();
@@ -206,12 +210,11 @@ if(mysqli_num_rows($cartItems) ==0 )
                         if(response == 201)
                         {
                             alertify.success("สั่งซื้อเรียบร้อยแล้ว");
-                            // actions.redirect('my-orders.php');
                             window.location.href = 'my-orders.php'
                         }
                     }
                 });
             });
         }
-    }).render('#paypal-button-container');
+    }).render('#paypal-button-container'); // แสดงปุ่ม PayPal Checkout ในส่วนนี้
 </script>

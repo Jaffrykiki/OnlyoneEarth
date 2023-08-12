@@ -3,7 +3,7 @@
 session_start();
 include('connection/dbcon.php');
 
-    //query ข้อมูลหมวดหมู่สินค้า
+//query ข้อมูลหมวดหมู่สินค้า
 function getAllActive($table)
 {  
     global $connection;
@@ -16,6 +16,14 @@ function getAllTrending()
 {  
     global $connection;
     $query = "SELECT * FROM products WHERE trending= '1' ";  
+    return $query_run = mysqli_query($connection, $query);
+}
+
+//เรียกดูรายการสินค้าทั้งหมด
+function getAllProducts()
+{  
+    global $connection;
+    $query = "SELECT * FROM products";  
     return $query_run = mysqli_query($connection, $query);
 }
 
@@ -82,6 +90,37 @@ function checkTrackingNoValid($trackingNo)
 
 
 }
+//ค้นหาหมวดหมู่
+function searchCategories($searchTerm) {
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $query = "SELECT * FROM category WHERE name LIKE '%$searchTerm%'"; // ค้นหาข้อมูลหมวดหมู่
+    $result = mysqli_query($connection, $query);
+    
+    $category = array();
+    
+    while ($row = mysqli_fetch_assoc($result)) {
+        $category[] = $row;
+    }
+    return $category;
+    
+}
+
+//ค้นหาสินค้า
+function searchProducts($searchTerm) {
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $query = "SELECT * FROM products WHERE name LIKE '%$searchTerm%'"; // ค้นหาข้อมูลสินค้า
+    $result = mysqli_query($connection, $query);
+    
+    $product = array();
+    
+    while ($row = mysqli_fetch_assoc($result)) {
+        $product[] = $row;
+    }
+    return $product;
+    
+}
+
+
 
 // แสดงข้อมูลผู้ใช้
 function getUsers()

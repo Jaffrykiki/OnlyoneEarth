@@ -3,7 +3,7 @@
 include('funtion/userfunction.php');
 include('includes/header.php');
 
-include('authenticate.php');
+include('authenticate.php'); // เรียกใช้ไฟล์ authenticate.php ที่เป็นการตรวจสอบสิทธิ์การเข้าถึงหน้านี้
 
 ?>
 
@@ -27,11 +27,12 @@ include('authenticate.php');
                 <div class="col-md-12">
                     <div id="mycart">
                         <?php
-                        $items = getCartItems();
+                        $items = getCartItems(); // ดึงรายการสินค้าในตะกร้าของผู้ใช้
                         if (mysqli_num_rows($items) > 0) 
                         {
                         ?>
                             <div class="row align-items-center">
+                                <!-- แสดงส่วนหัวของตารางรายการสินค้าในตะกร้า -->
                                 <div class="col-md-5">
                                     <h6>สินค้า</h6>
                                 </div>
@@ -47,9 +48,10 @@ include('authenticate.php');
                             </div>
                             <div id="">
                                 <?php
-                                foreach ($items as $citem) {
+                                foreach ($items as $citem) { // ใช้ loop วนเพื่อแสดงข้อมูลของสินค้าในตะกร้า
                                 ?>
                                     <div class="card product_data shadow-sm mb-3">
+                                        <!-- แสดงรายการสินค้าแต่ละรายการในตะกร้า -->
                                         <div class="row align-items-center">
                                             <div class="col-md-2">
                                                 <img src="uploads/<?= $citem['image']; ?>" alt="Image" width="160" height="160" >

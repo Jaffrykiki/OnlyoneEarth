@@ -7,8 +7,10 @@ include('authenticate.php');
 
 ?>
 
+<!-- เริ่มส่วนของเนื้อหาหน้าเว็บ -->
 <div class="py-3 bg-primary">
     <div class="container">
+        <!-- แถบเนวิเกชันสีน้ำเงินด้านบนของหน้าเว็บ -->
         <h7 class="text-white">
             <a href="index.php" class="text-white">
                 หน้าแรก /
@@ -22,6 +24,7 @@ include('authenticate.php');
 
 <div class="py-5">
     <div class="container">
+        <!-- ส่วนของการแสดงรายการออเดอร์ -->
         <div class="card card-body shadow">
             <div class="row">
                 <div class="col-md-12">
@@ -37,6 +40,7 @@ include('authenticate.php');
                         </thead>
                         <tbody>
                             <?php
+                            // ดึงข้อมูลรายการออเดอร์โดยใช้ฟังก์ชัน
                             $orders = getOrders();
                             if (mysqli_num_rows($orders) > 0) {
                                 foreach ($orders as $item) {
@@ -67,6 +71,7 @@ include('authenticate.php');
         </div>
     </div>
 </div>
+<!-- สิ้นสุดส่วนของเนื้อหาหน้าเว็บ -->
 
 
 

@@ -4,11 +4,13 @@ include('includes/header.php');
 
 ?>
 
+<!-- ส่วนของการแสดงผลแบบฟอร์มเข้าสู่ระบบ -->
 <div class="py-5">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <?php
+                // ตรวจสอบว่ามีข้อความเซสชันเก็บไว้หรือไม่ ถ้ามีให้แสดงข้อความแจ้งเตือน
                 if (isset($_SESSION['message'])) {
                 ?>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -16,6 +18,7 @@ include('includes/header.php');
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 <?php
+                // เคลียร์ข้อความเซสชันหลังจากแสดงผลแล้ว
                     unset($_SESSION['message']);
                 }
                 ?>
@@ -24,6 +27,7 @@ include('includes/header.php');
                         <h4>เข้าสู่ระบบ</h4>
                     </div>
                     <div class="card-body">
+                          <!-- แบบฟอร์มสำหรับกรอกข้อมูลเข้าสู่ระบบ -->
                         <form action="funtion/authcode.php" method="POST">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">อีเมล์</label>

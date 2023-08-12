@@ -43,15 +43,13 @@ include('authenticate.php');
                                     </div>
                                 </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <h5>รูปภาพของฉัน</h5>
                             <hr>
                             <div class="row align-items-center">
-                                <div class="col-md-3">
-                                    <div class="d-flex justify-content-center align-items-center">
+                                    <div class="d-flex text-center justify-content-center align-items-center">
                                         <img src="uploads/<?= $data['img']; ?>" alt="Image" width="120" style="border-radius: 50%;">
                                     </div>
-                                </div>
                                 <hr>
                                 <h5>ขนาดไฟล์: สูงสุด 1 MB</h5>
                                 <h5>ไฟล์ที่รองรับ: .JPEG, .PNG</h5>
@@ -61,6 +59,8 @@ include('authenticate.php');
                                     <input type="file" name="img" class="form-control mb-2">
                                 </div>
                             </div>
+                        </div>
+                        </div>
                 </form>
             </div>
         </div>
@@ -68,7 +68,7 @@ include('authenticate.php');
                             }
     ?>
     </div>
-</div>
+
 </div>
 
 

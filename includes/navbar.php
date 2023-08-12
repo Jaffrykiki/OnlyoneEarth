@@ -25,7 +25,7 @@
         ?>
           <li class="nav-item dropdown " >
             <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="uploads/<?= $_SESSION['auth_user']['img']; ?>" alt="Profile Image" class="user-profile-image" style="border-radius:50%;" width="30" height="30">
+            <img src="uploads/<?= $_SESSION['auth_user']['img']; ?>" alt="" class="user-profile-image" style="border-radius:50%;" width="35" height="35">
               <?= $_SESSION['auth_user']['name']; ?>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
