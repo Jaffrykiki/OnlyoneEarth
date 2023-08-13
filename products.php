@@ -3,22 +3,28 @@
 include('funtion/userfunction.php');
 include('includes/header.php');
 
+// ตรวจสอบว่ามีพารามิเตอร์ 'category' ถูกส่งมาทาง URL หรือไม่
 if (isset($_GET['category'])) 
 {
-    $category_name = $_GET['category'];
+    $category_name = $_GET['category'];     // ดึงค่า 'category' จาก URL และเก็บในตัวแปร $category_name
+    // เรียกใช้ฟังก์ชัน getNameActive() เพื่อดึงข้อมูลหมวดหมู่จากฐานข้อมูล
     $category_data = getNameActive("category", $category_name);
     $category = mysqli_fetch_array($category_data);
 
+    // ตรวจสอบว่ามีข้อมูลหมวดหมู่ในตัวแปร $category หรือไม่
     if ($category) 
     {
         $cid = $category['id'];
         ?>
+        <!-- เริ่มส่วนแสดงชื่อหมวดหมู่บนหน้าเว็บ -->
         <div class="py-3 bg-primary">
             <div class="container">
                 <h7 class="text-white">
+                    <!-- ลิงก์กลับไปที่หน้าแรก -->
                     <a class="text-white" href="categories.php">
                         หน้าแรก /
                     </a>
+                    <!-- ลิงก์กลับไปที่หมวดหมู่สินค้า -->
                     <a class="text-white" href="categories.php">
                         หมวดหมู่ /
                     </a>
@@ -26,6 +32,8 @@ if (isset($_GET['category']))
                 
             </div>
         </div>
+         <!-- สิ้นสุดส่วนแสดงชื่อหมวดหมู่บนหน้าเว็บ -->
+
 
         <div class="py-5">
             <div class="container">
@@ -35,14 +43,16 @@ if (isset($_GET['category']))
                         <hr>
                         <div class="row">
                             <?php
-
+                            // เรียกใช้ฟังก์ชัน getProdByCategory() เพื่อดึงข้อมูลสินค้าในหมวดหมู่นี้
                             $products = getProdByCategory($cid);
 
+                            // เรียกใช้ฟังก์ชัน getProdByCategory() เพื่อดึงข้อมูลสินค้าในหมวดหมู่นี้
                             if (mysqli_num_rows($products) > 0) 
                             {
-
+                                // วน loop แสดงข้อมูลสินค้า
                                 foreach ($products as $item) {
                             ?>
+                                    <!-- แสดงสินค้าแต่ละรายการ -->
                                     <div class="col-md-2 mb-2">
                                         <a href="product-view.php?product=<?= $item['name']; ?>">
                                             <div class="card shadow">

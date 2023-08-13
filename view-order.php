@@ -10,7 +10,7 @@ if (isset($_GET['t']))
 {
     $tracking_no = $_GET['t'];
 
-    $orderData = checkTrackingNoValid($tracking_no);
+    $orderData = checkTrackingNoValid($tracking_no);// เรียกใช้ฟังก์ชันเพื่อตรวจสอบความถูกต้องของเลขพัสดุ
     if (mysqli_num_rows($orderData) < 0) 
     {
 ?>
@@ -28,6 +28,7 @@ if (isset($_GET['t']))
 $data = mysqli_fetch_array($orderData);
 ?>
 
+<!-- เริ่มส่วนแสดงเนื้อหาของหน้าเว็บ -->
 <div class="py-3 bg-primary">
     <div class="container">
         <h7 class="text-white">
@@ -60,7 +61,7 @@ $data = mysqli_fetch_array($orderData);
                                     <h4>รายละเอียดการจัดส่ง</h4>
                                     <hr>
                                     <div class="row">
-                                        <div class="col-md-12 mb-2">
+                                            <!-- แสดงข้อมูลชื่อ, อีเมล์, เบอร์โทรศัพท์, หมายเลขพัสดุ, ที่อยู่, รหัสไปษณีย์ -->                                        <div class="col-md-12 mb-2">
                                             <label class="fw-bold">ชื่อ</label>
                                             <div class="border p-1">
                                                 <?= $data['name'] ?>
@@ -104,7 +105,7 @@ $data = mysqli_fetch_array($orderData);
                                 <div class="col-md-6">
                                     <h4>รายละเอียดออเดอร์</h4>
                                     <hr>
-
+                                    <!-- แสดงรายละเอียดออเดอร์เช่น รายการสินค้า, ราคารวม, รูปแบบการชำระเงิน, สถานะ -->
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -114,18 +115,21 @@ $data = mysqli_fetch_array($orderData);
                                             </tr>
                                         </thead>
                                         <tbody>
-
-
                                             <?php
+                                            // ดึงค่า id ของผู้ใช้ที่เข้าสู่ระบบจาก session
                                             $userId = $_SESSION['auth_user']['id'];
-
+                                            
+                                            // สร้างคำสั่ง SQL ในการดึงข้อมูลออเดอร์และรายการสินค้าที่เกี่ยวข้อง
                                             $order_query = "SELECT o.id as oid, o.tracking_no, o.user_id, oi. *,oi.qty as orderqty, p.* FROM orders o, order_items oi,
                                         products p WHERE o.user_id='$userId' AND oi.order_id=o.id AND p.id=oi.prod_id 
                                         AND o.tracking_no='$tracking_no' ";
 
+                                             // ทำการ query ไปยังฐานข้อมูล   
                                             $order_query_run = mysqli_query($connection, $order_query);
 
+                                            // ตรวจสอบว่ามีข้อมูลที่ได้จากการ query หรือไม่
                                             if (mysqli_num_rows($order_query_run) > 0) {
+                                                // วนลูปแสดงรายการสินค้าที่เกี่ยวข้องในตาราง
                                                 foreach ($order_query_run as $item) {
                                             ?>
                                                     <tr>

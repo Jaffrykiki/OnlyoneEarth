@@ -1,11 +1,15 @@
 <?php 
 session_start();
 
-// if(isset($_SESSION['auth']))
-// {
-//     $_SESSION['message'] = "คุณเข้าสู่ระบบแล้ว";
-//     header('Location:index.php');
-// }
+if (isset($_SESSION['auth'])) {
+    // ตรวจสอบ role_as ว่าเป็น 2 หรือไม่
+    if ($_SESSION['role_as'] == 2) {
+        // กำหนดข้อความในเซสชันและเปลี่ยนเส้นทางไปที่ index.php
+        $_SESSION['message'] = "คุณเป็นผู้ขายอยู่แล้ว";
+        header('Location: index.php');
+        exit(); // จบการทำงานเพื่อป้องกันการทำงานต่อหลังจากเปลี่ยนเส้นทาง
+    }
+}
 
 
 include('includes/header.php'); 
