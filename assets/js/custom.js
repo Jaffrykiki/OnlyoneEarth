@@ -1,12 +1,14 @@
 $(document).ready(function ()  {
 
-    //เพิ่มจำนวนสินค้า
+    // เมื่อคลิกที่ปุ่มเพิ่มจำนวนสินค้า
     $(document).on('click','.increment-btn', function (e) {
 
         e.preventDefault();
 
+        // ดึงค่าจำนวนสินค้าปัจจุบัน
         var qty = $(this).closest('.product_data').find('.input-qty').val();
         
+        // แปลงเป็นตัวเลขและเพิ่มค่า 1
         var value = parseInt(qty, 10);
         value = isNaN(value) ? 0 : value;
         if(value < 10)
@@ -16,12 +18,14 @@ $(document).ready(function ()  {
         }
     });
 
-    //ลดจำนวนสินค้า
+    // เมื่อคลิกที่ปุ่มลดจำนวนสินค้า
         $(document).on('click','.decrement-btn', function (e) {   
         e.preventDefault();
 
+        // ดึงค่าจำนวนสินค้าปัจจุบัน
         var qty = $(this).closest('.product_data').find('.input-qty').val();
         
+        // แปลงเป็นตัวเลขและลดค่า 1
         var value = parseInt(qty, 10);
         value = isNaN(value) ? 0 : value;
         if(value > 1)
@@ -31,14 +35,16 @@ $(document).ready(function ()  {
         }
     });
 
-    //เพิ่มสินค้าลงตระกร้า
+    // เมื่อคลิกที่ปุ่มเพิ่มสินค้าลงตระกร้า
         $(document).on('click','.addToCartBtn', function (e) {   
         
         e.preventDefault();
 
+        // ดึงค่าจำนวนสินค้าและรหัสสินค้า
         var qty = $(this).closest('.product_data').find('.input-qty').val();
         var prod_id = $(this).val();
         
+        // ส่งข้อมูลผ่าน Ajax เพื่อเพิ่มสินค้าลงตระกร้า
         $.ajax({
             method: "POST",
             url: "funtion/handlecart.php",
@@ -49,6 +55,7 @@ $(document).ready(function ()  {
             },
             success: function (response)  {
                 
+                // แสดงข้อความตามผลการทำงาน
                 if(response == 201)
                 {
                     alertify.success("สินค้าถูกเพิ่มลงตระกร้าเรียบร้อยแล้ว");
@@ -69,12 +76,14 @@ $(document).ready(function ()  {
         });
     });
 
-    //เพิ่ม ลด จำนวนสินค้าในตระกร้า
+    // เมื่อคลิกที่ปุ่มเพื่อเพิ่มหรือลดจำนวนสินค้าในตระกร้า
     $(document).on('click','.updateQty', function () {
 
+        // ดึงค่าจำนวนสินค้าและรหัสสินค้า
         var qty = $(this).closest('.product_data').find('.input-qty').val();
         var prod_id = $(this).closest('.product_data').find('.prodId').val();
 
+        // ส่งข้อมูลผ่าน Ajax เพื่ออัปเดตจำนวนสินค้าในตระกร้า
         $.ajax({
             method: "POST",
             url: "funtion/handlecart.php",
@@ -84,16 +93,16 @@ $(document).ready(function ()  {
                 "scope": "update"
             },
             success: function (response) {
-                // alert(response);
+                // ไม่ต้องทำอะไรเพิ่มเนื่องจากเป็นการอัปเดตเพียงค่าจำนวนสินค้าในฐานข้อมูล
             }
         });
     });
 
-    //ลบสินค้าในตระกร้า
+    // เมื่อคลิกที่ปุ่มลบสินค้าในตระกร้า
     $(document).on('click','.deleteItem' , function () {
         var cart_id = $(this).val();
-        // alert(cart_id);
 
+        // เมื่อคลิกที่ปุ่มลบสินค้าในตระกร้า
         $.ajax({
             method: "POST",
             url: "funtion/handlecart.php",
@@ -105,6 +114,7 @@ $(document).ready(function ()  {
                 if(response == 200)
                 {
                     alertify.success("ลบสินค้าในตระกร้าเรียบร้อยแล้ว");
+                    // โหลดส่วนตระกร้าสินค้าใหม่เพื่อแสดงข้อมูลที่อัปเดตแล้ว
                     $('#mycart').load(location.href + " #mycart");
                 }else{
                     alertify.success(response);

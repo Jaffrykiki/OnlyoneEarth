@@ -1,13 +1,16 @@
 <?php
 
-include('../middleware/adminMiddleware.php');
+include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ middleware ที่ใช้ตรวจสอบสิทธิ์ของผู้ดูแลระบบ
 include('includes/header.php');
 
-//ตรวจสอบว่ามีเลขพัสดุอยู่หรือไม่
+// ตรวจสอบว่ามีพารามิเตอร์ 't' ที่ถูกส่งมาหรือไม่
 if (isset($_GET['t'])) {
     $tracking_no = $_GET['t'];
 
+    // เรียกใช้ฟังก์ชัน checkTrackingNoValid เพื่อตรวจสอบความถูกต้องของหมายเลขพัสดุ
     $orderData = checkTrackingNoValid($tracking_no);
+
+    // ตรวจสอบว่ามีข้อมูลออเดอร์หรือไม่
     if (mysqli_num_rows($orderData) < 0) {
 ?>
         <h4>มีบางอย่างผิดพลาด โปรดติดต่อแอดมินสมถุย</h4>
@@ -21,10 +24,11 @@ if (isset($_GET['t'])) {
     die();
 }
 
+// ดึงข้อมูลออเดอร์จากการสำรวจข้อมูลผ่าน mysqli_fetch_array()
 $data = mysqli_fetch_array($orderData);
 ?>
 
-
+<!-- เริ่มส่วนหน้าเว็บ -->
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -75,7 +79,7 @@ $data = mysqli_fetch_array($orderData);
                                         <?= $data['pincode'] ?>
                                     </div>
                                 </div>
-
+                                <!-- ข้อมูลอื่น ๆ เช่น อีเมล์ เบอร์โทรศัพท์ หมายเลขพัสดุ ที่อยู่ รหัสไปษณีย์ -->       
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -92,6 +96,8 @@ $data = mysqli_fetch_array($orderData);
                                 </thead>
                                 <tbody>
                                     <?php
+
+                                    // ดึงข้อมูลรายการสินค้าในออเดอร์จากการสำรวจฐานข้อมูล
                                     $order_query = "SELECT o.id as oid, o.tracking_no, o.user_id, oi. *,oi.qty as orderqty, p.* FROM orders o, order_items oi,
                                         products p WHERE oi.order_id=o.id AND p.id=oi.prod_id 
                                         AND o.tracking_no='$tracking_no' ";
@@ -119,7 +125,7 @@ $data = mysqli_fetch_array($orderData);
                                     ?>
                                 </tbody>
                             </table>
-
+                            <!-- ส่วนของการแสดงราคารวม และข้อมูลการชำระเงิน สถานะ -->
                             <hr>
                             <h4>ราคารวม : <span class="float-end fw-bold">฿<?= $data['total_price'] ?></span></h4>
 

@@ -1,18 +1,21 @@
+/* กำหนดรูปแบบตัวอักษรสำหรับทั้งหน้าเว็บ */
 *{
     font-family: 'Noto Sans Thai', sans-serif;
 
 }
-
+/* กำหนดลักษณะการเชื่อมโยง (ลิงค์) */
 a{
    text-decoration: none ;
 }
 
+/* ส่วนสร้างเส้นใต้แบบผ่านรูปแบบ */
 .underline{
     height: 5px;
     width: 150px;
     background-color: red;
     border-radius: 20px;
 }
+/* กำหนดพื้นหลังสีเทาอ่อน */
 .bg-f2f2f2{
     background-color: #f2f2f2;
 }

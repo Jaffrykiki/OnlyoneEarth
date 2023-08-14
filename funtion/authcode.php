@@ -9,29 +9,33 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 
-//Load Composer's autoloader
+// ใช้ Composer's autoloader เพื่อโหลดคลาสที่ต้องการ
 require '../vendor/autoload.php';
 
-//SendEmail_verify
+// ฟังก์ชันสำหรับการส่งอีเมล์ยืนยันการลงทะเบียน
 function sendemail_verify($name,$email,$verify_token)
 {
-    $mail = new PHPMailer(true);
+
+    // สร้างอ็อบเจ็กต์สำหรับส่งอีเมล์
+    $mail = new PHPMailer(true); 
     $mail->isSMTP();
     $mail->SMTPAuth   = true;
-    
+
+    // ตั้งค่า SMTP สำหรับ Gmail
     $mail->Host       = 'smtp.gmail.com';
     $mail->Username   = 'jaffry8426@gmail.com';
     $mail->Password   = 'oeopsrzbqwfycrpj';
-
     $mail->SMTPSecure = "tls";
     $mail->Port       = 587;
 
+    // ตั้งค่าผู้ส่งและผู้รับ
     $mail->setFrom('jaffry8426@gmail.com', $name);
     $mail->addAddress($email); 
 
-    $mail->isHTML(true); 
+    $mail->isHTML(true);  // ตั้งค่าให้เนื้อหาเป็น HTML
     $mail->Subject = 'Email verification From Only One Earth';
 
+    // สร้างเนื้อหาอีเมล์
     $email_templace =" 
     <h2>คุณได้ลงทะเบียนกับ Only One Earth</h2>
     <h5>ยืนยันที่อยู่อีเมลของคุณเพื่อเข้าสู่ระบบด้วยลิงค์ด้านล่าง</h5>
@@ -40,57 +44,69 @@ function sendemail_verify($name,$email,$verify_token)
     ";
 
 
-
+    // สร้างเนื้อหาอีเมล์        
     $mail->Body    = $email_templace;
+
+    // ส่งอีเมล์
     $mail->send();
     echo 'ส่งข้อความแล้ว';
 }
 
 
-//สมัครสมาชิกทั่วไป
+// กรณีที่ผู้ใช้กดปุ่ม "สมัครสมาชิกทั่วไป"
 if (isset($_POST['register_btn'])) 
 {
+   // รับข้อมูลจากฟอร์มและเก็บไว้ในตัวแปร
     $name = mysqli_real_escape_string($connection, $_POST['name']);
     $phone = mysqli_real_escape_string($connection, $_POST['phone']);
     $email = mysqli_real_escape_string($connection, $_POST['email']);
     $password = mysqli_real_escape_string($connection, $_POST['password']);
     $cpassword = mysqli_real_escape_string($connection, $_POST['cpassword']);
 
-    //ตรวจสอบว่าอีเมลลงทะเบียนแล้วหรือไม่
+    // ตรวจสอบว่าอีเมลลงทะเบียนแล้วหรือไม่
     $check_email_query = "SELECT email FROM users WHERE email='$email' ";
     $check_email_query_run = mysqli_query($connection, $check_email_query);
     
+    // ถ้ามีอีเมล์ในระบบแล้ว
     if (mysqli_num_rows($check_email_query_run) >0 ) 
     {
+        // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางกลับไปยังหน้าลงทะเบียน
         $_SESSION['message'] = "อีเมล์ของท่านเคยทำการลงทะเบียนแล้ว";
         header('Location: ../register.php');
     } 
+    // ถ้ายังไม่มีอีเมล์ในระบบ
     else 
     {    
+        // เช็ครหัสผ่านว่าตรงกันหรือไม่
         if ($password == $cpassword) 
         {
-            //insert user date 
+            // เพิ่มข้อมูลผู้ใช้ในฐานข้อมูล 
             $insert_query = "INSERT INTO users (name,email,phone,password) VALUE ('$name','$email','$phone','$password')";
             $insert_query_run = mysqli_query($connection, $insert_query);
 
             if ($insert_query_run) {
+                // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางไปยังหน้าเข้าสู่ระบบ
                 $_SESSION['message'] = "สมัครสมาชิกสำเร็จ";
                 header('Location: ../login.php');
             } else {
+                // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางไปยังหน้าเข้าสู่ระบบ
                 $_SESSION['message'] = "มีบางอย่างผิดพลาด";
                 header('Location: ../login.php');
             }
         } 
+        // ถ้ายังไม่มีอีเมล์ในระบบ
         else 
         {
+            // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางกลับไปยังหน้าลงทะเบียน
             $_SESSION['message'] = "รหัสผ่านไม่ตรงกัน";
             header('Location: ../register.php');
         }
     }
 }
-//สมัครผู้ขาย
+// กรณีที่ผู้ใช้กดปุ่ม "สมัครผู้ขาย"
 else if (isset($_POST['register_seller_btn'])) 
 {
+    // รับข้อมูลจากฟอร์มและเก็บไว้ในตัวแปร
     $name = mysqli_real_escape_string($connection, $_POST['name']);
     $phone = mysqli_real_escape_string($connection, $_POST['phone']);
     $email = mysqli_real_escape_string($connection, $_POST['email']);
@@ -99,60 +115,72 @@ else if (isset($_POST['register_seller_btn']))
     $verify_token = md5(rand());
 
 
-    //ตรวจสอบว่าอีเมลลงทะเบียนแล้วหรือไม่
+    // ตรวจสอบว่าอีเมลลงทะเบียนแล้วหรือไม่
     $check_email_query = "SELECT email FROM users WHERE email='$email' ";
     $check_email_query_run = mysqli_query($connection, $check_email_query);
     
+    // ถ้ามีอีเมล์ในระบบแล้ว
     if (mysqli_num_rows($check_email_query_run) >0 ) 
     {
+        // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางกลับไปยังหน้าลงทะเบียน
         $_SESSION['message'] = "อีเมล์ของท่านเคยทำการลงทะเบียนแล้ว";
         header('Location: ../register.php');
     } 
+    // ถ้ายังไม่มีอีเมล์ในระบบ
     else 
     {    
+        // เช็ครหัสผ่านว่าตรงกันหรือไม่
         if ($password == $cpassword) 
         {
-            //insert user date 
+            // เพิ่มข้อมูลผู้ใช้ในฐานข้อมูล 
             $insert_query = "INSERT INTO users (name,email,phone,password,verify_token,role_as) VALUE ('$name','$email','$phone','$password','$verify_token','2')";
             $insert_query_run = mysqli_query($connection, $insert_query);
             
-            echo $insert_query_run;
-
+            // เรียกใช้ฟังก์ชันส่งอีเมล์ยืนยัน
             if ($insert_query_run) 
             {
                 sendemail_verify("$name","$email","$verify_token");
 
+                // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางไปยังหน้าลงทะเบียนผู้ขาย
                 $_SESSION['message'] = "ลงทะเบียนเรียบร้อยแล้ว โปรดยืนยันการลงทะเบียนผ่านอีเมล์อีกครั้ง";
                 header('Location: ../register_seller.php');
             } 
             else 
             {
+               // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางไปยังหน้าลงทะเบียนผู้ขาย
                 $_SESSION['message'] = "มีบางอย่างผิดพลาด";
                 header('Location: ../register_seller.php');
             }
         } 
+        // ถ้ารหัสผ่านไม่ตรงกัน
         else 
         {
+            // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางกลับไปยังหน้าลงทะเบียน
             $_SESSION['message'] = "รหัสผ่านไม่ตรงกัน";
             header('Location: ../register.php');
         }
     }
 }
-//ล็อกอิน
+
+// กรณีที่ผู้ใช้กดปุ่ม "เข้าสู่ระบบ"
 else if(isset($_POST['login_btn'])) 
 {
+    // ดึงข้อมูลจากฟอร์มและค้นหาในฐานข้อมูล
     $email = mysqli_real_escape_string($connection , $_POST['email']);
     $password = mysqli_real_escape_string($connection , $_POST['password']);
 
 
-    //queryข้อมูลจากฐานข้อมูล
+    // คำสั่ง SQL สำหรับการเรียกข้อมูลผู้ใช้จากฐานข้อมูล
     $login_query = "SELECT * FROM users WHERE email='$email' AND password='$password' ";
     $login_query_run = mysqli_query($connection, $login_query);
 
+    // ถ้าพบข้อมูลผู้ใช้ที่ตรงกับในระบบ
     if(mysqli_num_rows($login_query_run) > 0 )
     {
+        // เซ็ตตัวแปรเซสชันสำหรับเช็คการเข้าสู่ระบบ
         $_SESSION['auth'] = true;
 
+        // ดึงข้อมูลผู้ใช้จากการค้นหาในฐานข้อมูล
         $userdate = mysqli_fetch_array($login_query_run); 
         $username = $userdate['name'];
         $useremail = $userdate['email'];
@@ -161,7 +189,7 @@ else if(isset($_POST['login_btn']))
         $verify_status = $userdate['verify_status'];
         $img =$userdate['img'];
 
-
+        // เก็บข้อมูลผู้ใช้ในเซสชัน
         $_SESSION['auth_user'] =[
             'name' => $username,
             'emmail' => $username,
@@ -169,68 +197,79 @@ else if(isset($_POST['login_btn']))
             'img' => $img
         ];
         
-        //เช็คบทบาทของการเข้าสู่ระบบ
+        // ตรวจสอบบทบาทของผู้ใช้และเปลี่ยนเส้นทางตาม
         $_SESSION['role_as'] = $role_as;
         if ($role_as == 0) {
+            // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางไปยังหน้าหลัก
             $_SESSION['message'] = 
             redirect("../index.php" ,"ยินดีต้อนรับเข้าสู่ระบบ");
         }
-        else if($role_as == 1)
-        {
+        else if($role_as == 1) {
+            // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางไปยังหน้าแดชบอร์ดแอดมิน
             $_SESSION['message'] = 
             redirect("../admin/index.php","ยินดีต้อนรับเข้าสู่แดชบอร์ด");
         } else  {
             $_SESSION['verify_status'] = $verify_status;
-        
-            if($verify_status == 1)
-            {
+            if($verify_status == 1) {
+                // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางไปยังหน้าแดชบอร์ดขาย
                 $_SESSION['message'] = 
                 redirect("../seller/index.php","ยินดีต้อนรับเข้าสู่แดชบอร์ด");
             }
             else  
             {
                 $_SESSION['message'] = 
+                // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางไปยังหน้าหลัก
                 redirect("../index.php" ,"ยินดีต้อนรับเข้าสู่ระบบ");
             }
         }
     }
     else
         {
-            //ไม่เข้าเงื่อนไขด้านบน
+           // ไม่พบข้อมูลผู้ใช้ที่ตรงกับในระบบ
         $_SESSION['message'] = "";
         redirect("../login.php" ,"ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
         }
 }
-//แก้ข้อมูลส่วนตัว
+
+// กรณีที่ผู้ใช้กดปุ่ม "แก้ไขข้อมูลส่วนตัว"
 else if(isset($_POST['update_profile_btn']))
 {
+    // รับค่าผู้ใช้และข้อมูลจากแบบฟอร์ม
     $user_id = $_SESSION['auth_user']['id'];
     $name = $_POST['name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
+    // รับค่าผู้ใช้และข้อมูลจากแบบฟอร์ม
     $path = "../uploads";
 
+    // รับข้อมูลรูปภาพใหม่และเก่า
     $new_image = $_FILES['img']['name'];
     $old_image = $_POST['old_image'];
+
+    // ตรวจสอบว่ามีการอัปโหลดรูปภาพใหม่หรือไม่
     if($new_image != "")
     { 
-        //update_filename =$new_image;
+        // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันเป็นส่วนหนึ่งของชื่อไฟล์
         $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
         $update_filenname = time().'.'.$image_ext;
     }
     else
     {
+        // ถ้าไม่มีการอัปโหลดรูปภาพใหม่ ใช้ชื่อไฟล์เก่า
         $update_filenname = $old_image;
     }
    
-    echo "filename=".$update_filenname ; 
+    // echo "filename=".$update_filenname ; 
+    // สร้างคำสั่ง SQL สำหรับการอัปเดตข้อมูลผู้ใช้
     $update_user_query ="UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`img`='$update_filenname' WHERE id ='$user_id'" ;
-    echo $update_user_query;
+    // ดำเนินการอัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
     $update_user_query_run = mysqli_query($connection, $update_user_query);
 
+    // ตรวจสอบว่าการอัปเดตสำเร็จหรือไม่
     if ($update_user_query_run) 
     {
+        // ถ้ามีการอัปโหลดรูปภาพใหม่ ย้ายไฟล์ไปยังที่เก็บและลบไฟล์เก่า
         if($_FILES['img']['name'] != "")
         {
             move_uploaded_file($_FILES['img']['tmp_name'], $path. '/' .$update_filenname);
@@ -239,10 +278,12 @@ else if(isset($_POST['update_profile_btn']))
                 unlink("../uploads/".$old_image);
             }
         }
+        // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
         redirect("../profile.php?id=$user_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
     }
     else
     {
+        // ถ้าการอัปเดตไม่สำเร็จ นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
         redirect("../profile.php?id=$user_id", "มีบางอย่างผิดพลาด");
     }
 

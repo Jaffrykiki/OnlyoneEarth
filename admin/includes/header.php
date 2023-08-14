@@ -7,19 +7,24 @@
   <title>
     Admin
   </title>
-  <!--     Fonts and icons     -->
+
+   <!-- ลิงก์ไปยังฟอนต์ที่ใช้ -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-  <!-- Font Awesome Icons -->
+  
+   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
   <!-- Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <!-- CSS Files -->
+
+     <!-- กำหนดค่าตัวแปร CSS เพื่อเลือกธีมหน้าเว็บ -->
   <link id="pagestyle" href="assets/css/material-dashboard.min.css" rel="stylesheet" />
 
-  <!-- Alertify js -->
+  <!-- ลิงก์ไปยังไฟล์ CSS สำหรับ Alertify JS -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
   
+  <!-- ส่วนของการกำหนดรูปแบบ CSS เพิ่มเติม -->
   <style>
     .form-control {
       border: 2px solid #b3a1a1 !important;
@@ -35,5 +40,8 @@
 
 <body class="g-sidenav-show  bg-gray-200">
   <?php include('sidebar.php'); ?>
+
+  <!-- เริ่มต้นส่วนของ Main Content -->
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    
     <?php include('navbar.php'); ?>

@@ -1,6 +1,6 @@
 <?php
 
-include('../middleware/adminMiddleware.php');
+include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ middleware ที่ใช้ตรวจสอบสิทธิ์ของผู้ดูแลระบบ
 include('includes/header.php');
 
 
@@ -10,6 +10,7 @@ include('includes/header.php');
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+             <!-- เริ่มต้นของการแสดงประวัติคำสั่งซื้อ -->
             <div class="card">
                 <div class="card-header bg-primary">
                     <h4 class="text-white">ประวัติคำสั่งซื้อ
@@ -30,9 +31,12 @@ include('includes/header.php');
                         </thead>
                         <tbody>
                             <?php
+                            // เรียกใช้ฟังก์ชัน getOrderHistroy() เพื่อดึงข้อมูลคำสั่งซื้อ
                             $orders = getOrderHistroy();
 
+                            // ตรวจสอบว่ามีคำสั่งซื้อหรือไม่
                             if (mysqli_num_rows($orders) > 0) {
+                                // วนลูปเพื่อแสดงข้อมูลคำสั่งซื้อทั้งหมด
                                 foreach ($orders as $item) {
                             ?>
                                     <tr>
@@ -48,6 +52,7 @@ include('includes/header.php');
                                 <?php
                                 }
                             } else {
+                                // ถ้าไม่มีคำสั่งซื้อ
                                 ?>
                                 <tr>
                                     <td colspan="5"> ไม่มีคำสั่งซื้อ </td>
@@ -59,6 +64,7 @@ include('includes/header.php');
                     </table>
                 </div>
             </div>
+            <!-- สิ้นสุดการแสดงประวัติคำสั่งซื้อ -->
         </div>
     </div>
 </div>

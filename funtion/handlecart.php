@@ -4,42 +4,41 @@
 session_start();
 include('../connection/dbcon.php');
 
-if (isset($_SESSION['auth'])) 
+if (isset($_SESSION['auth']))  // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
 {
     if (isset($_POST['scope'])) {
-        $scope  = $_POST['scope'];
+        $scope  = $_POST['scope']; // รับค่า scope ที่ส่งมาเพื่อตรวจสอบการดำเนินการที่จะทำ
         switch ($scope) {
-                //เพิ่มสินค้าเข้าไปในตระกร้า
-            case "add":
-                $prod_id = $_POST['prod_id'];
-                $prod_qty = $_POST['prod_qty'];
+            case "add": // กรณีเพิ่มสินค้าลงในตระกร้า
+                $prod_id = $_POST['prod_id']; // รับค่า id ของสินค้า
+                $prod_qty = $_POST['prod_qty']; // รับค่าจำนวนสินค้าที่จะเพิ่ม
 
-                //เช็คว่ามีสินค้านั้นในตระกร้าหรือยัง
+                // เช็คว่าสินค้านี้มีอยู่ในตระกร้าของผู้ใช้หรือไม่
                 $user_id = $_SESSION['auth_user']['id'];
 
                 $chk_existing_cart = "SELECT * FROM carts WHERE prod_id='$prod_id' AND user_id='$user_id' ";
                 $chk_existing_cart_run = mysqli_query($connection, $chk_existing_cart);
 
                 if (mysqli_num_rows($chk_existing_cart_run) > 0) {
-                    echo "existing";
-                } else {
+                    echo "existing"; // สินค้ามีอยู่ในตระกร้าแล้ว
+                } else { 
                     $insert_query =  "INSERT INTO carts (user_id, prod_id, prod_qty) VALUES ('$user_id','$prod_id','$prod_qty') ";
                     $insert_query_run = mysqli_query($connection, $insert_query);
 
                     if ($insert_query_run) {
-                        echo 201;
+                        echo 201; // เพิ่มสินค้าลงในตระกร้าสำเร็จ
                     } else {
-                        echo 500;
+                        echo 500; // เกิดข้อผิดพลาดในการเพิ่มสินค้า
                     }
                 }
                 break;
 
-                //อัปเดดจำนวนสินค้าในตระกร้า
-            case "update":
-                $prod_id = $_POST['prod_id'];
-                $prod_qty = $_POST['prod_qty'];
+                
+            case "update": // กรณีอัปเดตจำนวนสินค้าในตระกร้า
+                $prod_id = $_POST['prod_id']; // รับค่า id ของสินค้า
+                $prod_qty = $_POST['prod_qty']; // รับค่าจำนวนสินค้าที่ต้องการอัปเดต
 
-                //เช็คว่ามีสินค้านั้นในตระกร้าหรือยัง
+                // เช็คว่าสินค้านี้มีอยู่ในตระกร้าของผู้ใช้หรือไม่
                 $user_id = $_SESSION['auth_user']['id'];
 
                 $chk_existing_cart = "SELECT * FROM carts WHERE prod_id='$prod_id' AND user_id='$user_id' ";
@@ -49,9 +48,9 @@ if (isset($_SESSION['auth']))
                     $update_query = "UPDATE carts SET prod_qty='$prod_qty' WHERE prod_id='$prod_id' AND user_id='$user_id' ";
                     $update_query_run = mysqli_query($connection, $update_query);
                     if ($update_query_run) {
-                        echo 200;
+                        echo 200; // อัปเดตจำนวนสินค้าในตระกร้าสำเร็จ
                     } else {
-                        echo 500;
+                        echo 500; // เกิดข้อผิดพลาดในการอัปเดต
                     }
                 } else {
                     echo "มีบางอย่างผิดพลาด ติดต่อแอดมินสมถุย";
@@ -59,10 +58,10 @@ if (isset($_SESSION['auth']))
                 break;
 
                 //ลบสินค้าในตระกร้า
-            case "delete":
-                $cart_id = $_POST['cart_id'];
+            case "delete": // กรณีลบสินค้าในตระกร้า
+                $cart_id = $_POST['cart_id']; // รับค่า id ของรายการสินค้าในตระกร้า
 
-                //เช็คว่ามีสินค้านั้นในตระกร้าหรือยัง
+                // เช็คว่ารายการสินค้านี้อยู่ในตระกร้าของผู้ใช้หรือไม่
                 $user_id = $_SESSION['auth_user']['id'];
 
 
@@ -73,7 +72,7 @@ if (isset($_SESSION['auth']))
                     $delete_query = "DELETE FROM carts WHERE id='$cart_id' ";
                     $delete_query_run = mysqli_query($connection, $delete_query);
                     if ($delete_query_run) {
-                        echo 200;
+                        echo 200; // ลบรายการสินค้าในตระกร้าสำเร็จ
                     } else {
                         echo "มีบางอย่างผิดพลาด ติดต่อแอดมินสมถุย";
                     }
@@ -83,11 +82,11 @@ if (isset($_SESSION['auth']))
                 break;
 
             default:
-                echo 500;
+                echo 500; // ค่า scope ไม่ถูกต้อง
         }
     }
 } 
 else 
 {
-    echo 401;
+    echo 401; // ผู้ใช้ไม่ได้เข้าสู่ระบบ
 }

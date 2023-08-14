@@ -1,5 +1,5 @@
 <?php
-include('../middleware/adminMiddleware.php');
+include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ middleware ที่ใช้ตรวจสอบสิทธิ์ของผู้ดูแลระบบ
 include('includes/header.php');
 
 ?>
@@ -7,26 +7,32 @@ include('includes/header.php');
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            <!-- เริ่มต้นของการแสดงรายการสินค้า -->
             <div class="card">
                 <div class="card-header">
-                    <h4>Products</h4>
+                    <h4>สินค้า</h4>
                 </div>
                 <div class="card-body" id="products_table">
                     <table class="table table-dark table-striped">
                         <thead>
                             <tr>
-                                <th>Id Product</th>
-                                <th>Id Users</th>
-                                <th>Name</th>
-                                <th>Image</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>ไอดีสินค้า</th>
+                                <th>ไอดีผู้ใช้</th>
+                                <th>ชื่อสินค้า</th>
+                                <th>รูปภาพสินค้า</th>
+                                <th>แก้ไข</th>
+                                <th>ลบ</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
+                            // เรียกใช้ฟังก์ชัน getAll("products") เพื่อดึงข้อมูลรายการสินค้าทั้งหมด
                             $products = getAll("products");
+
+                             // ตรวจสอบว่ามีรายการสินค้าหรือไม่
                             if (mysqli_num_rows($products) > 0) {
+
+                                 // ตรวจสอบว่ามีรายการสินค้าหรือไม่
                                 foreach ($products as $item) {
                             ?>
                                     <tr>
@@ -46,6 +52,8 @@ include('includes/header.php');
                             <?php
                                 }
                             } else {
+
+                                // ถ้าไม่มีรายการสินค้า
                                 echo "ไม่พบบันทึก";
                             }
                             ?>
@@ -55,6 +63,7 @@ include('includes/header.php');
                     </table>
                 </div>
             </div>
+            <!-- สิ้นสุดการแสดงรายการสินค้า -->
         </div>
     </div>
 </div>

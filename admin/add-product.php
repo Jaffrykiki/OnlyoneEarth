@@ -1,24 +1,26 @@
 <?php
 
-include('../middleware/adminMiddleware.php');
+include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ middleware adminMiddleware.php เพื่อตรวจสอบสิทธิ์ผู้ดูแลระบบ
 include('includes/header.php');
 
 
 ?>
 
-
+<!-- เริ่มต้นส่วนของเนื้อหา -->
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Add Product</h4>
+                    <h4>เพิ่มสินค้า</h4>
                 </div>
                 <div class="card-body" style="margin-top: -40px;">
+                <!-- แบบฟอร์มสำหรับเพิ่มสินค้า -->
                     <form action="code.php" method="POST" enctype="multipart/form-data">
                         <div class="row mb-4">
                             <div class="col-md-5">
                                 <label class="mb-0">เลือกหมวดหมู่</label>
+                                <!-- เลือกหมวดหมู่สำหรับสินค้า -->
                                 <select name ="category_id" class="form-select mb-2">
                                     <option selected>เลือกหมวดหมู่</option>
                                     <?php
@@ -67,6 +69,7 @@ include('includes/header.php');
                             </div>
                         </div>
                         <div class="col-md-12">
+                            <!-- เลือกหมวดหมู่สำหรับสินค้า -->
                             <button type="submit" class="btn btn-primary" name="add_product_btn">บันทึก</button>
                         </div>
                     </form>
@@ -75,5 +78,6 @@ include('includes/header.php');
         </div>
     </div>
 </div>
+<!-- เลือกหมวดหมู่สำหรับสินค้า -->
 
 <?php include('includes/footer.php') ?>

@@ -3,59 +3,70 @@
 include('../connection/dbcon.php');
 include('../funtion/myfunction.php');
 
-//เพิ่มหมวดหมู่สินค้า
+// เมื่อกดปุ่ม "เพิ่มหมวดหมู่สินค้า"
 if (isset($_POST['add_category_btn'])) 
 {
     $name = $_POST['name'];
 
+    // สร้างคำสั่ง SQL สำหรับเพิ่มหมวดหมู่
     $cate_query =  "INSERT INTO category (name) VALUES ('$name') ";
 
+    // รันคำสั่ง SQL
     $cate_query_run = mysqli_query($connection, $cate_query);
 
     if ($cate_query_run) {
+        // ถ้าสำเร็จ redirect ไปยังหน้า "add-category.php" พร้อมแสดงข้อความ "เพิ่มหมวดหมู่สินค้าเรียบร้อยแล้ว"
         redirect("add-category.php", "Category Succesfully");
     } else {
+        // ถ้าไม่สำเร็จ redirect ไปยังหน้า "add-category.php" พร้อมแสดงข้อความ "มีบางอย่างผิดพลาด"
         redirect("add-category.php", "Something Went Wrong");
     }
 } 
-//แก้หมวดหมู่
+// เมื่อกดปุ่ม "อัปเดตหมวดหมู่สินค้า" 
 else if (isset($_POST['update_category_btn'])) 
 {
     $category_id = $_POST['category_id'];
     $name = $_POST['name'];
 
+    // สร้างคำสั่ง SQL สำหรับอัปเดตชื่อหมวดหมู่
     $update_query = "UPDATE category SET Name='$name' WHERE id='$category_id' ";
 
+    // รันคำสั่ง SQL
     $update_query_run = mysqli_query($connection, $update_query);
 
     if ($update_query_run) 
     {
+        // ถ้าสำเร็จ redirect ไปยังหน้า "edit-category.php" พร้อมแสดงข้อความ "อัปเดตหมวดหมู่สินค้าเรียบร้อยแล้ว"
         redirect("edit-category.php?id=$category_id", "อัปเดตหมวดหมู่เรียบร้อยแล้ว");
     } 
     else 
     {
+        // ถ้าไม่สำเร็จ redirect ไปยังหน้า "edit-category.php" พร้อมแสดงข้อความ "มีบางอย่างผิดพลาด"
         redirect("edit-category.php", "บางอย่างผิดพลาด");
     }
 }
-//ลบหมวดหมู่สินค้า 
+
+// เมื่อกดปุ่ม "ลบหมวดหมู่สินค้า" 
 else if (isset($_POST['delete_category_btn'])) 
 {
     $category_id = mysqli_real_escape_string($connection, $_POST['category_id']);
 
+    // สร้างคำสั่ง SQL สำหรับลบหมวดหมู่
     $delete_query = "DELETE FROM category WHERE id='$category_id' ";
+
+    // รันคำสั่ง SQL
     $delete_query_run  = mysqli_query($connection, $delete_query);
 
     if ($delete_query_run) {
-        // redirect("category.php", "ลบหมวดหมู่เรียบร้อยแล้ว");
-        echo 200;
+        echo 200; // สำเร็จ: HTTP 200 OK
     } else {
-        // redirect("category.php", "บางอย่างผิดพลาด");
-        echo 500;
+        echo 500; // ผิดพลาด: HTTP 500 Internal Server Error
     }
 } 
-//เพิ่มสินค้า
+// เมื่อกดปุ่ม "เพิ่มสินค้า"
 else if (isset($_POST['add_product_btn'])) 
 {
+    // รับค่าต่าง ๆ จากฟอร์ม
     $category_id = $_POST['category_id'];
     $name = $_POST['name'];
     $detail = $_POST['detail'];
@@ -63,207 +74,264 @@ else if (isset($_POST['add_product_btn']))
     $num = $_POST['num'];
     $trending = isset($_POST['trending']) ? '1':'0';
 
-
+    // รับชื่อไฟล์รูปภาพ
     $image = $_FILES['image']['name'];
 
+    // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
     $path = "../uploads";
 
+     // ดึงนามสกุลไฟล์ภาพ
     $image_ext = pathinfo($image, PATHINFO_EXTENSION);
+
+     // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันด้วยการใช้เวลาปัจจุบันและนามสกุลไฟล์
     $filename = time() . '.' . $image_ext;
 
+    // ตรวจสอบว่ามีชื่อและรายละเอียดต้องไม่ว่าง
     if ($name != "" && $detail != "") 
     {
+        // ดึงค่า id ของผู้ใช้จาก session
         $users_id = $_SESSION['auth_user']['id'];
+
+        // สร้างคำสั่ง SQL เพื่อเพิ่มข้อมูลสินค้าในฐานข้อมูล
         $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,trending,image) VALUES 
         ('$category_id', $users_id ,'$name','$detail','$price','$num','$trending','$filename') ";
 
+        // ทำการ query คำสั่ง SQL และเก็บผลลัพธ์ในตัวแปร $product_query_run
         $product_query_run = mysqli_query($connection, $product_query);
 
+        // ตรวจสอบผลลัพธ์การ query เพื่อทำการเปลี่ยนเส้นทางหน้าเว็บ
         if ($product_query_run) 
         {
+            // ย้ายไฟล์รูปภาพไปยังโฟลเดอร์ที่กำหนด
             move_uploaded_file($_FILES['image']['tmp_name'], $path . '/' . $filename);
 
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
             redirect("add-product.php", "เพิ่มสินค้าสำเร็จแล้ว");
         } 
         else 
         {
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
             redirect("add-product.php", "มีบางอย่างผิดพลาด");
         }
     } 
     else 
     {
+        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
         redirect("add-product.php", "all fields are mandatory");
     }
 }
-//แก้ไขสินค้า
+// เมื่อกดปุ่ม "อัปเดตสินค้า"
 else if (isset($_POST['update_product_btn']))
 {
+    // รับค่า product_id และ category_id จากฟอร์ม
     $product_id = $_POST['product_id'];
     $category_id = $_POST['category_id'];
 
+      // รับข้อมูลสินค้า
     $name = $_POST['name'];
     $detail = $_POST['detail'];
     $price = $_POST['price'];
     $num = $_POST['num'];
     $trending = isset($_POST['trending']) ? '1':'0';
 
+    // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
     $path = "../uploads";
 
+    // รับชื่อไฟล์รูปภาพใหม่และรูปภาพเก่า
     $new_image = $_FILES['image']['name'];
     $old_image = $_POST['old_image'];
 
+    // ตรวจสอบว่ามีการเลือกไฟล์รูปใหม่หรือไม่
     if($new_image != "")
     {
-        //update_filename =$new_image;
+        // ดึงนามสกุลไฟล์ภาพใหม่
         $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
+        // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันด้วยเวลาปัจจุบันและนามสกุลไฟล์
         $update_filenname = time().'.'.$image_ext;
     }
     else
     {
+        // ใช้ชื่อไฟล์เดิม
         $update_filenname = $old_image;
     }
 
+    // สร้างคำสั่ง SQL เพื่ออัปเดตข้อมูลสินค้าในฐานข้อมูล
     $update_product_query ="UPDATE products SET category_id='$category_id',name='$name',detail='$detail',price='$price',num='$num',trending='$trending',image='$update_filenname' 
     WHERE  id ='$product_id'";
+
+    // ทำการ query คำสั่ง SQL และเก็บผลลัพธ์ในตัวแปร $update_product_query_run
     $update_product_query_run = mysqli_query($connection, $update_product_query);
 
 
+    // ตรวจสอบผลลัพธ์การ query เพื่อทำการเปลี่ยนเส้นทางหน้าเว็บ
     if ($update_product_query_run) 
     {
+        // ตรวจสอบว่ามีการเลือกไฟล์รูปใหม่หรือไม่
         if($_FILES['image']['name'] != "")
         {
+            // ย้ายไฟล์รูปภาพไปยังโฟลเดอร์ที่กำหนด
             move_uploaded_file($_FILES['image']['tmp_name'], $path. '/' .$update_filenname);
+            // ตรวจสอบว่ามีไฟล์รูปภาพเก่าอยู่ในโฟลเดอร์ และลบไฟล์รูปภาพเก่า
             if(file_exists("../uploads/".$old_image))
             {
                 unlink("../uploads/".$old_image);
             }
         }
+        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
         redirect("edit-product.php?id=$product_id", "อัปเดตสินค้าเรียบร้อยแล้ว");
     }
     else
     {
+        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
         redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
     }
 }
-//ลบสินค้า
+// เมื่อกดปุ่ม "ลบสินค้า"
 else if(isset($_POST['delete_product_btn']))
 {
+    // รับค่า product_id จากฟอร์มและทำการ escape เพื่อป้องกันการโจมตี SQL Injection
     $product_id = mysqli_real_escape_string($connection, $_POST['product_id']);
 
+    // สร้างคำสั่ง SQL เพื่อเลือกข้อมูลสินค้าที่จะลบ
     $product_query = "SELECT * FROM products WHERE id='$product_id'";
     $product_query_run  = mysqli_query($connection, $product_query);
+
+    // ดึงข้อมูลสินค้าที่จะลบ
     $product_data = mysqli_fetch_array($product_query_run);
     $image = $product_data['image'];
 
+    // สร้างคำสั่ง SQL เพื่อลบข้อมูลสินค้าที่ตรงกับ product_id
     $delete_query = "DELETE FROM products WHERE id='$product_id' ";
     $delete_query_run  = mysqli_query($connection, $delete_query);
 
 
-
+    // ตรวจสอบผลลัพธ์การ query เพื่อทำการแสดงข้อความหรือเปลี่ยนเส้นทางหน้า
     if ($delete_query_run) 
     {
+        // ตรวจสอบว่ามีไฟล์รูปภาพในโฟลเดอร์และทำการลบไฟล์รูปภาพ
         if(file_exists("../uploads/".$image))
         {
             unlink("../uploads/".$image);
         }
-        // redirect("manage_users.php", "ลบสินข้อมูลผู้ใช้เรียบร้อยแล้ว");
-        echo 200;
+        // ใช้ echo เพื่อแสดงผลลัพธ์ในรูปแบบของ HTTP status code
+        echo 200; // HTTP status code 200 OK
     } 
     else 
     {
-        // redirect("products.php", "บางอย่างผิดพลาด");
-        echo 500;
+        echo 500; // HTTP status code 500 Internal Server Error
     }
 
 }
-//แก้ไขผู้ใช้
+// เมื่อกดปุ่ม "อัปเดตผู้ใช้"
 else if (isset($_POST['update_users_btn']))
 {
+    // รับค่าจากฟอร์ม 
     $users_id = $_POST['users_id'];
     $name = $_POST['name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $password = $_POST['password'];
 
+    // กำหนดตำแหน่งที่เก็บไฟล์รูปภาพ
     $path = "../uploads";
 
+     // รับค่าไฟล์รูปภาพใหม่และไฟล์รูปภาพเดิม
     $new_image = $_FILES['img']['name'];
     $old_image = $_POST['old_image'];
 
+    // ตรวจสอบว่ามีการอัปโหลดไฟล์รูปภาพใหม่หรือไม่
     if($new_image != "")
     {
-        //update_filename =$new_image;
+        // หานามสกุลของไฟล์รูปภาพใหม่
         $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
+
+        // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันและนามสกุลของไฟล์
         $update_filenname = time().'.'.$image_ext;
     }
     else
     {
+        // ถ้าไม่มีการอัปโหลดไฟล์รูปภาพใหม่ ใช้ชื่อไฟล์เดิม
         $update_filenname = $old_image;
     }
 
+     // สร้างคำสั่ง SQL เพื่ออัปเดตข้อมูลผู้ใช้
     $update_user_query ="UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`password`='$password',`img`=' $update_filenname' WHERE id ='$users_id'" ;
     $update_user_query_run = mysqli_query($connection, $update_user_query);
 
 
+    // ตรวจสอบผลลัพธ์การ query เพื่อทำการแสดงข้อความหรือเปลี่ยนเส้นทางหน้า
     if ($update_user_query_run) 
     {
+        // ตรวจสอบว่ามีการอัปโหลดไฟล์รูปภาพใหม่หรือไม่
         if($_FILES['img']['name'] != "")
         {
+            // ย้ายไฟล์รูปภาพไปยังตำแหน่งที่เก็บ
             move_uploaded_file($_FILES['img']['tmp_name'], $path. '/' .$update_filenname);
+            // ตรวจสอบว่ามีไฟล์รูปภาพเดิมในโฟลเดอร์และทำการลบ
             if(file_exists("../uploads/".$old_image))
             {
                 unlink("../uploads/".$old_image);
             }
         }
+         // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าและแสดงข้อความแจ้งเตือน
         redirect("edit-users.php?id=$users_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
     }
     else
     {
+        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าและแสดงข้อความแจ้งเตือน
         redirect("edit-users.php?id=$users_id", "มีบางอย่างผิดพลาด");
     }
 }
-//ลบผู้ใช้
+// เมื่อกดปุ่ม "ลบผู้ใช้"
 else if(isset($_POST['delete_users_btn']))
 {
+    // รับค่า users_id จากฟอร์มและทำการ escape เพื่อป้องกันการโจมตี SQL Injection
     $users_id = mysqli_real_escape_string($connection, $_POST['users_id']);
 
+     // สร้างคำสั่ง SQL เพื่อเลือกข้อมูลผู้ใช้ที่จะถูกลบ
     $user_query = "SELECT * FROM users WHERE id='$users_id'" ;
     $user_query_run = mysqli_query($connection, $user_query);
     $user_data = mysqli_fetch_array($user_query_run);
     $img = $user_data['img'];
 
+    // สร้างคำสั่ง SQL เพื่อลบข้อมูลผู้ใช้
     $delete_query = "DELETE FROM users WHERE id='$users_id' ";
     $delete_query_run  = mysqli_query($connection, $delete_query);
 
+    // ตรวจสอบผลลัพธ์การ query เพื่อทำการแสดงข้อความหรือเปลี่ยนเส้นทางหน้า
     if ($delete_query_run) 
     {
+        // ตรวจสอบว่ามีไฟล์รูปภาพในโฟลเดอร์และทำการลบ
         if(file_exists("../uploads/".$img))
         {
             unlink("../uploads/".$img);
         }
-        // redirect("products.php", "ลบสินค้ารียบร้อยแล้ว");
+        // ใช้ echo เพื่อแสดงผลสถานะลบเป็น HTTP Response Code 200
         echo 200;
     } 
     else 
     {
-        // redirect("products.php", "บางอย่างผิดพลาด");
+        // ใช้ echo เพื่อแสดงผลสถานะผิดพลาดเป็น HTTP Response Code 500
         echo 500;
     }
 
 }
-//อัปเดดออเดอร์
-else if(isset($_POST['update_order_btn'])) {
-    
+// เมื่อกดปุ่ม "อัปเดตสถานะคำสั่งซื้อ"
+else if(isset($_POST['update_order_btn'])) 
+{    
+    // รับค่า tracking_no และ order_status จากฟอร์ม
     $track_no = $_POST['tracking_no'];
     $order_status =$_POST['order_status'];
 
+    // รับค่า tracking_no และ order_status จากฟอร์ม
     $updateOrder_query = "UPDATE orders SET status= '$order_status' WHERE tracking_no= '$track_no' ";
     $updateOrder_query_run = mysqli_query($connection, $updateOrder_query);
 
+    // หลังจากอัปเดตสถานะคำสั่งซื้อเสร็จสมบูรณ์ ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าและแสดงข้อความผลลัพธ์
     redirect("view-order.php?t=$track_no", "อัปเดตสถานะคำสั่งซื้อสำเร็จแล้ว");
 
 }
-//ไม่เข้าเงื่อนไขอะไรด้านบนเลย
+// ถ้าไม่เข้าเงื่อนไขใดเลย ให้เปลี่ยนเส้นทางไปยังหน้า ../index.php
 else
 {
     header('Location : ../index.php');

@@ -3,7 +3,7 @@
 session_start();
 include('connection/dbcon.php');
 
-//query ข้อมูลหมวดหมู่สินค้า
+// ฟังก์ชันสำหรับการดึงข้อมูลทั้งหมดในตาราง 
 function getAllActive($table)
 {  
     global $connection;
@@ -11,7 +11,7 @@ function getAllActive($table)
     return $query_run = mysqli_query($connection, $query);
 }
 
-//เรียกดูรายการสินค้าที่กำลังมาแรง
+// ฟังก์ชันสำหรับการดึงรายการสินค้าที่กำลังมาแรง
 function getAllTrending()
 {  
     global $connection;
@@ -19,7 +19,7 @@ function getAllTrending()
     return $query_run = mysqli_query($connection, $query);
 }
 
-//เรียกดูรายการสินค้าทั้งหมด
+// ฟังก์ชันสำหรับการดึงรายการสินค้าทั้งหมด
 function getAllProducts()
 {  
     global $connection;
@@ -27,16 +27,16 @@ function getAllProducts()
     return $query_run = mysqli_query($connection, $query);
 }
 
-//ชื่อหมวดหมู่สินค้า
+// ฟังก์ชันสำหรับการค้นหาข้อมูลโดยชื่อในตาราง
 function getNameActive($table, $name)
 {
     global $connection;
-    $query = "SELECT * FROM $table WHERE  name ='$name' ";
-    return $query_run = mysqli_query($connection, $query);
+    $query = "SELECT * FROM $table WHERE  name ='$name' "; // สร้างคำสั่ง SQL เพื่อค้นหาข้อมูลที่ตรงกับชื่อที่ระบุ
+    return $query_run = mysqli_query($connection, $query); // ส่งคำสั่ง SQL ไปประมวลผลที่ฐานข้อมูล
 
 }
 
-//query ข้อมูลสินค้า
+// ฟังก์ชันสำหรับการค้นหาสินค้าตามหมวดหมู่
 function getProdByCategory($category_id)
 { 
     global $connection;
@@ -52,7 +52,7 @@ function getIDActive($table, $id)
 
 }
 
-//แสดงรายการสินค้าในตระกร้า
+// ฟังก์ชันสำหรับแสดงรายการสินค้าในตระกร้า
 function getCartItems()
 {
     global $connection;
@@ -62,7 +62,7 @@ function getCartItems()
      return $query_run = mysqli_query($connection, $query);
 }
 
-//แสดงออเดอร์
+// ฟังก์ชันสำหรับแสดงรายการออเดอร์
 function getOrders()
 {
     global $connection;
@@ -71,7 +71,7 @@ function getOrders()
     return $query_run = mysqli_query($connection, $query);
 }
 
-//เก็บข้อความ
+// ฟังก์ชันสำหรับการเก็บข้อความและเปลี่ยนเส้นทางการเรียกหน้า
 function redirect($url, $message) 
 {
     $_SESSION['message'] = $message;
@@ -79,7 +79,7 @@ function redirect($url, $message)
     exit();
 }
 
-//ตรวจสอบว่ามีหมายเลขติดตามนั้นอยู่หรือไม่
+// ฟังก์ชันสำหรับตรวจสอบความถูกต้องของหมายเลขติดตาม
 function checkTrackingNoValid($trackingNo)
 {
     global $connection;
@@ -90,7 +90,7 @@ function checkTrackingNoValid($trackingNo)
 
 
 }
-//ค้นหาหมวดหมู่
+// ฟังก์ชันสำหรับค้นหาหมวดหมู่
 function searchCategories($searchTerm) {
     global $connection; // เชื่อมต่อฐานข้อมูล
     $query = "SELECT * FROM category WHERE name LIKE '%$searchTerm%'"; // ค้นหาข้อมูลหมวดหมู่
@@ -105,7 +105,7 @@ function searchCategories($searchTerm) {
     
 }
 
-//ค้นหาสินค้า
+// ฟังก์ชันสำหรับค้นหาหมวดหมู่
 function searchProducts($searchTerm) {
     global $connection; // เชื่อมต่อฐานข้อมูล
     $query = "SELECT * FROM products WHERE name LIKE '%$searchTerm%'"; // ค้นหาข้อมูลสินค้า
@@ -121,8 +121,7 @@ function searchProducts($searchTerm) {
 }
 
 
-
-// แสดงข้อมูลผู้ใช้
+// ฟังก์ชันสำหรับแสดงข้อมูลผู้ใช้
 function getUsers()
 {
     global $connection;
@@ -130,6 +129,3 @@ function getUsers()
     $query = "SELECT * FROM users WHERE id ='$userId'";
     return $query_run = mysqli_query($connection, $query);
 }
-
-
-?> 

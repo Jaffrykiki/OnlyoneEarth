@@ -4,11 +4,12 @@ include('includes/header.php');
 
 ?>
 
+<!-- เริ่มต้นส่วนเนื้อหา -->
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="card" style="width: 70rem;">
-                <!-- เริ่มต้นของการแสดงผู้ใช้งาน -->
+                <!-- ส่วนหัวของการแสดงผู้ใช้งาน -->
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h4 class="m-0">จัดการผู้ใช้งาน</h4>
                     <!-- แบบฟอร์มสำหรับค้นหาผู้ใช้ -->
@@ -51,6 +52,7 @@ include('includes/header.php');
                                             <td width="50px" height="50px"><?= $user['id']; ?></td>
                                             <td width="50px" height="50px">
                                                 <?php
+                                                // แปลงรหัสบทบาทเป็นข้อความ
                                                 if ($user['role_as'] == 0) {
                                                     echo "ผู้ซื้อ";
                                                 } elseif ($user['role_as'] == 1) {
@@ -62,7 +64,7 @@ include('includes/header.php');
                                                 }
                                                 ?>
                                             </td>
-
+                                            <!-- แสดงข้อมูลอื่น ๆ ของผู้ใช้ -->
                                             <td><?= $user['name']; ?></td>
                                             <td><?= $user['email']; ?></td>
                                             <td><?= $user['phone']; ?></td>
