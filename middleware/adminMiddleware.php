@@ -1,16 +1,19 @@
 <?php
 
-include ('../funtion/myfunction.php'); 
+include ('../funtion/myfunction.php');  // เรียกใช้ไฟล์ myfunction.php ที่มีฟังก์ชัน redirect และอื่นๆ
 
-if(isset($_SESSION['auth']))
+if(isset($_SESSION['auth'])) // ตรวจสอบว่ามีเซสชัน auth อยู่หรือไม่
 {
+    // ตรวจสอบว่าบทบาทของผู้ใช้ไม่ใช่แอดมิน (role_as ไม่เท่ากับ 1)
     if($_SESSION['role_as'] != 1)
     {
+         // ถ้าไม่ใช่แอดมิน ให้เรียกใช้ฟังก์ชัน redirect เพื่อกลับไปหน้า index.php พร้อมแสดงข้อความข้อผิดพลาด
         redirect("../index.php","คุณไม่ได้รับอนุญาตให้เข้าถึงหน้านี้");
     }
 }
 else
 {
+    // ถ้าไม่มีเซสชัน auth ให้เรียกใช้ฟังก์ชัน redirect เพื่อส่งผู้ใช้ไปหน้า login.php พร้อมแสดงข้อความเพื่อเข้าสู่ระบบ
     redirect("../login.php","เข้าสู่ระบบเพื่อดำเนินการต่อ");
 }
 
