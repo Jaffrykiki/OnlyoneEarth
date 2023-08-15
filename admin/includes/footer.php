@@ -32,7 +32,10 @@
 <!-- ส่วนของ Script สำหรับการโหลดและใช้งานไฟล์ JavaScript -->
 <script src="assets/js/jquery-3.7.0.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
+<!-- เป็นไลบรารี Perfect Scrollbar ที่ช่วยในการเพิ่มการเลื่อนแบบ custom เพื่อปรับแต่งการเลื่อนบนเว็บไซต์ของคุณ คุณสามารถกำหนดสไตล์เลื่อนได้ตามต้องการ -->
 <script src="assets/js/perfect-scrollbar.min.js"></script>
+
+<!-- เป็นไลบรารี Perfect Scrollbar ที่ช่วยในการเพิ่มการเลื่อนแบบ custom เพื่อปรับแต่งการเลื่อนบนเว็บไซต์ของคุณ คุณสามารถกำหนดสไตล์เลื่อนได้ตามต้องการ -->
 <script src="assets/js/smooth-scrollbar.min.js"></script>
 
 <!-- CDN สำหรับ SweetAlert -->

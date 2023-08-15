@@ -1,6 +1,6 @@
 <?php
 
-include('../middleware/sellerMiddleware.php');
+include('../middleware/sellerMiddleware.php'); // เรียกใช้ middleware เพื่อตรวจสอบสิทธิ์ผู้ใช้
 include('includes/header.php');
 
 
@@ -12,11 +12,13 @@ include('includes/header.php');
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-primary">
+                        <!-- แสดงหัวข้อของหน้ารายการออเดอร์ -->
                     <h4 class="text-white">ออเดอร์
                         <a href="order-history.php" class="btn btn-warning float-end">ประวัติคำสั่งซื้อที่ดำเนินการแล้ว</a>
                     </h4>
                 </div>
                 <div class="card-body" id="">
+                    <!-- สร้างตารางสำหรับแสดงรายการออเดอร์ -->
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -30,8 +32,10 @@ include('includes/header.php');
                         </thead>
                         <tbody>
                             <?php
+                            // ดึงข้อมูลรายการออเดอร์ทั้งหมด
                             $orders = getAllOrders();
 
+                            // ตรวจสอบว่ามีรายการออเดอร์หรือไม่
                             if (mysqli_num_rows($orders) > 0) {
                                 foreach ($orders as $item) {
                             ?>
@@ -50,6 +54,7 @@ include('includes/header.php');
                             } else {
                                 ?>
                                 <tr>
+                                    <!-- แสดงข้อความเมื่อไม่มีรายการออเดอร์ -->
                                     <td colspan="5"> ไม่มีคำสั่งซื้อ </td>
                                 </tr>
                             <?php

@@ -2,29 +2,39 @@
 <html lang="en">
 
 <head>
+    <!-- หัวเรื่องเว็บไซต์ -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
     Seller
   </title>
-  <!--     Fonts and icons     -->
+  <!-- Fonts and icons -->
+  <!-- ลิงก์ไปยัง Google Fonts สำหรับแสดงตัวอักษรในเว็บไซต์ -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
-  <!-- Font Awesome Icons -->
+
+ <!-- ลิงก์ไปยัง Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <!-- Material Icons -->
+
+  <!-- ลิงก์ไปยัง Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <!-- CSS Files -->
+
+ <!-- ลิงก์ไปยัง CSS Files สำหรับการตกแต่งหน้าเว็บ -->
   <link id="pagestyle" href="assets/css/material-dashboard.min.css" rel="stylesheet" />
 
-  <!-- Alertify js -->
+  <!-- ลิงก์ไปยัง Alertify JS -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
   
+
+  <!-- ส่วนสไตล์ CSS เพิ่มเติม -->
   <style>
+    /* กำหนดสไตล์สำหรับ .form-control */
     .form-control {
       border: 2px solid #b3a1a1 !important;
       padding: 8px 20px;
     }
+    
+    /* กำหนดสไตล์สำหรับ .form-select */
     .form-select {
       border: 2px solid #b3a1a1 !important;
       padding: 8px 20px;
