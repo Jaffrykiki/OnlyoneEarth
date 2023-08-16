@@ -105,7 +105,7 @@ function searchCategories($searchTerm) {
     
 }
 
-// ฟังก์ชันสำหรับค้นหาหมวดหมู่
+// ฟังก์ชันสำหรับค้นหาสินค้า
 function searchProducts($searchTerm) {
     global $connection; // เชื่อมต่อฐานข้อมูล
     $query = "SELECT * FROM products WHERE name LIKE '%$searchTerm%'"; // ค้นหาข้อมูลสินค้า
