@@ -143,3 +143,13 @@ function searchOrder_history($searchTerm)
     }
     return $product;
 }
+
+function getLogs()
+{
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $query = "SELECT `cat_logs_id`, `user_id`, `cat_id`, `event`, `created_at` FROM `category_logs`";  // ค้นหาLogs
+    // ทำการส่งคำสั่ง SQL ไปที่ฐานข้อมูลและรับผลลัพธ์
+
+    return $query = mysqli_query($connection, $query);
+ 
+}

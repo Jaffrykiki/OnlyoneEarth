@@ -34,19 +34,19 @@ include('includes/header.php');
                         <tbody>
                             
                             <?php
-                            // เรียกใช้ฟังก์ชัน getAllOrders() เพื่อดึงข้อมูลรายการคำสั่งซื้อทั้งหมด
-                            $Orders = getAllOrders();
+                            // เรียกใช้ฟังก์ชัน getAll("category_logs") เพื่อดึงข้อมูลรายการสินค้าทั้งหมด
+                            $Logs = getLogs();
 
                             // ตรวจสอบว่ามีรายการสินค้าหรือไม่
-                         if (mysqli_num_rows($Orders) > 0) {
+                         if (mysqli_num_rows($Logs) > 0) {
                                 // วนลูปเพื่อแสดงข้อมูลรายการคำสั่งซื้อทั้งหมด
-                                foreach ($Orders as $item) {
+                                foreach ($Logs as $item) {
                             ?>
                                     <tr>
-                                        <td> <?= $item['id']; ?> </td>
-                                        <td> 1 </td>
-                                        <td> 1  </td>
-                                        <td> ลบสินค้า </td>
+                                        <td> <?= $item['cat_logs_id']; ?> </td>
+                                        <td> <?= $item['user_id']; ?></td>
+                                        <td> <?= $item['cat_id']; ?></td>
+                                        <td> <?= $item['event']; ?></td>
                                         <td> <?= $item['created_at']; ?> </td>   
                                     </tr>
                                 <?php
