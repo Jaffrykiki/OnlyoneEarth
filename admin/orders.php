@@ -23,7 +23,7 @@ include('includes/header.php');
                     <a href="order-history.php" class="btn btn-warning float-end">ประวัติคำสั่งซื้อที่ดำเนินการแล้ว</a>
                 </div>
                 <div class="card-body" id="">
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-dark table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -35,6 +35,7 @@ include('includes/header.php');
                             </tr>
                         </thead>
                         <tbody>
+                            
                             <?php
                             // เรียกใช้ฟังก์ชัน getAllOrders() เพื่อดึงข้อมูลรายการคำสั่งซื้อทั้งหมด
                             $Orders = getAllOrders();

@@ -175,7 +175,7 @@ if(mysqli_num_rows($cartItems) ==0 )
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: '0.1'//'<?= $totalPrice ?>'
+                        value: '<?= $totalPrice ?>'
                     }
                 }]
             });

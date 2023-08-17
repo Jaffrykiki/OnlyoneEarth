@@ -2,6 +2,8 @@
 session_start();
 include('../connection/dbcon.php');
 
+
+
 // เรียกดูข้อมูลสินค้าทั้งหมด โดยสามารถระบุเงื่อนไขการกรองข้อมูลได้
 function getAll($table, $where = false)
 {
@@ -116,6 +118,22 @@ function searchOrders($searchTerm)
     id LIKE '%$searchTerm%' OR
     name LIKE '%$searchTerm%' OR 
     tracking_no LIKE '%$searchTerm%'";;  // ค้นหาออเดอร์
+    $result = mysqli_query($connection, $query);
+
+    $product = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $product[] = $row;
+    }
+    return $product;
+}
+
+function searchOrder_history($searchTerm)
+{
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $query = "SELECT * FROM orders WHERE   
+    id LIKE '%$searchTerm%' OR
+    name LIKE '%$searchTerm%'";  // ค้นหาออเดอร์
     $result = mysqli_query($connection, $query);
 
     $product = array();

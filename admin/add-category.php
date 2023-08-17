@@ -6,13 +6,17 @@ include('includes/header.php');
 
 ?>
 
+
+
 <!-- เริ่มต้นส่วนของเนื้อหา -->
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>เพิ่มหมวดหมู่สินค้า</h4>
+                    <h4>เพิ่มหมวดหมู่สินค้า
+                        <a href="logs_category.php" class="btn btn-primary float-end">ประวัติการสร้างหมวดหมู่</a>
+                </h4>
                 </div>
                 <div class="card-body">
                      <!-- แบบฟอร์มสำหรับเพิ่มหมวดหมู่ -->

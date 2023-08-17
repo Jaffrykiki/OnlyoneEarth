@@ -15,11 +15,22 @@ if (isset($_POST['add_category_btn']))
     $cate_query_run = mysqli_query($connection, $cate_query);
 
     if ($cate_query_run) {
+
+    // บันทึก logs เมื่อสำเร็จ
+    
+    $users_id = $_SESSION['auth_user']['id']; // แทนที่ด้วยรหัสผู้ใช้งานจริง
+    $cat_id = mysqli_insert_id($connection); // รหัสหมวดหมู่ที่เพิ่มล่าสุด
+    $event = "เพิ่มหมวดหมู่สินค้า";
+
+    $logs_query = "INSERT INTO category_logs (user_id, cat_id, event) VALUES ('$users_id', '$cat_id', '$event')";
+
+    $logs_query_run = mysqli_query($connection, $logs_query);
+
         // ถ้าสำเร็จ redirect ไปยังหน้า "add-category.php" พร้อมแสดงข้อความ "เพิ่มหมวดหมู่สินค้าเรียบร้อยแล้ว"
-        redirect("add-category.php", "Category Succesfully");
+        redirect("add-category.php", "เพิ่มหมวดหมู่สินค้าเรียบร้อยแล้ว");
     } else {
         // ถ้าไม่สำเร็จ redirect ไปยังหน้า "add-category.php" พร้อมแสดงข้อความ "มีบางอย่างผิดพลาด"
-        redirect("add-category.php", "Something Went Wrong");
+        redirect("add-category.php", "มีบางอย่างผิดพลาด");
     }
 } 
 // เมื่อกดปุ่ม "อัปเดตหมวดหมู่สินค้า" 
@@ -336,4 +347,3 @@ else
 {
     header('Location : ../index.php');
 }
-?>

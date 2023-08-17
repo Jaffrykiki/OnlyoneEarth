@@ -3,6 +3,12 @@
 session_start();
 include('connection/dbcon.php');
 
+// if (!isset($_SESSION['auth_user'])) {
+//     // ไม่มีข้อมูล session auth
+//     header("Location:../login.php"); // แก้ไขเป็น URL ของหน้า login ที่คุณต้องการให้ redirect
+//     exit(); // จบการทำงานของสคริปต์
+// }
+
 // ฟังก์ชันสำหรับการดึงข้อมูลทั้งหมดในตาราง 
 function getAllActive($table)
 {  
