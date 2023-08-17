@@ -11,13 +11,14 @@ include('includes/header.php');
             <div class="card" style="width: 70rem;">
                 <!-- ส่วนหัวของการแสดงผู้ใช้งาน -->
                 <div class="card-header d-flex align-items-center justify-content-between">
-                    <h4 class="m-0">จัดการผู้ใช้งาน</h4>
-                    <!-- แบบฟอร์มสำหรับค้นหาผู้ใช้ -->
-                    <form class="d-flex m-0" role="search" style="max-width: 550px; height: 50px;">
-                        <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit" style="width: 200px; height: 50px;">ค้นหา</button>
-                        <a href="manage_users.php" class="form-control me-4" style="width: 100px; height: 50px; border-radius: 5px; " >กลับ</a> 
-                    </form>
+                    <h4 class="m-0">ผู้ใช้ทั้งหมด
+                        <form class="d-flex m-0" role="search" style="max-width: 550px; height: 50px;">
+                            <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit" style="width: 200px; height: 50px;">ค้นหา</button>
+                            <a href="manage_users.php" class="form-control me-4" style="width: 100px; height: 50px; border-radius: 5px; ">กลับ</a>
+                        </form>
+                    </h4>
+                    <a href="logs_users.php" class="btn btn-warning float-end">ประวัติการทำรายการ</a>
                 </div>
                 <!-- ตารางแสดงผู้ใช้ -->
                 <div class="card-body" id="users_table">
