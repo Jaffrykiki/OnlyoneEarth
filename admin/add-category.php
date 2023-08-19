@@ -15,7 +15,6 @@ include('includes/header.php');
             <div class="card">
                 <div class="card-header">
                     <h4>เพิ่มหมวดหมู่สินค้า
-                        <a href="logs_category.php" class="btn btn-primary float-end">ประวัติการสร้างหมวดหมู่</a>
                 </h4>
                 </div>
                 <div class="card-body">

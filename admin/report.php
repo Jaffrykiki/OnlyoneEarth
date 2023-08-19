@@ -13,37 +13,39 @@ include('includes/header.php');
             <!-- เริ่มต้นของการแสดงรายการคำสั่งซื้อ -->
             <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
-                    <h4 class="m-0">ตรวจสอบบันทึก</h4>
-                    <a href="category.php" class="btn btn-primary float-end">กลับ</a>
+                    <h4 class="m-0">คำร้อง </h4>
                 </div>
                 <div class="card-body" id="">
                     <table class="table table-dark table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>ไอดีแอดมิน</th>
-                                <th>รหัสหมวดหมู่</th>
-                                <th>เหตุการณ์</th>
-                                <th>วันที่</th>
+                                <th>ชื่อผู้รายงาน</th>
+                                <th>เรื่อง</th>
+                                <th>รายละเอียด</th>
+                                <th>รูปภาพสินค้า</th>
+                                <th>วันที่รายงาน</th>
                             </tr>
                         </thead>
                         <tbody>
                             
                             <?php
-                            // เรียกใช้ฟังก์ชัน getAll("category_logs") เพื่อดึงข้อมูลรายการสินค้าทั้งหมด
-                            $Logs = getLogs_Cat();
-
-                            // ตรวจสอบว่ามีรายการสินค้าหรือไม่
-                         if (mysqli_num_rows($Logs) > 0) {
+                            // เรียกใช้ฟังก์ชัน getAllOrders() เพื่อดึงข้อมูลรายการคำสั่งซื้อทั้งหมด
+                            $Orders = getAllReports();
+                            if (mysqli_num_rows($Orders) > 0) {
                                 // วนลูปเพื่อแสดงข้อมูลรายการคำสั่งซื้อทั้งหมด
-                                foreach ($Logs as $item) {
+                                foreach ($Orders as $item) {
                             ?>
                                     <tr>
-                                        <td> <?= $item['cat_logs_id']; ?> </td>
-                                        <td> <?= $item['user_id']; ?></td>
-                                        <td> <?= $item['cat_id']; ?></td>
-                                        <td> <?= $item['event']; ?></td>
-                                        <td> <?= $item['created_at']; ?> </td>   
+                                        <td> <?= $item['id']; ?> </td>
+                                        <td> <?= $item['user_id']; ?> </td>
+                                        <td> <?= $item['subject']; ?> </td>
+                                        <td> <?= $item['details']; ?> </td>
+                                        <td>
+                                                <img src="../uploads/<?= $item['img']; ?>" width="130px" height="130px">
+                                            </td>
+                                        <td> <?= $item['created_at']; ?> </td>
+                                       
                                     </tr>
                                 <?php
                                 }
@@ -51,7 +53,7 @@ include('includes/header.php');
                                 // ถ้าไม่มีรายการคำสั่งซื้อ
                                 ?>
                                 <tr>
-                                    <td colspan="5"> ไม่มีเหตุการณ์ </td>
+                                    <td colspan="5"> ไม่มีคำสั่งซื้อ </td>
                                 </tr>
                             <?php
                             }

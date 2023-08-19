@@ -21,6 +21,8 @@ include('includes/header.php');
                     </form>
                     </h4>
                     <a href="order-history.php" class="btn btn-warning float-end">ประวัติคำสั่งซื้อที่ดำเนินการแล้ว</a>
+                    <br> 
+                    <a href="logs_order.php" class="btn btn-secondary ">ตรวจสอบบันทึก</a>
                 </div>
                 <div class="card-body" id="">
                     <table class="table table-dark table-striped">

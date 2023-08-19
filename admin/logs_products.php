@@ -14,15 +14,15 @@ include('includes/header.php');
             <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
                     <h4 class="m-0">ตรวจสอบบันทึก</h4>
-                    <a href="category.php" class="btn btn-primary float-end">กลับ</a>
+                    <a href="products.php" class="btn btn-primary float-end">กลับ</a>
                 </div>
                 <div class="card-body" id="">
                     <table class="table table-dark table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>ID_Logs</th>
                                 <th>ไอดีแอดมิน</th>
-                                <th>รหัสหมวดหมู่</th>
+                                <th>รหัสสินค้า</th>
                                 <th>เหตุการณ์</th>
                                 <th>วันที่</th>
                             </tr>
@@ -31,7 +31,7 @@ include('includes/header.php');
                             
                             <?php
                             // เรียกใช้ฟังก์ชัน getAll("category_logs") เพื่อดึงข้อมูลรายการสินค้าทั้งหมด
-                            $Logs = getLogs_Cat();
+                            $Logs = getLogs_Pro();
 
                             // ตรวจสอบว่ามีรายการสินค้าหรือไม่
                          if (mysqli_num_rows($Logs) > 0) {
@@ -39,9 +39,9 @@ include('includes/header.php');
                                 foreach ($Logs as $item) {
                             ?>
                                     <tr>
-                                        <td> <?= $item['cat_logs_id']; ?> </td>
-                                        <td> <?= $item['user_id']; ?></td>
-                                        <td> <?= $item['cat_id']; ?></td>
+                                        <td> <?= $item['p_logs_id']; ?> </td>
+                                        <td> <?= $item['u_id']; ?></td>
+                                        <td> <?= $item['p_id']; ?></td>
                                         <td> <?= $item['event']; ?></td>
                                         <td> <?= $item['created_at']; ?> </td>   
                                     </tr>

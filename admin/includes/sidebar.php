@@ -73,11 +73,11 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-white <?= $page == "logs.php"? 'bg-gradient-primary':''; ?>" href="logs.php">
+        <a class="nav-link text-white <?= $page == "report.php"? 'bg-gradient-primary':''; ?>" href="report.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">table_view</i>
           </div>
-          <span class="nav-link-text ms-1">เหตุการณ์</span>
+          <span class="nav-link-text ms-1">คำร้องจากผู้ใช้</span>
         </a>
       </li>
       <!-- จบส่วนของเมนูใน Sidebar -->

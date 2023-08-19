@@ -44,6 +44,14 @@ function getAllOrders()
     return $query_run = mysqli_query($connection, $query);
 }
 
+// ดึงคำสั่งซื้อที่มีสถานะ "0" (ยังไม่ดำเนินการ) โดยมีไอดีของผู้ขาย
+function getAllOrders_seller($sellerId)
+{
+    global $connection;
+    $query = "SELECT * FROM orders WHERE sellerId = '$sellerId' AND status = '0'";
+    return $query_run = mysqli_query($connection, $query);
+}
+
 // ดึงคำสั่งซื้อที่ไม่มีสถานะ "0" (สำเร็จแล้ว)
 function getOrderHistroy()
 {
@@ -128,6 +136,7 @@ function searchOrders($searchTerm)
     return $product;
 }
 
+//ฟังก์ชันสำหรับค้นหาออเดอร์ที่สำเร็จแล้ว
 function searchOrder_history($searchTerm)
 {
     global $connection; // เชื่อมต่อฐานข้อมูล
@@ -143,13 +152,54 @@ function searchOrder_history($searchTerm)
     }
     return $product;
 }
-
-function getLogs()
+//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง category_logs ในฐานข้อมูล
+function getLogs_Cat()
 {
     global $connection; // เชื่อมต่อฐานข้อมูล
     $query = "SELECT `cat_logs_id`, `user_id`, `cat_id`, `event`, `created_at` FROM `category_logs`";  // ค้นหาLogs
-    // ทำการส่งคำสั่ง SQL ไปที่ฐานข้อมูลและรับผลลัพธ์
+  
+    // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $query = mysqli_query($connection, $query); 
 
-    return $query = mysqli_query($connection, $query);
+    // คืนผลลัพธ์การ query กลับไป
+    return $query;
+ 
+}
+//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง category_logs ในฐานข้อมูล
+function getLogs_Pro()
+{
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $query = "SELECT `p_logs_id`, `u_id`, `p_id`, `event`, `created_at` FROM `products_logs`";  // ค้นหาLogs
+  
+    // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $query = mysqli_query($connection, $query); 
+
+    // คืนผลลัพธ์การ query กลับไป
+    return $query;
+ 
+}
+//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง orders_categoryในฐานข้อมูล
+function getLogs_Order()
+{
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $query = "SELECT `or_logs_id`, `u_id`, `ord_id`, `event`, `created_at` FROM `orders_logs`";  // ค้นหาLogs
+  
+    // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $query = mysqli_query($connection, $query); 
+
+    // คืนผลลัพธ์การ query กลับไป
+    return $query;
+ 
+}
+function getAllReports()
+{
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $select_query = "SELECT * FROM reports";
+  
+    // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $select_query); 
+
+    // คืนผลลัพธ์การ query กลับไป
+    return $select_query;
  
 }

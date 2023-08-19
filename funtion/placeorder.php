@@ -36,12 +36,11 @@ else if (isset($_SESSION['auth']))
         $pincode = mysqli_real_escape_string($connection, $_POST['pincode']);
         $address = mysqli_real_escape_string($connection, $_POST['address']);
         $payment_mode = mysqli_real_escape_string($connection, $_POST['payment_mode']);
-        $payment_id = mysqli_real_escape_string($connection, $_POST['payment_id']);
-        // if ($payment_id === null) {
-        //     $payment_id = "null"; // เปลี่ยนเป็นสตริงที่ถูกต้อง
-        // } else {
-        //     $payment_id = mysqli_real_escape_string($connection, $_POST['payment_id']);
-        // }
+        $payment_id = "";
+
+        if ($payment_mode !== "COD") {
+            $payment_id = mysqli_real_escape_string($connection, $_POST['payment_id']); // เปลี่ยนเป็นสตริงที่ถูกต้อง
+        } 
         
             // ตรวจสอบข้อมูลที่กรอกในฟอร์ม
         if($name == "" || $email == "" || $phone == "" || $pincode == "" || $address == "")
@@ -52,28 +51,64 @@ else if (isset($_SESSION['auth']))
         } 
 
         $userId = $_SESSION['auth_user']['id'];
+
         // ดึงสินค้าในตะกร้าของผู้ใช้
-        $query = "SELECT c.id as cid, c.prod_id, c.prod_qty, p.id as pid, p.name, p.image, p.price, p.users_id 
-            FROM carts c, products p WHERE c.prod_id=p.id AND c.user_id='$userId' ORDER BY c.id DESC  ";
+        // $query = "SELECT c.id as cid, c.prod_id, c.prod_qty, p.id as pid, p.name, p.image, p.price, p.users_id 
+        //     FROM carts c, products p WHERE c.prod_id=p.id AND c.user_id='$userId' ORDER BY c.id DESC  ";
+
+        // ดึงสินค้าในตะกร้าของผู้ใช้
+        $query = "SELECT c.id as cid, c.user_id, c.prod_id, c.prod_qty, p.id as pid, p.name, p.image, p.price, p.users_id 
+        FROM carts c
+        JOIN products p ON c.prod_id = p.id
+        WHERE c.user_id = '$userId' ORDER BY c.id DESC";
 
         $query_run = mysqli_query($connection, $query);
 
-        // ดึงสินค้าในตะกร้าของผู้ใช้
-        $totalPrice = 0;
-        foreach ($query_run as $citem) 
-        {
-            $totalPrice += $citem['price'] * $citem['prod_qty'];
+        $ordersBySeller = array(); // เก็บข้อมูลการสั่งซื้อตามคนขาย
+
+        foreach ($query_run as $citem) {
+            // echo "adasdas". $citem['users_id'];
+            $sellerId = $citem['users_id'];
+            if (!isset($ordersBySeller[$sellerId])) {
+                $ordersBySeller[$sellerId] = array(
+                    'sellerId' => $sellerId,
+                    'sellerItems' => array(),
+                );
+            }
+        
+            $ordersBySeller[$sellerId]['sellerItems'][] = $citem;
         }
+
+        // ดึงสินค้าในตะกร้าของผู้ใช้
+
+        foreach ($ordersBySeller as $sellerOrder) {
+            $sellerId = $sellerOrder['sellerId'];
+            $sellerItems = $sellerOrder['sellerItems'];
+
+        
+            $totalPrice = 0;
+        
+            foreach ($sellerItems as $citem) {
+                $totalPrice += $citem['price'] * $citem['prod_qty'];
+            }
+
+        //shama
+        // $totalPrice = 0;
+        // foreach ($query_run as $citem) 
+        // {
+        //     $totalPrice += $citem['price'] * $citem['prod_qty'];
+            
+        // }
 
         //เพิ่มข้อมูลเข้าไปในตาราง orders
         $tracking_no = "Somtuy".rand(1111,9999).substr($phone,2);
-        $insert_query = "INSERT INTO orders (user_id, tracking_no, name, email, phone, address, pincode, total_price, payment_mode, payment_id ) VALUES ('$userId','$tracking_no', '$name', '$email', '$phone', '$address', '$pincode', '$totalPrice', '$payment_mode', '$payment_id') ";
+        $insert_query = "INSERT INTO orders (user_id,sellerId,tracking_no, name, email, phone, address, pincode, total_price, payment_mode, payment_id) VALUES ('$userId','$sellerId','$tracking_no', '$name', '$email', '$phone', '$address', '$pincode', '$totalPrice', '$payment_mode', '$payment_id') ";
         $insert_query_run = mysqli_query($connection, $insert_query);
        
         if($insert_query_run)
         {
             $order_id = mysqli_insert_id($connection);
-            foreach ($query_run as $citem) 
+            foreach ($sellerItems  as $citem) 
             {
                 // เพิ่มรายการสินค้าในตาราง order_items
                 $prod_id = $citem['prod_id'];
@@ -101,21 +136,12 @@ else if (isset($_SESSION['auth']))
             // ลบรายการสินค้าในตะกร้าหลังสั่งซื้อ
             $deleteCartQuery = "DELETE FROM carts WHERE user_id='$userId'";
             $deleteCartQuery_run = mysqli_query($connection , $deleteCartQuery);
-            
-            if($payment_mode == "COD")
-            {
-                $_SESSION['message'] = "สั่งซื้อสินค้าเรียบร้อยแล้ว";
-                header('Location: ../my-orders.php');
-                die();
-            }else{
-                echo 201;
-            }
         }
     }
+    $_SESSION['message'] = "สั่งซื้อสินค้าเรียบร้อยแล้ว";
+    header('Location: ../my-orders.php');
 }
-
+}
 else  {
     header('Location: ../index.php');
 }
-
-?>

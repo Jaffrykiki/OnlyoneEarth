@@ -4,6 +4,8 @@ include('../middleware/sellerMiddleware.php'); // เรียกใช้ middl
 include('includes/header.php');
 
 
+// ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
+$sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
 ?>
 
 
@@ -33,7 +35,7 @@ include('includes/header.php');
                         <tbody>
                             <?php
                             // ดึงข้อมูลรายการออเดอร์ทั้งหมด
-                            $orders = getAllOrders();
+                            $orders = getAllOrders_seller($sellerId);
 
                             // ตรวจสอบว่ามีรายการออเดอร์หรือไม่
                             if (mysqli_num_rows($orders) > 0) {

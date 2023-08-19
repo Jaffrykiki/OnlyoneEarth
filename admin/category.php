@@ -21,6 +21,7 @@ include('includes/header.php');
                             <a href="category.php" class="form-control me-4" style="width: 100px; height: 50px; border-radius: 5px; " >กลับ</a> 
                         </form>
                     </div>
+                    <a href="logs_category.php" class="btn btn-secondary float-end">ตรวจสอบบันทึก</a>
                 </div>
                 <div class="card-body" id="category_table">
                     <table class="table table-success table-striped">

@@ -65,7 +65,7 @@ include('includes/header.php');
                             </div>
                             <div class="col-md-3">
                                 <label class="mb-0">กำลังมาแรง</label>
-                                <input type="checkbox" required name="trending">
+                                <input type="checkbox"  name="trending">
                             </div>
                         </div>
                         <div class="col-md-12">

@@ -29,7 +29,7 @@ function getAllTrending()
 function getAllProducts()
 {  
     global $connection;
-    $query = "SELECT * FROM products";  
+    $query = "SELECT * FROM products LIMIT 8 ";  
     return $query_run = mysqli_query($connection, $query);
 }
 
