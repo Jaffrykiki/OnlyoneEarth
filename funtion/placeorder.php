@@ -26,7 +26,6 @@ if(isset($_POST['cancel_order'])) {
 
 else if (isset($_SESSION['auth'])) 
 {
-    // $payment_id = null;
     if(isset($_POST['placeOrderBtn']))
     {   
         // รับข้อมูลจากฟอร์มสำหรับการสั่งซื้อ
@@ -52,9 +51,6 @@ else if (isset($_SESSION['auth']))
 
         $userId = $_SESSION['auth_user']['id'];
 
-        // ดึงสินค้าในตะกร้าของผู้ใช้
-        // $query = "SELECT c.id as cid, c.prod_id, c.prod_qty, p.id as pid, p.name, p.image, p.price, p.users_id 
-        //     FROM carts c, products p WHERE c.prod_id=p.id AND c.user_id='$userId' ORDER BY c.id DESC  ";
 
         // ดึงสินค้าในตะกร้าของผู้ใช้
         $query = "SELECT c.id as cid, c.user_id, c.prod_id, c.prod_qty, p.id as pid, p.name, p.image, p.price, p.users_id 
@@ -136,11 +132,17 @@ else if (isset($_SESSION['auth']))
             // ลบรายการสินค้าในตะกร้าหลังสั่งซื้อ
             $deleteCartQuery = "DELETE FROM carts WHERE user_id='$userId'";
             $deleteCartQuery_run = mysqli_query($connection , $deleteCartQuery);
+            if($payment_mode == "COD")
+            {
+                $_SESSION['message'] = "สั่งซื้อเรียบร้อยแล้ว";
+                header('Location: ../my-orders.php');
+                die();
+            }else {
+                echo 201; 
+            }
         }
     }
-    $_SESSION['message'] = "สั่งซื้อสินค้าเรียบร้อยแล้ว";
-    header('Location: ../my-orders.php');
-}
+    }
 }
 else  {
     header('Location: ../index.php');

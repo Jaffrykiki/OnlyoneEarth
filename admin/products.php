@@ -2,6 +2,68 @@
 include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ middleware ที่ใช้ตรวจสอบสิทธิ์ของผู้ดูแลระบบ
 include('includes/header.php');
 
+//query
+$query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
+	$row = mysqli_fetch_row($query);
+
+	$rows = $row[0];
+
+	$page_rows = 5;  //จำนวนข้อมูลที่ต้องการให้แสดงใน 1 หน้า  ตย. 5 record / หน้า 
+
+	$last = ceil($rows/$page_rows);
+
+	if($last < 1){
+		$last = 1;
+	}
+
+	$pagenum = 1;
+
+	if(isset($_GET['pn'])){
+		$pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
+	}
+
+	if ($pagenum < 1) {
+		$pagenum = 1;
+	}
+	else if ($pagenum > $last) {
+		$pagenum = $last;
+	}
+
+	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+
+	$nquery=mysqli_query($connection,"SELECT * from  products $limit");
+
+	$paginationCtrls = '';
+
+	if($last != 1){
+
+	if ($pagenum > 1) {
+$previous = $pagenum - 1;
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previous.'#og" class="btn btn-info">Previous</a> &nbsp; &nbsp; ';
+
+		for($i = $pagenum-4; $i < $pagenum; $i++){
+			if($i > 0){
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+        // $paginationCtrls .= '<a href="#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+			}
+	}
+}
+
+	$paginationCtrls .= ''.$pagenum.' &nbsp; ';
+
+	for($i = $pagenum+1; $i <= $last; $i++){
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+		if($i >= $pagenum+4){
+			break;
+		}
+	}
+
+if ($pagenum != $last) {
+$next = $pagenum + 1;
+$paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'#og" class="btn btn-info">Next</a> ';
+}
+	}
+
 ?>
 
 <div class="container">
@@ -12,7 +74,7 @@ include('includes/header.php');
                 <div class="card-header">
                     <!-- ส่วนหัวของการแสดงผู้ใช้งาน -->
                     <div class="card-header d-flex align-items-center justify-content-between">
-                        <h4 class="m-0">สินค้าทั้งหมด</h4>
+                        <h4  class="m-0">สินค้าทั้งหมด</h4>
                         <!-- แบบฟอร์มสำหรับค้นหาผู้ใช้ -->
                         <form class="d-flex m-0" role="search" style="max-width: 550px; height: 50px;">
                             <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
@@ -20,9 +82,9 @@ include('includes/header.php');
                             <a href="products.php" class="form-control me-4" style="width: 100px; height: 50px; border-radius: 5px; ">กลับ</a>
                         </form>
                     </div>
-                    <a href="logs_products.php" class="btn btn-secondary float-end">ตรวจสอบบันทึก</a>
+                    <a  href="logs_products.php" class="btn btn-secondary float-end">ตรวจสอบบันทึก</a>
                 </div>
-                <div class="card-body" id="products_table">
+                <div id="og" class="card-body table-responsive" id="products_table">
                     <table class="table table-dark table-striped">
                         <thead>
                             <tr>
@@ -66,9 +128,9 @@ include('includes/header.php');
                                 } else if (empty($products)) {
                                     echo "ค้นหาสินค้าไม่เจอ";
                                 }
-                            } else if (mysqli_num_rows($Products) > 0) {
-                                // ตรวจสอบว่ามีรายการสินค้าหรือไม่
-                                foreach ($Products as $item) {
+                            } // ตรวจสอบว่ามีรายการสินค้าหรือไม่
+                            else if ($nquery && mysqli_num_rows($nquery) > 0) {
+                                while ($item = mysqli_fetch_assoc($nquery)) {
                                     ?>
                                     <tr>
                                         <td><?= $item['id']; ?></td>
@@ -100,6 +162,7 @@ include('includes/header.php');
             </div>
             <!-- สิ้นสุดการแสดงรายการสินค้า -->
         </div>
+        <div id="pagination_controls"><?php echo $paginationCtrls; ?></div>	
     </div>
 </div>
 

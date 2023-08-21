@@ -3,14 +3,76 @@
 include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ middleware adminMiddleware.php เพื่อตรวจสอบสิทธิ์ผู้ดูแลระบบ
 include('includes/header.php');
 
+//query
+$query=mysqli_query($connection,"SELECT COUNT(id) FROM `category`");
+	$row = mysqli_fetch_row($query);
+
+	$rows = $row[0];
+
+	$page_rows = 5;  //จำนวนข้อมูลที่ต้องการให้แสดงใน 1 หน้า  ตย. 5 record / หน้า 
+
+	$last = ceil($rows/$page_rows);
+
+	if($last < 1){
+		$last = 1;
+	}
+
+	$pagenum = 1;
+
+	if(isset($_GET['pn'])){
+		$pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
+	}
+
+	if ($pagenum < 1) {
+		$pagenum = 1;
+	}
+	else if ($pagenum > $last) {
+		$pagenum = $last;
+	}
+
+	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+
+	$nquery=mysqli_query($connection,"SELECT * from  category $limit");
+
+	$paginationCtrls = '';
+
+	if($last != 1){
+
+	if ($pagenum > 1) {
+$previous = $pagenum - 1;
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previous.'#og" class="btn btn-info">Previous</a> &nbsp; &nbsp; ';
+
+		for($i = $pagenum-4; $i < $pagenum; $i++){
+			if($i > 0){
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+        // $paginationCtrls .= '<a href="#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+			}
+	}
+}
+
+	$paginationCtrls .= ''.$pagenum.' &nbsp; ';
+
+	for($i = $pagenum+1; $i <= $last; $i++){
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+		if($i >= $pagenum+4){
+			break;
+		}
+	}
+
+if ($pagenum != $last) {
+$next = $pagenum + 1;
+$paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'#og" class="btn btn-info">Next</a> ';
+}
+	}
+
 ?>
 
 <!-- เริ่มต้นส่วนของเนื้อหา -->
 <div class="container">
-    <div class="row">
+    <div id="og" class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <div  class="card-header">
                     <!-- ส่วนหัวของการแสดงผู้ใช้งาน -->
                     <div class="card-header d-flex align-items-center justify-content-between">
                         <h4 class="m-0">หมวดหมู่สินค้า</h4>
@@ -23,7 +85,7 @@ include('includes/header.php');
                     </div>
                     <a href="logs_category.php" class="btn btn-secondary float-end">ตรวจสอบบันทึก</a>
                 </div>
-                <div class="card-body" id="category_table">
+                <div class="card-body table-responsive" id="category_table">
                     <table class="table table-success table-striped">
                         <thead>
                             <tr>
@@ -62,8 +124,8 @@ include('includes/header.php');
                                 echo "ค้นหาหมวดหมู่สินค้าไม่เจอ";
                             }
                         }   // ตรวจสอบว่ามีข้อมูลหมวดหมู่หรือไม่
-                        else if (mysqli_num_rows($caregories) > 0) {
-                            foreach ( $caregories as $item) {
+                        else if ($nquery && mysqli_num_rows($nquery) > 0) {
+                            while ($item = mysqli_fetch_assoc($nquery)) {
                                 ?>
                                 <tr>
                                         <td><?= $item['id']; ?></td>
@@ -88,6 +150,7 @@ include('includes/header.php');
                 </div>
             </div>
         </div>
+        <div id="pagination_controls"><?php echo $paginationCtrls; ?></div>	
     </div>
 </div>
 <!-- จบส่วนของเนื้อหา -->

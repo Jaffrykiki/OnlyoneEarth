@@ -2,11 +2,73 @@
 include('../middleware/adminMiddleware.php');
 include('includes/header.php');
 
+//query
+$query=mysqli_query($connection,"SELECT COUNT(id) FROM `users`");
+	$row = mysqli_fetch_row($query);
+
+	$rows = $row[0];
+
+	$page_rows = 5;  //จำนวนข้อมูลที่ต้องการให้แสดงใน 1 หน้า  ตย. 5 record / หน้า 
+
+	$last = ceil($rows/$page_rows);
+
+	if($last < 1){
+		$last = 1;
+	}
+
+	$pagenum = 1;
+
+	if(isset($_GET['pn'])){
+		$pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
+	}
+
+	if ($pagenum < 1) {
+		$pagenum = 1;
+	}
+	else if ($pagenum > $last) {
+		$pagenum = $last;
+	}
+
+	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+
+	$nquery=mysqli_query($connection,"SELECT * from  users $limit");
+
+	$paginationCtrls = '';
+
+	if($last != 1){
+
+	if ($pagenum > 1) {
+$previous = $pagenum - 1;
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previous.'#og" class="btn btn-info">Previous</a> &nbsp; &nbsp; ';
+
+		for($i = $pagenum-4; $i < $pagenum; $i++){
+			if($i > 0){
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+        // $paginationCtrls .= '<a href="#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+			}
+	}
+}
+
+	$paginationCtrls .= ''.$pagenum.' &nbsp; ';
+
+	for($i = $pagenum+1; $i <= $last; $i++){
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+		if($i >= $pagenum+4){
+			break;
+		}
+	}
+
+if ($pagenum != $last) {
+$next = $pagenum + 1;
+$paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'#og" class="btn btn-info">Next</a> ';
+}
+	}
+
 ?>
 
 <!-- เริ่มต้นส่วนเนื้อหา -->
 <div class="container">
-    <div class="row">
+    <div id="og" class="row">
         <div class="col-md-12">
             <div class="card" style="width: 70rem;">
                 <!-- ส่วนหัวของการแสดงผู้ใช้งาน -->
@@ -21,7 +83,7 @@ include('includes/header.php');
                     <a href="logs_users.php" class="btn btn-warning float-end">ประวัติการทำรายการ</a>
                 </div>
                 <!-- ตารางแสดงผู้ใช้ -->
-                <div class="card-body" id="users_table">
+                <div class="card-body table-responsive" style="width: 100%;"  id="users_table">
                     <table class="table table-dark table-striped">
                         <thead>
                             <tr>
@@ -87,8 +149,9 @@ include('includes/header.php');
                                 } else if (empty($Users)) {
                                     echo "ไม่เจอผู้ใช้ที่ค้นหา";
                                 }
-                            } else  if (mysqli_num_rows($users) > 0) {
-                                foreach ($users as $item) {
+                            } 
+                            else if ($nquery && mysqli_num_rows($nquery) > 0) {
+                                while ($item = mysqli_fetch_assoc($nquery)) {
                                     // แสดงข้อมูลผู้ใช้ทั้งหมด
                                     ?>
                                     <tr>
@@ -134,6 +197,7 @@ include('includes/header.php');
                 </div>
             </div>
         </div>
+        <div id="pagination_controls"><?php echo $paginationCtrls; ?></div>	
     </div>
 </div>
 

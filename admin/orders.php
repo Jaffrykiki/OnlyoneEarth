@@ -3,6 +3,68 @@
 include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ middleware ที่ใช้ตรวจสอบสิทธิ์ของผู้ดูแลระบบ
 include('includes/header.php'); 
 
+//query
+$query=mysqli_query($connection,"SELECT COUNT(id) FROM `orders`");
+	$row = mysqli_fetch_row($query);
+
+	$rows = $row[0];
+
+	$page_rows = 5;  //จำนวนข้อมูลที่ต้องการให้แสดงใน 1 หน้า  ตย. 5 record / หน้า 
+
+	$last = ceil($rows/$page_rows);
+
+	if($last < 1){
+		$last = 1;
+	}
+
+	$pagenum = 1;
+
+	if(isset($_GET['pn'])){
+		$pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
+	}
+
+	if ($pagenum < 1) {
+		$pagenum = 1;
+	}
+	else if ($pagenum > $last) {
+		$pagenum = $last;
+	}
+
+	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+
+	$nquery=mysqli_query($connection,"SELECT * from  orders $limit");
+
+	$paginationCtrls = '';
+
+	if($last != 1){
+
+	if ($pagenum > 1) {
+$previous = $pagenum - 1;
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previous.'#og" class="btn btn-info">Previous</a> &nbsp; &nbsp; ';
+
+		for($i = $pagenum-4; $i < $pagenum; $i++){
+			if($i > 0){
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+        // $paginationCtrls .= '<a href="#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+			}
+	}
+}
+
+	$paginationCtrls .= ''.$pagenum.' &nbsp; ';
+
+	for($i = $pagenum+1; $i <= $last; $i++){
+		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+		if($i >= $pagenum+4){
+			break;
+		}
+	}
+
+if ($pagenum != $last) {
+$next = $pagenum + 1;
+$paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'#og" class="btn btn-info">Next</a> ';
+}
+	}
+
 
 ?>
 
@@ -65,11 +127,9 @@ include('includes/header.php');
                                 } else if (empty($orders)) {
                                     echo "ค้นหาออเดอร์ไม่เจอ";
                                 }
-
-                            // ตรวจสอบว่ามีรายการคำสั่งซื้อหรือไม่
-                             } else if (mysqli_num_rows($Orders) > 0) {
-                                // วนลูปเพื่อแสดงข้อมูลรายการคำสั่งซื้อทั้งหมด
-                                foreach ($Orders as $item) {
+                             } // ตรวจสอบว่ามีรายการคำสั่งซื้อหรือไม่
+                             else if ($nquery && mysqli_num_rows($nquery) > 0) {
+                                while ($item = mysqli_fetch_assoc($nquery)) {
                             ?>
                                     <tr>
                                         <td> <?= $item['id']; ?> </td>
@@ -98,6 +158,7 @@ include('includes/header.php');
             </div>
             <!-- สิ้นสุดการแสดงรายการคำสั่งซื้อ --> 
         </div>
+        <div id="pagination_controls"><?php echo $paginationCtrls; ?></div>	
     </div>
 </div>
 
