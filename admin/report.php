@@ -53,7 +53,7 @@ include('includes/header.php');
                                 // ถ้าไม่มีรายการคำสั่งซื้อ
                                 ?>
                                 <tr>
-                                    <td colspan="5"> ไม่มีคำสั่งซื้อ </td>
+                                    <td colspan="5"> ไม่มีคำร้องจากผู้ใช้ </td>
                                 </tr>
                             <?php
                             }
