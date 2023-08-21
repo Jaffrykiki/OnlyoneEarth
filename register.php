@@ -39,29 +39,29 @@ include('includes/header.php');
                         <!-- // ลบเซสชันข้อความหลังจากแสดงข้อความแจ้งเตือน -->
                         <form action="funtion/authcode.php" method="POST">
                             <div class="mb-3">
-                                <label class="form-label">Name</label>
+                                <label class="form-label">ชื่อ</label>
                                 <!-- ช่องกรอกชื่อ -->
                                 <input type="text" name="name" required class="form-control" placeholder="ป้อนชื่อที่คุณต้องการสร้าง">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Phone</label>
+                                <label class="form-label">เบอร์โทร</label>
                                 <!-- ช่องกรอกเบอร์โทรศัพท์ -->
-                                <input type="phone" name="phone" required class="form-control" placeholder="ป้อนเบอร์โทรศัพท์">
+                                <input type="tel" name="phone" required class="form-control" placeholder="ป้อนเบอร์โทรศัพท์" pattern="[0-9]{10}" title="โปรดป้อนหมายเลขโทรศัพท์ 10 หลัก">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                <label for="exampleInputEmail1" class="form-label">อีเมล์</label>
                                 <!-- ช่องกรอกอีเมล์ -->
                                 <input type="email" name="email" required class="form-control" placeholder="ป้อนอีเมล์ของคุณ" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Password</label>
+                                <label for="exampleInputPassword1" class="form-label">รหัสผ่าน</label>
                                 <!-- ช่องกรอกรหัสผ่าน -->
-                                <input type="password" name="password" required class="form-control" placeholder="ป้อนรหัสผ่านที่คุณต้องการสร้าง" id="exampleInputPassword1">
+                                <input type="password" name="password" required class="form-control" placeholder="ป้อนรหัสผ่านที่คุณต้องการสร้าง" id="exampleInputPassword1" pattern=".{8,}" title="รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Confirm Password</label>
+                                <label class="form-label">ยืนยันรหัสผ่าน</label>
                                 <!-- ช่องกรอกยืนยันรหัสผ่าน -->
-                                <input type="password" name="cpassword" required class="form-control" placeholder="ยืนยันรหัสของคุณอีกครั้ง">
+                                <input type="password" name="cpassword" required class="form-control" placeholder="ยืนยันรหัสของคุณอีกครั้ง" id="exampleInputcPassword1" pattern=".{8,}" title="รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร">
                             </div>
                             <!-- ปุ่มสำหรับส่งข้อมูลการสมัครสมาชิก -->
                             <button type="submit" name="register_btn" class="btn btn-primary">ยืนยัน</button>

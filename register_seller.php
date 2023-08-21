@@ -43,7 +43,7 @@ include('includes/header.php');
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">เบอร์โทรศัพท์</label>
-                                <input type="phone" required name="phone" class="form-control" placeholder="ป้อนเบอร์โทรศัพท์">
+                                <input type="tel" name="phone" required class="form-control" placeholder="ป้อนเบอร์โทรศัพท์" pattern="[0-9]{10}" title="โปรดป้อนหมายเลขโทรศัพท์ 10 หลัก">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">อีเมล์</label>
@@ -51,11 +51,11 @@ include('includes/header.php');
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputPassword1" class="form-label">รหัสผ่าน</label>
-                                <input type="password" required name="password" class="form-control" placeholder="ป้อนรหัสผ่านที่คุณต้องการสร้าง" id="exampleInputPassword1">
+                                <input type="password" required name="password" class="form-control" placeholder="ป้อนรหัสผ่านที่คุณต้องการสร้าง" id="exampleInputPassword1" pattern=".{8,}" title="รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">ยืนยันรหัสผ่าน</label>
-                                <input type="password" required name="cpassword" class="form-control" placeholder="ยืนยันรหัสของคุณอีกครั้ง">
+                                <input type="password" required name="cpassword" class="form-control" placeholder="ยืนยันรหัสของคุณอีกครั้ง" pattern=".{8,}" title="รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร">
                             </div>
                             <button type="submit" name="register_seller_btn" class="btn btn-primary">ยืนยัน</button>
                             <a href="index.php" class="btn btn-warning">กลับไปหน้าหลัก</a>

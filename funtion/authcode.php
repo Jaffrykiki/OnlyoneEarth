@@ -63,17 +63,25 @@ if (isset($_POST['register_btn']))
     $password = mysqli_real_escape_string($connection, $_POST['password']);
     $cpassword = mysqli_real_escape_string($connection, $_POST['cpassword']);
 
+     // ตรวจสอบว่ามีเบอร์โทรศัพท์ในระบบแล้วหรือไม่
+     $check_phone_query = "SELECT phone FROM users WHERE phone='$phone' ";
+     $check_phone_query_run = mysqli_query($connection, $check_phone_query);
+
     // ตรวจสอบว่าอีเมลลงทะเบียนแล้วหรือไม่
     $check_email_query = "SELECT email FROM users WHERE email='$email' ";
     $check_email_query_run = mysqli_query($connection, $check_email_query);
     
-    // ถ้ามีอีเมล์ในระบบแล้ว
-    if (mysqli_num_rows($check_email_query_run) >0 ) 
-    {
-        // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางกลับไปยังหน้าลงทะเบียน
-        $_SESSION['message'] = "อีเมล์ของท่านเคยทำการลงทะเบียนแล้ว";
+         // ถ้าเบอร์โทรศัพท์มีอยู่ในระบบแล้ว
+    if (mysqli_num_rows($check_phone_query_run) >0 ) {
+         $_SESSION['message'] = "หมายเลขโทรศัพท์หรืออีเมล์นี้เคยลงทะเบียนแล้ว";
+         header('Location: ../register.php');
+         exit;
+         } 
+         else if (mysqli_num_rows($check_email_query_run) > 0) {
+        // ถ้าอีเมล์มีอยู่ในระบบแล้ว
+        $_SESSION['message'] = "หมายเลขโทรศัพท์หรืออีเมล์นี้เคยลงทะเบียนแล้ว";
         header('Location: ../register.php');
-    } 
+    }
     // ถ้ายังไม่มีอีเมล์ในระบบ
     else 
     {    
@@ -115,17 +123,26 @@ else if (isset($_POST['register_seller_btn']))
     $verify_token = md5(rand());
 
 
+     // ตรวจสอบว่ามีเบอร์โทรศัพท์ในระบบแล้วหรือไม่
+     $check_phone_query = "SELECT phone FROM users WHERE phone='$phone' ";
+     $check_phone_query_run = mysqli_query($connection, $check_phone_query);
+
     // ตรวจสอบว่าอีเมลลงทะเบียนแล้วหรือไม่
     $check_email_query = "SELECT email FROM users WHERE email='$email' ";
     $check_email_query_run = mysqli_query($connection, $check_email_query);
     
-    // ถ้ามีอีเมล์ในระบบแล้ว
-    if (mysqli_num_rows($check_email_query_run) >0 ) 
-    {
-        // แสดงข้อความแจ้งเตือนและเปลี่ยนเส้นทางกลับไปยังหน้าลงทะเบียน
+         // ถ้าเบอร์โทรศัพท์มีอยู่ในระบบแล้ว
+    if (mysqli_num_rows($check_phone_query_run) >0 ) {
+         $_SESSION['message'] = "หมายเลขโทรศัพท์นี้เคยลงทะเบียนแล้ว";
+         header('Location: ../register_seller.php');
+         exit;
+         } 
+         else if (mysqli_num_rows($check_email_query_run) > 0) {
+        // ถ้าอีเมล์มีอยู่ในระบบแล้ว
         $_SESSION['message'] = "อีเมล์ของท่านเคยทำการลงทะเบียนแล้ว";
-        header('Location: ../register.php');
-    } 
+        header('Location: ../register_seller.php');
+    }
+
     // ถ้ายังไม่มีอีเมล์ในระบบ
     else 
     {    
