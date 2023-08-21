@@ -38,26 +38,27 @@ include('includes/header.php');
                     <div class="card-body">
                         <form action="funtion/authcode.php" method="POST">
                             <div class="mb-3">
-                                <label class="form-label">Name</label>
+                                <label class="form-label">ชื่อ</label>
                                 <input type="text" required name="name" class="form-control" placeholder="ป้อนชื่อที่คุณต้องการสร้าง">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Phone</label>
+                                <label class="form-label">เบอร์โทรศัพท์</label>
                                 <input type="phone" required name="phone" class="form-control" placeholder="ป้อนเบอร์โทรศัพท์">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                <label for="exampleInputEmail1" class="form-label">อีเมล์</label>
                                 <input type="email" required name="email" class="form-control" placeholder="ป้อนอีเมล์ของคุณ" id="exampleInputEmail1" aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Password</label>
+                                <label for="exampleInputPassword1" class="form-label">รหัสผ่าน</label>
                                 <input type="password" required name="password" class="form-control" placeholder="ป้อนรหัสผ่านที่คุณต้องการสร้าง" id="exampleInputPassword1">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Confirm Password</label>
+                                <label class="form-label">ยืนยันรหัสผ่าน</label>
                                 <input type="password" required name="cpassword" class="form-control" placeholder="ยืนยันรหัสของคุณอีกครั้ง">
                             </div>
-                            <button type="submit" name="register_seller_btn" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="register_seller_btn" class="btn btn-primary">ยืนยัน</button>
+                            <a href="index.php" class="btn btn-warning">กลับไปหน้าหลัก</a>
                         </form>
                     </div>
                 </div>

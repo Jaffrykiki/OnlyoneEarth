@@ -2,6 +2,7 @@
 
 include('funtion/userfunction.php');
 include('includes/header.php');
+include('includes/navbar.php');
 
 // ตรวจสอบว่ามีพารามิเตอร์ 'product' ถูกส่งมาทาง URL หรือไม่
 if (isset($_GET['product'])) {
@@ -81,7 +82,7 @@ if (isset($_GET['product'])) {
                                 if ($product['num'] > 0) {
                                 ?>
                                     <!-- ปุ่มเพิ่มสินค้าลงตะกร้า -->
-                                    <button class="btn btn-primary px-4 addToCartBtn" value="<?= $product['id']; ?>"><i class="fa fa-shopping-cart me-2"></i>เพิ่มสินค้าลงตระกร้า</button>
+                                    <button class="btn btn-primary px-4 addToCartBtn"  value="<?= $product['id']; ?>"><i class="fa fa-shopping-cart me-2"></i>เพิ่มสินค้าลงตระกร้า</button>
                                 <?php
                                 } else {
                                     echo "<p class='text-danger'>สินค้าหมดชั่วคราว</p>";

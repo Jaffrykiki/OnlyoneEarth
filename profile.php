@@ -2,9 +2,8 @@
 
 include('funtion/userfunction.php');
 include('includes/header.php');
-
 include('authenticate.php');
-
+include('includes/navbar.php'); 
 
 
 ?>
@@ -70,7 +69,7 @@ include('authenticate.php');
                                     <!-- ส่งข้อมูลรูปภาพเดิมเพื่อนำไปใช้ในการอัปเดต -->
                                     <input type="hidden" name="old_image" value="<?= $data['img']; ?>">
                                     <!-- ส่งข้อมูลรูปภาพเดิมเพื่อนำไปใช้ในการอัปเดต -->
-                                    <input type="file" name="img" class="form-control mb-2">
+                                    <input type="file"  name="img" accept=".jpeg, .jpg, .png" class="form-control mb-2">
                                 </div>
                             </div>
                         </div>

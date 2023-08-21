@@ -38,7 +38,7 @@
           <li class="nav-item dropdown " >
             <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <!-- แสดงรูปภาพผู้ใช้ -->
-            <img src="uploads/<?= $_SESSION['auth_user']['img']; ?>" alt="" class="user-profile-image" style="border-radius:50%;" width="35" height="35">
+            <img src="<?= isset($_SESSION['login_id'])? $_SESSION['auth_user']['img']:"uploads/".$_SESSION['auth_user']['img'] ?>" alt="" class="user-profile-image" style="border-radius:50%;" width="35" height="35">
               <!-- แสดงชื่อผู้ใช้ -->
               <?= $_SESSION['auth_user']['name']; ?>
             </a>

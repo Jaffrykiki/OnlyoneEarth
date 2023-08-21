@@ -36,24 +36,30 @@ $(document).ready(function ()  {
     });
 
     // เมื่อคลิกที่ปุ่มเพิ่มสินค้าลงตระกร้า
-        $(document).on('click','.addToCartBtn', function (e) {   
+        $(document).on('click','.addToCartBtn', function (e) { 
+              
         
         e.preventDefault();
 
         // ดึงค่าจำนวนสินค้าและรหัสสินค้า
         var qty = $(this).closest('.product_data').find('.input-qty').val();
         var prod_id = $(this).val();
+
+        // console.log("Product ID:", prod_id);
+        // console.log("Quantity:", qty);
+
         
         // ส่งข้อมูลผ่าน Ajax เพื่อเพิ่มสินค้าลงตระกร้า
         $.ajax({
             method: "POST",
             url: "funtion/handlecart.php",
-            data: {
+           data: {
                 "prod_id": prod_id,
                 "prod_qty": qty,
-                "scope": "add"
+                "scope": "add" 
             },
             success: function (response)  {
+
                 
                 // แสดงข้อความตามผลการทำงาน
                 if(response == 201)

@@ -2,6 +2,7 @@
 
 include('funtion/userfunction.php');
 include('includes/header.php');
+include('includes/navbar.php');
 
 // ตรวจสอบว่ามีพารามิเตอร์ 'category' ถูกส่งมาทาง URL หรือไม่
 if (isset($_GET['category'])) 

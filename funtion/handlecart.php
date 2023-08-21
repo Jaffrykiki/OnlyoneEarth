@@ -1,12 +1,14 @@
 <?php
 
-
 session_start();
 include('../connection/dbcon.php');
 
+
+
 if (isset($_SESSION['auth']))  // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
 {
-    if (isset($_POST['scope'])) {
+    if (isset($_POST['scope'])) 
+    {
         $scope  = $_POST['scope']; // รับค่า scope ที่ส่งมาเพื่อตรวจสอบการดำเนินการที่จะทำ
         switch ($scope) {
             case "add": // กรณีเพิ่มสินค้าลงในตระกร้า
@@ -46,6 +48,7 @@ if (isset($_SESSION['auth']))  // ตรวจสอบว่าผู้ใช�
 
                 if (mysqli_num_rows($chk_existing_cart_run) > 0) {
                     $update_query = "UPDATE carts SET prod_qty='$prod_qty' WHERE prod_id='$prod_id' AND user_id='$user_id' ";
+
                     $update_query_run = mysqli_query($connection, $update_query);
                     if ($update_query_run) {
                         echo 200; // อัปเดตจำนวนสินค้าในตระกร้าสำเร็จ

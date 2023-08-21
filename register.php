@@ -1,16 +1,15 @@
-<?php 
+<?php
 session_start();
 
 // ตรวจสอบว่ามีเซสชัน auth หรือไม่
-if(isset($_SESSION['auth']))
-{
+if (isset($_SESSION['auth'])) {
     $_SESSION['message'] = "คุณได้เข้าสู่ระบบแล้ว"; // กำหนดข้อความในเซสชันและเปลี่ยนเส้นทางไปที่ index.php
     header('Location:index.php');
     exit(); // จบการทำงานเพื่อป้องกันการทำงานต่อหลังจากเปลี่ยนเส้นทาง
 }
 
 
-include('includes/header.php'); 
+include('includes/header.php');
 ?>
 
 <!-- เริ่มส่วนแสดงฟอร์มสมัครสมาชิก -->
@@ -18,21 +17,20 @@ include('includes/header.php');
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <?php 
+                <?php
                 // ตรวจสอบว่ามีเซสชันข้อความหรือไม่
-                if (isset($_SESSION['message'])) 
-                {  
-                    ?>
+                if (isset($_SESSION['message'])) {
+                ?>
                     <!-- แสดงข้อความแจ้งเตือนเมื่อมีเซสชันข้อความ -->
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <strong>Status:</strong> <?= $_SESSION['message']; ?>.
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
-                    <?php
+                <?php
                     // ลบเซสชันข้อความหลังจากแสดงข้อความแจ้งเตือน
                     unset($_SESSION['message']);
                 }
-                    ?>
+                ?>
                 <div class="card">
                     <div class="card-header">
                         <h4>แบบฟอร์มสมัครสมาชิก</h4>
@@ -66,9 +64,14 @@ include('includes/header.php');
                                 <input type="password" name="cpassword" required class="form-control" placeholder="ยืนยันรหัสของคุณอีกครั้ง">
                             </div>
                             <!-- ปุ่มสำหรับส่งข้อมูลการสมัครสมาชิก -->
-                            <button type="submit" name="register_btn" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="register_btn" class="btn btn-primary">ยืนยัน</button>
                         </form>
                         <!-- สิ้นสุดฟอร์มสำหรับส่งข้อมูลการสมัครสมาชิก -->
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <a href="index.php" class="btn btn-warning">กลับไปหน้าหลัก</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

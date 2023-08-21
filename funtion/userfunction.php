@@ -30,7 +30,7 @@ function getAllProducts()
 {  
     global $connection;
     $query = "SELECT * FROM products LIMIT 8 ";  
-    return $query_run = mysqli_query($connection, $query);
+    return mysqli_query($connection, $query);
 }
 
 // ฟังก์ชันสำหรับการค้นหาข้อมูลโดยชื่อในตาราง

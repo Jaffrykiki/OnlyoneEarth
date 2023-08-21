@@ -192,7 +192,7 @@ else if(isset($_POST['login_btn']))
         // เก็บข้อมูลผู้ใช้ในเซสชัน
         $_SESSION['auth_user'] =[
             'name' => $username,
-            'emmail' => $username,
+            'email' => $useremail,
             'id' => $users_id,
             'img' => $img
         ];
@@ -251,8 +251,13 @@ else if(isset($_POST['update_profile_btn']))
     if($new_image != "")
     { 
         // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันเป็นส่วนหนึ่งของชื่อไฟล์
-        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
+        $image_ext = strtolower(pathinfo($new_image, PATHINFO_EXTENSION));
+        // ตรวจสอบชนิดของไฟล์รูปภาพ
+        $allowed_image_extensions = array("jpeg", "jpg", "png");
         $update_filenname = time().'.'.$image_ext;
+
+        // ตรวจสอบขนาดไฟล์รูปภาพ
+        $max_file_size = 1024 * 1024; // 1 MB
     }
     else
     {
@@ -260,11 +265,13 @@ else if(isset($_POST['update_profile_btn']))
         $update_filenname = $old_image;
     }
    
-    // echo "filename=".$update_filenname ; 
+    if(in_array($image_ext, $allowed_image_extensions) && $_FILES['img']['size'] <= $max_file_size)
+    {
+        $update_filename = time() . '.' . $image_ext;
     // สร้างคำสั่ง SQL สำหรับการอัปเดตข้อมูลผู้ใช้
-    $update_user_query ="UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`img`='$update_filenname' WHERE id ='$user_id'" ;
+        $update_user_query ="UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`img`='$update_filenname' WHERE id ='$user_id'" ;
     // ดำเนินการอัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
-    $update_user_query_run = mysqli_query($connection, $update_user_query);
+        $update_user_query_run = mysqli_query($connection, $update_user_query);
 
     // ตรวจสอบว่าการอัปเดตสำเร็จหรือไม่
     if ($update_user_query_run) 
@@ -285,6 +292,11 @@ else if(isset($_POST['update_profile_btn']))
     {
         // ถ้าการอัปเดตไม่สำเร็จ นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
         redirect("../profile.php?id=$user_id", "มีบางอย่างผิดพลาด");
+    }
+}
+    else
+    {
+    redirect("../profile.php?id=$user_id", "ไฟล์รูปภาพไม่ถูกต้องหรือขนาดเกินกว่า 1 MB");
     }
 
 } 
@@ -344,5 +356,3 @@ else if(isset($_POST['report_btn']))
         redirect("../help_center.php", "กรุณาแนบไฟล์รูปภาพ");
     }
 }
-
-?>
