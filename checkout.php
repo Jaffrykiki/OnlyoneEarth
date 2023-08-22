@@ -88,7 +88,7 @@ fclose($file);
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label class="fw-bold">ที่อยู่</label>
-                                    <textarea name="address" id="address" required placeholder="ป้อนที่อยู่ของของคุณ" class="form-control" rows="6"></textarea>
+                                    <textarea name="address" id="address" required placeholder="ป้อนที่อยู่ของของคุณ" class="form-control" rows="6" minlength="20"></textarea>
                                     <smail class="text-danger address"></smail>
                                 </div>
                                 <!-- <div class="col-md-12 mb-">
