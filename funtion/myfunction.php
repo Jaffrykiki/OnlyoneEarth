@@ -257,7 +257,6 @@ function getOrdersCan() {
 }
 
 // ฟังก์ชั่นเรียกดูรายได้ใน orders โดยสถานะ = 1 
-
 function getTotalPriceWithStatus1() {
     global $connection; // เชื่อมต่อฐานข้อมูล
 
@@ -341,6 +340,91 @@ function getUser() {
     }
 }
 
+//ฟังก์ชั่นเรียกดูสินค้าที่กำลังดำเนินการของผู้ขายสินค้า
+function getOrdersCount_seller($sellerId) {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $sql = "SELECT COUNT(*) AS total_orders FROM orders WHERE sellerId = '$sellerId' AND status = 0";
+
+     // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $sql); 
+
+    if ($select_query->num_rows > 0) {
+        $row = $select_query->fetch_assoc();
+        return $row["total_orders"];
+    } else {
+        return 0;
+    }
+}
+
+//ฟังก์ชันสำหรับการดึงข้อมูลเปอร์เซ็นต์เพิ่มขึ้นจากฐานข้อมูลที่มีผู้ขายเป็นผู้ขายสินค้า
+function getPercentageIncrease_seller($sellerId) {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $currentDate = date('Y-m'); // วันที่ปัจจุบัน
+    $previousDate = date('Y-m', strtotime('-1 month')); // วันที่ก่อนหน้า
+
+    $sqlCurrent = "SELECT SUM(total_price) AS total_sales FROM orders WHERE sellerId = '$sellerId' AND DATE(created_at) = '$currentDate'";
+    $sqlPrevious = "SELECT SUM(total_price) AS total_sales FROM orders WHERE sellerId = '$sellerId' AND DATE(created_at) = '$previousDate'";
+
+    $resultCurrent = $connection->query($sqlCurrent);
+    $resultPrevious = $connection->query($sqlPrevious);
+
+    $currentSales = $resultCurrent->fetch_assoc()["total_sales"];
+    $previousSales = $resultPrevious->fetch_assoc()["total_sales"];
+
+    $percentageIncrease = calculatePercentageIncrease($previousSales, $currentSales);
+    return number_format($percentageIncrease, 2);
+}
+
+//ฟังก์ชั่นเรียกดูออเดอร์ที่ดำเนินการแล้วของผู้ขาย
+function getOrdersComplete_seller($sellerId) {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $sql = "SELECT COUNT(*) AS total_orders FROM orders WHERE sellerId = '$sellerId' AND status = 1";
+
+     // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $sql); 
+
+    if ($select_query->num_rows > 0) {
+        $row = $select_query->fetch_assoc();
+        return $row["total_orders"];
+    } else {
+        return 0;
+    }
+}
+
+//ฟังก์ชั่นเรียกดูออเดอร์ที่ยกเลิกของผู้ขาย
+function getOrdersCan_seller($sellerId) {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $sql = "SELECT COUNT(*) AS total_orders FROM orders WHERE sellerId = '$sellerId' AND status = 2";
+
+     // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $sql); 
+
+    if ($select_query->num_rows > 0) {
+        $row = $select_query->fetch_assoc();
+        return $row["total_orders"];
+    } else {
+        return 0;
+    }
+}
+
+// ฟังก์ชั่นเรียกดูรายได้ใน orders โดยสถานะ = 1 ของผู้ขาย 
+function getTotalPriceWithStatus1_seller($sellerId) {
+    global $connection; // เชื่อมต่อฐานข้อมูล
+
+    $sql = "SELECT SUM(total_price) AS total FROM orders WHERE sellerId = '$sellerId' AND status = 1";
+    $result = $connection->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['total'];
+    } else {
+        return 0;
+    }
+}
 
 
 

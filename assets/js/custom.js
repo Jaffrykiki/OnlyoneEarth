@@ -130,4 +130,52 @@ $(document).ready(function ()  {
         
     });
 
+    //ยกเลิกคำสั่งซื้อ
+    $(document).on('click', '.cancel_order', function () {
+        console.log("Cancel button clicked.");
+
+        var status = $(this).data('status');
+        var trackingNo = $(this).data('tracking');
+
+         // ตรวจสอบค่าที่ได้
+        console.log('Status:', status);
+        console.log('Tracking No:', trackingNo);
+      
+        swal({
+          title: "คุณแน่ใจใช่ไหม?",
+          text: "เมื่อยกเลิกแล้ว คุณจะไม่สามารถแก้ไขอะไรได้!!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+              method: "POST",
+              url: "funtion/placeorder.php",
+              data: {
+                'tracking_no': trackingNo,
+                'cancel_order': true,
+                'status': status
+              },
+              success: function (response) {
+                console.log('Response from AJAX:', response);
+                if (response == 200) {    
+                    swal("สำเร็จแล้ว!", "ยกเลิกคำสั่งซื้อแล้ว!", "success");
+                    alertify.success("ยกเลิกคำสั่งซื้อเรียบร้อยแล้ว");
+
+                        // รอสักครู่ก่อนที่จะเปลี่ยนเส้นทางไปยังหน้า view-order.php
+                    setTimeout(function() {
+                    window.location.href = "view-order.php?t=" + trackingNo;
+                }, 4000); // 4000 คือเวลาในหน่วยมิลลิวินาที (คือ 4 วินาที)
+                } else {
+                    swal("ผิดพลาด!", "มีบางอย่างผิดพลาด!", "warning");
+                }
+              }
+            });
+          }
+        });
+      });
+      
+
 });

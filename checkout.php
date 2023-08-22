@@ -75,6 +75,7 @@ fclose($file);
                                     <smail class="text-danger phone"></smail>
                                 </div>
                                 <div class="col-md-6 mb-3">
+                                    <label class="fw-bold">รหัสไปรษณีย์</label>
                                     <select name="pincode" id="pincode" required class="form-control">
                                         <option value="" disabled selected>กรุณาเลือกรหัสไปรษณีย์</option>
                                         <?php
@@ -232,7 +233,10 @@ fclose($file);
                     success: function(response) {
                         if (response == 201) {
                             alertify.success("สั่งซื้อเรียบร้อยแล้ว");
+                            // รอสักครู่ก่อนที่จะเปลี่ยนเส้นทางไปยังหน้า my-orders.php
+                            setTimeout(function() {
                             window.location.href = 'my-orders.php'
+                        }, 4000); // 5000 คือเวลาในหน่วยมิลลิวินาที (คือ 4 วินาที)
                         }
                     }
                 });

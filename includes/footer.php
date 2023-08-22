@@ -7,6 +7,10 @@
     <!-- เรียกใช้ไฟล์ JavaScript ที่กำหนดเอง -->
     <script src="assets/js/custom.js"></script>
 
+    <!-- CDN สำหรับ SweetAlert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
     <!-- เรียกใช้ไลบรารี Owl Carousel -->
     <script src="assets/js/owl.carousel.min.js"></script>
 

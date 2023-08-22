@@ -5,7 +5,7 @@ session_start();
 include('../connection/dbcon.php');
 
 // การยกเลิกคำสั่งซื้อ
-if(isset($_POST['cancel_order'])) {
+if(isset($_POST['cancel_order']) && isset($_POST['tracking_no']) && isset($_POST['status']) )  {
 
     // รับค่า tracking_no และ newStatus จากฟอร์ม
     $tracking_no = $_POST["tracking_no"];
@@ -15,14 +15,12 @@ if(isset($_POST['cancel_order'])) {
     $update_query = "UPDATE orders SET status = $newStatus WHERE tracking_no = '$tracking_no'";
     $update_query_run = mysqli_query($connection, $update_query);
     if($update_query_run){
-        $_SESSION['message'] = "ยกเลิกคำสั่งซื้อเรียบร้อยแล้ว";
-        header('Location: ../view-order.php?t='.$tracking_no);
-        die();
-    }
-    else {
-        redirect("../view-order.php?t=$tracking_no", "เกิดข้อผิดพลาด");
+        echo 200;
+    } else {
+        echo "มีบางอย่างผิดพลาด ติดต่อแอดมินสมถุย"; // ผิดพลาด: HTTP 500 Internal Server Error
     }
 }
+
 
 else if (isset($_SESSION['auth'])) 
 {

@@ -7,13 +7,11 @@ include('includes/navbar.php');
 include('authenticate.php');
 
 //ตรวจสอบว่ามีเลขพัสดุอยู่หรือไม่
-if (isset($_GET['t'])) 
-{
+if (isset($_GET['t'])) {
     $tracking_no = $_GET['t'];
 
-    $orderData = checkTrackingNoValid($tracking_no);// เรียกใช้ฟังก์ชันเพื่อตรวจสอบความถูกต้องของเลขพัสดุ
-    if (mysqli_num_rows($orderData) < 0) 
-    {
+    $orderData = checkTrackingNoValid($tracking_no); // เรียกใช้ฟังก์ชันเพื่อตรวจสอบความถูกต้องของเลขพัสดุ
+    if (mysqli_num_rows($orderData) < 0) {
 ?>
         <h4>มีบางอย่างผิดพลาด โปรดติดต่อแอดมินสมถุย</h4>
     <?php
@@ -53,7 +51,7 @@ $data = mysqli_fetch_array($orderData);
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bg-primary">
-                        <span class="text-white fs-3">รายละเอียดออเดอร์</span>    
+                            <span class="text-white fs-3">รายละเอียดออเดอร์</span>
                             <a href="my-orders.php" class="btn btn-warning float-end"> <i class="fa fa-reply "></i>กลับ</a>
                         </div>
                         <div class="card-body">
@@ -62,7 +60,8 @@ $data = mysqli_fetch_array($orderData);
                                     <h4>รายละเอียดการจัดส่ง</h4>
                                     <hr>
                                     <div class="row">
-                                            <!-- แสดงข้อมูลชื่อ, อีเมล์, เบอร์โทรศัพท์, หมายเลขพัสดุ, ที่อยู่, รหัสไปษณีย์ -->                                        <div class="col-md-12 mb-2">
+                                        <!-- แสดงข้อมูลชื่อ, อีเมล์, เบอร์โทรศัพท์, หมายเลขพัสดุ, ที่อยู่, รหัสไปษณีย์ -->
+                                        <div class="col-md-12 mb-2">
                                             <label class="fw-bold">ชื่อ</label>
                                             <div class="border p-1">
                                                 <?= $data['name'] ?>
@@ -119,13 +118,13 @@ $data = mysqli_fetch_array($orderData);
                                             <?php
                                             // ดึงค่า id ของผู้ใช้ที่เข้าสู่ระบบจาก session
                                             $userId = $_SESSION['auth_user']['id'];
-                                            
+
                                             // สร้างคำสั่ง SQL ในการดึงข้อมูลออเดอร์และรายการสินค้าที่เกี่ยวข้อง
                                             $order_query = "SELECT o.id as oid, o.tracking_no, o.user_id, oi. *,oi.qty as orderqty, p.* FROM orders o, order_items oi,
                                         products p WHERE o.user_id='$userId' AND oi.order_id=o.id AND p.id=oi.prod_id 
                                         AND o.tracking_no='$tracking_no' ";
 
-                                             // ทำการ query ไปยังฐานข้อมูล   
+                                            // ทำการ query ไปยังฐานข้อมูล   
                                             $order_query_run = mysqli_query($connection, $order_query);
 
                                             // ตรวจสอบว่ามีข้อมูลที่ได้จากการ query หรือไม่
@@ -158,12 +157,10 @@ $data = mysqli_fetch_array($orderData);
                                     <hr>
                                     <label class="fw-bold">รูปแบบการชำระเงิน:</label>
                                     <div class="border p-1 mb-3">
-
                                         <?= $data['payment_mode'] ?>
                                     </div>
                                     <label class="fw-bold">สถานะ:</label>
                                     <div class="border p-1 mb-3">
-
                                         <?php
                                         if ($data['status'] == 0) {
                                             echo "อยู่ระหว่างดำเนินการ";
@@ -174,11 +171,9 @@ $data = mysqli_fetch_array($orderData);
                                         }
                                         ?>
                                     </div>
-                                    <form action="funtion/placeorder.php" method="POST">
-                                    <input type="hidden" name="status" value="2">
-                                    <input type="hidden" name="tracking_no" value="<?= $tracking_no ?>">
-                                    <button type="submit" name="cancel_order" class="btn btn-danger mt-3">ยกเลิกคำสั่งซื้อ</button>
-                                    </form>
+                                    <?php if ($data['status'] == 0): ?>
+                                        <button type="button" class="btn btn-danger mt-3 cancel_order" data-tracking="<?= $tracking_no ?>" data-status="2">ยกเลิกคำสั่งซื้อ</button>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
