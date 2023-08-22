@@ -191,6 +191,7 @@ function getLogs_Order()
     return $query;
  
 }
+//ฟังก์ชั่นเรียกดูรายงาน
 function getAllReports()
 {
     global $connection; // เชื่อมต่อฐานข้อมูล
@@ -203,3 +204,143 @@ function getAllReports()
     return $select_query;
  
 }
+
+//ฟังก์ชั่นเรียกดูออเดอร์ที่กำลังดำเนินการ
+function getOrdersCount() {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $sql = "SELECT COUNT(*) AS total_orders FROM orders WHERE status = 0";
+
+     // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $sql); 
+
+    if ($select_query->num_rows > 0) {
+        $row = $select_query->fetch_assoc();
+        return $row["total_orders"];
+    } else {
+        return 0;
+    }
+}
+
+//ฟังก์ชั่นเรียกดูออเดอร์ที่ดำเนินการแล้ว
+function getOrdersComplete() {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $sql = "SELECT COUNT(*) AS total_orders FROM orders WHERE status = 1";
+
+     // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $sql); 
+
+    if ($select_query->num_rows > 0) {
+        $row = $select_query->fetch_assoc();
+        return $row["total_orders"];
+    } else {
+        return 0;
+    }
+}
+
+//ฟังก์ชั่นเรียกดูออเดอร์ที่ยกเลิก
+function getOrdersCan() {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $sql = "SELECT COUNT(*) AS total_orders FROM orders WHERE status = 2";
+
+     // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $sql); 
+
+    if ($select_query->num_rows > 0) {
+        $row = $select_query->fetch_assoc();
+        return $row["total_orders"];
+    } else {
+        return 0;
+    }
+}
+
+// ฟังก์ชั่นเรียกดูรายได้ใน orders โดยสถานะ = 1 
+
+function getTotalPriceWithStatus1() {
+    global $connection; // เชื่อมต่อฐานข้อมูล
+
+    $sql = "SELECT SUM(total_price) AS total FROM orders WHERE status = 1";
+    $result = $connection->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['total'];
+    } else {
+        return 0;
+    }
+}
+
+
+//ฟังก์ชันสำหรับการคำนวณเปอร์เซ็นต์เพิ่มขึ้น
+function calculatePercentageIncrease($previousValue, $currentValue) {
+    if ($previousValue === null || $previousValue === 0) {
+        return 100; // หากไม่มีค่าก่อนหน้า หรือมีค่าเป็นศูนย์ ให้ถือว่าเพิ่มขึ้น 100%
+    }
+
+    return (($currentValue - $previousValue) / $previousValue) * 100;
+}
+
+
+//ฟังก์ชันสำหรับการดึงข้อมูลเปอร์เซ็นต์เพิ่มขึ้นจากฐานข้อมูล
+function getPercentageIncrease() {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $currentDate = date('Y-m'); // วันที่ปัจจุบัน
+    $previousDate = date('Y-m', strtotime('-1 month')); // วันที่ก่อนหน้า
+
+    $sqlCurrent = "SELECT SUM(total_price) AS total_sales FROM orders WHERE DATE(created_at) = '$currentDate'";
+    $sqlPrevious = "SELECT SUM(total_price) AS total_sales FROM orders WHERE DATE(created_at) = '$previousDate'";
+
+    $resultCurrent = $connection->query($sqlCurrent);
+    $resultPrevious = $connection->query($sqlPrevious);
+
+    $currentSales = $resultCurrent->fetch_assoc()["total_sales"];
+    $previousSales = $resultPrevious->fetch_assoc()["total_sales"];
+
+    $percentageIncrease = calculatePercentageIncrease($previousSales, $currentSales);
+    return number_format($percentageIncrease, 2);
+}
+
+
+// ฟังก์ชั่นสำหรับดึงข้อมูลผู้ใช้ตามเงื่อนไข role_as = 2 และ verify_status = 1
+
+function getUsersWithCondition() {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $sql = "SELECT COUNT(*) AS total_seller FROM users WHERE verify_status = 1 AND role_as = 2 ";
+
+     // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $sql); 
+
+    if ($select_query->num_rows > 0) {
+        $row = $select_query->fetch_assoc();
+        return $row["total_seller"];
+    } else {
+        return 0;
+    }
+}
+
+
+
+//ฟังก์ชั่นเรียกดูข้อมูลจากตาราง users โดย role_as = 0 
+function getUser() {
+
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $sql = "SELECT COUNT(*) AS total_user FROM users WHERE role_as = 0";
+
+     // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $sql); 
+
+    if ($select_query->num_rows > 0) {
+        $row = $select_query->fetch_assoc();
+        return $row["total_user"];
+    } else {
+        return 0;
+    }
+}
+
+
+
+

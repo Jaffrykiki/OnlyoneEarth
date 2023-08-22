@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
-    Admin
+    แอดมิน
   </title>
 
    <!-- ลิงก์ไปยังฟอนต์ที่ใช้ -->

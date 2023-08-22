@@ -7,19 +7,15 @@
                 <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                     <!-- รายการที่ 1: เกี่ยวกับเรา -->
                     <li class="nav-item">
-                        <a href="#" class="nav-link pe-0 text-muted" target="_blank">About Us</a>
+                        <a href="https://www.facebook.com/autsadawut.plaglamyong/" class="nav-link pe-0 text-muted" target="_blank">เกี่ยวกับเรา</a>
                     </li>
                     <!-- รายการที่ 2: บริการ -->
                     <li class="nav-item">
-                        <a href="#" class="nav-link pe-0 text-muted" target="_blank">Service</a>
+                        <a href="https://www.facebook.com/autsadawut.plaglamyong/" class="nav-link pe-0 text-muted" target="_blank">บริการ</a>
                     </li>
                     <!-- รายการที่ 3: ติดต่อ -->
                     <li class="nav-item">
-                        <a href="#" class="nav-link pe-0 text-muted" target="_blank">Contact</a>
-                    </li>
-                    <!-- รายการที่ 4: เกี่ยวกับ -->
-                    <li class="nav-item">
-                        <a href="#" class="nav-link pe-0 text-muted" target="_blank">About</a>
+                        <a href="https://www.facebook.com/messages/t/100036370098825" class="nav-link pe-0 text-muted" target="_blank">ติดต่อ</a>
                     </li>
                 </ul>
             </div>

@@ -59,7 +59,7 @@ include('includes/navbar.php');
                             <div class="row align-items-center">
                                     <div class="d-flex text-center justify-content-center align-items-center">
                                         <!-- แสดงอีเมล์ผู้ใช้ที่สามารถแก้ไขได้ -->
-                                        <img src="uploads/<?= $data['img']; ?>" alt="Image" width="120" style="border-radius: 50%;">
+                                        <img src="uploads/<?= $data['img']; ?>" alt="Image" width="100" style="border-radius: 50%;">
                                     </div>
                                 <hr>
                                 <h5>ขนาดไฟล์: สูงสุด 1 MB</h5>

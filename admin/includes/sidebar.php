@@ -20,14 +20,14 @@
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">dashboard</i>
           </div>
-          <span class="nav-link-text ms-1">Dashboard</span>
+          <span class="nav-link-text ms-1">แดชบอร์ด</span>
         </a>
       </li>
             <li class="nav-item">
         <a class="nav-link text-white <?= $page == "manage_users.php"? 'bg-gradient-primary':''; ?>" href="manage_users.php">
         <!-- ไอคอนและข้อความเมนู -->
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">dashboard</i>
+            <i class="material-icons opacity-10">account_circle</i>
           </div>
           <span class="nav-link-text ms-1">จัดการผู้ใช้</span>
         </a>
@@ -35,7 +35,7 @@
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "category.php"? 'bg-gradient-primary':''; ?>" href="category.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">category</i>
+            <i class="material-icons opacity-10">format_list_bulleted</i>
           </div>
           <span class="nav-link-text ms-1">หมวดหมู่ทั้งหมด</span>
         </a>
@@ -43,7 +43,7 @@
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "add-category.php"? 'bg-gradient-primary':''; ?> " href="add-category.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">add</i>
+            <i class="material-icons opacity-10">playlist_add</i>
           </div>
           <span class="nav-link-text ms-1">เพิ่มหมวดหมู่สินค้า</span>
         </a>
@@ -67,7 +67,7 @@
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "orders.php"? 'bg-gradient-primary':''; ?>" href="orders.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">table_view</i>
+            <i class="material-icons opacity-10">view_list</i>
           </div>
           <span class="nav-link-text ms-1">ออเดอร์</span>
         </a>
@@ -75,7 +75,7 @@
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "report.php"? 'bg-gradient-primary':''; ?>" href="report.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">table_view</i>
+            <i class="material-icons opacity-10">report</i>
           </div>
           <span class="nav-link-text ms-1">คำร้องจากผู้ใช้</span>
         </a>

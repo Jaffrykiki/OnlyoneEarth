@@ -135,3 +135,4 @@ function getUsers()
     $query = "SELECT * FROM users WHERE id ='$userId'";
     return $query_run = mysqli_query($connection, $query);
 }
+

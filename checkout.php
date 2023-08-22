@@ -8,10 +8,27 @@ include('authenticate.php');
 
 $cartItems = getCartItems(); // ดึงข้อมูลสินค้าในตะกร้าสินค้า
 
-if(mysqli_num_rows($cartItems) ==0 )
-{
+if (mysqli_num_rows($cartItems) == 0) {
     header('Location: index.php'); // ถ้าไม่มีสินค้าในตะกร้า ให้เปลี่ยนเส้นทางไปยังหน้า index.php
 }
+
+$postalCodes = array();
+$province = array();
+
+$filename = "postcode/address.csv"; // เปลี่ยนเส้นทางไปยังไฟล์ CSV ของคุณ
+$file = fopen($filename, "r");
+
+if (!$file) {
+    die("ไม่สามารถเปิดไฟล์ CSV");
+}
+
+while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
+    $postalCodes[$data[0]] = $data[2]; // อ่านคอลัมน์ที่สามเพื่อเก็บข้อมูลจังหวัด
+    $province[$data[0]] = $data[1]; // จังหวัด
+}
+
+fclose($file);
+
 
 ?>
 
@@ -40,7 +57,7 @@ if(mysqli_num_rows($cartItems) ==0 )
                         <div class="col-md-7">
                             <h5>ที่อยู่ในการจัดส่ง</h5>
                             <hr>
-                             <!-- ส่วนของการป้อนข้อมูลที่อยู่ในการจัดส่ง -->
+                            <!-- ส่วนของการป้อนข้อมูลที่อยู่ในการจัดส่ง -->
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="fw-bold">ชื่อ</label>
@@ -54,13 +71,19 @@ if(mysqli_num_rows($cartItems) ==0 )
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="fw-bold">เบอร์โทรศัพท์</label>
-                                    <input type="text" name="phone" id="phone" required placeholder="ป้อนเบอร์โทรศัพท์ของของคุณ" class="form-control">
+                                    <input type="text" name="phone" id="phone" required placeholder="ป้อนเบอร์โทรศัพท์ของของคุณ" class="form-control" pattern="[0-9]{10}" title="โปรดป้อนหมายเลขโทรศัพท์ 10 หลัก">
                                     <smail class="text-danger phone"></smail>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="fw-bold">รหัสไปรษณีย์</label>
-                                    <input type="text" name="pincode" id="pincode" required placeholder="ป้อนรหัสไปรษณีย์" class="form-control">
-                                    <smail class="text-danger pincode"></smail>
+                                    <select name="pincode" id="pincode" required class="form-control">
+                                        <option value="" disabled selected>กรุณาเลือกรหัสไปรษณีย์</option>
+                                        <?php
+                                        // รายการรหัสไปรษณีย์และข้อความที่เกี่ยวข้อง
+                                        foreach ($postalCodes as $code => $provinceName) {
+                                            echo '<option value="' . $code . '">' . $code . ' - ' . $provinceName . '</option>';
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label class="fw-bold">ที่อยู่</label>
@@ -77,7 +100,7 @@ if(mysqli_num_rows($cartItems) ==0 )
                             <h5>รายละเอียดการสั่งซื้อ</h5>
                             <hr>
                             <!-- ส่วนของการแสดงรายละเอียดการสั่งซื้อ -->
-                            <?php 
+                            <?php
                             $items = getCartItems(); // ดึงข้อมูลสินค้าในตะกร้าสินค้า
                             $totalPrice = 0;
                             foreach ($items as $citem) {
@@ -98,9 +121,8 @@ if(mysqli_num_rows($cartItems) ==0 )
                                         </div>
                                     </div>
                                 </div>
-                             
                             <?php
-                                    //แสดงรายละเอียดของสินค้าที่เลือกในตะกร้า 
+                                //แสดงรายละเอียดของสินค้าที่เลือกในตะกร้า 
                                 $totalPrice += $citem['price'] * $citem['prod_qty'];
                             }
                             ?>
@@ -132,7 +154,7 @@ if(mysqli_num_rows($cartItems) ==0 )
     // สร้างปุ่ม PayPal Checkout
     paypal.Buttons({
         // การตรวจสอบข้อมูลก่อนการกดปุ่ม PayPal
-        onClick() {     
+        onClick() {
             var name = $('#name').val();
             var email = $('#email').val();
             var phone = $('#phone').val();
@@ -171,7 +193,7 @@ if(mysqli_num_rows($cartItems) ==0 )
 
         },
         // ส่วนการสร้างคำสั่งการชำระเงิน PayPal
-        createOrder: function(data, actions) { 
+        createOrder: function(data, actions) {
 
             return actions.order.create({
                 purchase_units: [{
@@ -193,13 +215,13 @@ if(mysqli_num_rows($cartItems) ==0 )
                 var address = $('#address').val();
 
                 var data = {
-                    'name' : name,
-                    'email' : email,
-                    'phone' : phone,
-                    'pincode' :pincode,
-                    'address' : address,
-                    'payment_mode' : "จ่ายโดย PayPal",
-                    'payment_id' : transaction.id,
+                    'name': name,
+                    'email': email,
+                    'phone': phone,
+                    'pincode': pincode,
+                    'address': address,
+                    'payment_mode': "จ่ายโดย PayPal",
+                    'payment_id': transaction.id,
                     'placeOrderBtn': true
                 };
 
@@ -207,9 +229,8 @@ if(mysqli_num_rows($cartItems) ==0 )
                     type: "POST",
                     url: "funtion/placeorder.php",
                     data: data,
-                    success: function (response) {
-                        if(response == 201)
-                        {
+                    success: function(response) {
+                        if (response == 201) {
                             alertify.success("สั่งซื้อเรียบร้อยแล้ว");
                             window.location.href = 'my-orders.php'
                         }
