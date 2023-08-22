@@ -44,7 +44,7 @@
                 <h4 class="text-white">Only One Earth</h4>
                 <div class="underline mb-2"></div>
                 <a href="index.php" class="text-white"> <i class="fa fa-angle-right"></i> หน้าแรก </a> <br>
-                <a href="#" class="text-white"> <i class="fa fa-angle-right"></i> เกี่ยวกับฉัน </a><br>
+                <a href="index.php#about-me" class="text-white"> <i class="fa fa-angle-right"></i> เกี่ยวกับฉัน </a><br>
                 <a href="cart.php" class="text-white"> <i class="fa fa-angle-right"></i> ตระกร้าสินค้าของฉัน </a><br>
                 <a href="categories.php" class="text-white"> <i class="fa fa-angle-right"></i> หมวดหมู่สินค้า </a><br>
                 <a href="help_center.php" class="text-white"> <i class="fa fa-angle-right"></i> ศูนย์ช่วยเหลือ </a>

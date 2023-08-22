@@ -11,8 +11,6 @@ $totalPriceWithStatus1 = getTotalPriceWithStatus1(); // ฟังก์ชั่
 $seller = getUsersWithCondition();  // ฟังก์ชั่นเรียกดูผ้ขาย ที่มีสถานะ verify = 1 และ role = 2
 $userCount = getUser(); // ฟังก์ชั่นเรียกดูผ้ซื้อ ที่มีสถานะ role_as = 0
 
-
-
 ?>
 
 

@@ -6,7 +6,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
-    Seller
+    ผู้ขาย
   </title>
   <!-- Fonts and icons -->
   <!-- ลิงก์ไปยัง Google Fonts สำหรับแสดงตัวอักษรในเว็บไซต์ -->
@@ -20,6 +20,9 @@
 
  <!-- ลิงก์ไปยัง CSS Files สำหรับการตกแต่งหน้าเว็บ -->
   <link id="pagestyle" href="assets/css/material-dashboard.min.css" rel="stylesheet" />
+
+  <!-- เรียกใช้ CSS ที่กำหนดเอง -->
+  <link href="assets/css/custom.css" rel="stylesheet">
 
   <!-- ลิงก์ไปยัง Alertify JS -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
@@ -40,6 +43,11 @@
       padding: 8px 20px;
     }
   </style>
+
+  <!-- เรียกใช้ฟอนต์ Noto Sans Thai จาก Google Fonts --> <!-- Font Noto Sans Thai -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap" rel="stylesheet">
 
 </head>
 

@@ -1,4 +1,4 @@
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
    <!-- ปุ่มตัวชี้วิ่งข้างล่างสำหรับการนำทางรูปภาพใน Carousel -->
   <div class="carousel-indicators">
     <!-- ปุ่มตัวชี้วิ่งสำหรับสไลด์ 1 (เริ่มต้นที่ 0) -->

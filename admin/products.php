@@ -85,7 +85,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                     <a  href="logs_products.php" class="btn btn-secondary float-end">ตรวจสอบบันทึก</a>
                 </div>
                 <div id="og" class="card-body table-responsive" id="products_table">
-                    <table class="table table-dark table-striped">
+                    <table class="table table-success table-striped">
                         <thead>
                             <tr>
                                 <th>ไอดีสินค้า</th>

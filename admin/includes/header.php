@@ -23,6 +23,9 @@
   <!-- ลิงก์ไปยังไฟล์ CSS สำหรับ Alertify JS -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+
+  <!-- เรียกใช้ CSS ที่กำหนดเอง -->
+  <link href="assets/css/custom.css" rel="stylesheet">
   
   <!-- ส่วนของการกำหนดรูปแบบ CSS เพิ่มเติม -->
   <style>
@@ -35,6 +38,11 @@
       padding: 8px 20px;
     }
   </style>
+
+    <!-- เรียกใช้ฟอนต์ Noto Sans Thai จาก Google Fonts --> <!-- Font Noto Sans Thai -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap" rel="stylesheet">
 
 </head>
 

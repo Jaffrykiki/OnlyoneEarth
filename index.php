@@ -116,7 +116,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
-            <div class="row row-cols-1 row-cols-md-4 ">
+            <div  class="row row-cols-1 row-cols-md-4 ">
                 <?php
                 $Products = getAllProducts(); // เรียกใช้ฟังก์ชันที่ดึงข้อมูลสินค้าทั้งหมด
                 if (mysqli_num_rows($Products) > 0)
@@ -171,14 +171,14 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                 ?>
                 <br>    
             </div>
-            <div id="pagination_controls"><?php echo $paginationCtrls; ?></div>		
+            <div id="about-me" id="pagination_controls"><?php echo $paginationCtrls; ?></div>		
         </div>
     </div>
 </div>
 
 <!-- ส่วนของเกี่ยวกับฉัน -->
-<div class="py-5 bg-f2f2f2">
-    <div class="container">
+<div  class="py-5 bg-f2f2f2">
+    <div  class="container">
         <div class="row">
             <div class="col-md-12">
                 <h4>เกี่ยวกับฉัน</h4>

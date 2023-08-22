@@ -87,7 +87,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                     <a href="logs_order.php" class="btn btn-secondary ">ตรวจสอบบันทึก</a>
                 </div>
                 <div class="card-body" id="">
-                    <table class="table table-dark table-striped">
+                    <table class="table table-info table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>

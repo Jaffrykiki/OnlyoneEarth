@@ -78,7 +78,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                     <h4 class="m-0">คำร้อง </h4>
                 </div>
                 <div class="card-body" id="">
-                    <table class="table table-dark table-striped">
+                    <table class="table table-warning table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>

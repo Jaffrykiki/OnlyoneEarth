@@ -84,7 +84,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                 </div>
                 <!-- ตารางแสดงผู้ใช้ -->
                 <div class="card-body table-responsive" style="width: 100%;"  id="users_table">
-                    <table class="table table-dark table-striped">
+                    <table class="table table-success table-striped">
                         <thead>
                             <tr>
                                 <th>ไอดีผู้ใช้</th>

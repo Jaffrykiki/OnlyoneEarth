@@ -3,12 +3,13 @@
   $page = substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'],"/")+1);
 ?>
 <!-- เริ่มต้นส่วนของเมนูด้านข้าง -->
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
-  <div class="sidenav-header">
-     <!-- ปุ่มปิดเมนู (สำหรับหน้าเว็บขนาดเล็ก) -->
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-warning" id="sidenav-main">
+<div class="sidenav-header">
+    <!-- ไอคอนสำหรับปิดเมนูด้านข้าง -->
     <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="navbar-brand m-0" href="index.php">
-      <span class="ms-1 font-weight-bold text-white">แดชบอร์ดผู้ขาย</span>
+      <i class="fa fa-users mr-2 text-white"></i> <!-- เพิ่มไอคอนในนี้ -->
+      <span class="ms-1 font-weight-bold text-white">Seller Dashboard</span>
     </a>
   </div>
   <hr class="horizontal light mt-0 mb-2">
@@ -16,7 +17,7 @@
     <ul class="navbar-nav">
       <li class="nav-item">
         <!-- ลิงก์แบบมีการเปลี่ยนสีพื้นหลังของเมนูเมื่ออยู่ที่หน้านั้น ๆ -->
-        <a class="nav-link text-white <?= $page == "index.php"? 'bg-gradient-primary':''; ?>" href="index.php">
+        <a class="nav-link text-white <?= $page == "index.php"? 'bg-gradient-info':''; ?>" href="index.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">dashboard</i>
           </div>
@@ -25,7 +26,7 @@
       </li>
       <li class="nav-item">
         <!-- ลิงก์แบบมีการเปลี่ยนสีพื้นหลังของเมนูเมื่ออยู่ที่หน้านั้น ๆ -->
-        <a class="nav-link text-white <?= $page == "products.php"? 'bg-gradient-primary':''; ?> " href="products.php">
+        <a class="nav-link text-white <?= $page == "products.php"? 'bg-gradient-info':''; ?> " href="products.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">table_view</i>
           </div>
@@ -34,7 +35,7 @@
       </li>
       <li class="nav-item">
         <!-- ลิงก์แบบมีการเปลี่ยนสีพื้นหลังของเมนูเมื่ออยู่ที่หน้านั้น ๆ -->
-        <a class="nav-link text-white <?= $page == "add-product.php"? 'bg-gradient-primary':''; ?>" href="add-product.php">
+        <a class="nav-link text-white <?= $page == "add-product.php"? 'bg-gradient-info':''; ?>" href="add-product.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">add_shopping_cart</i>
           </div>
@@ -43,7 +44,7 @@
       </li>
             <li class="nav-item">
               <!-- ลิงก์แบบมีการเปลี่ยนสีพื้นหลังของเมนูเมื่ออยู่ที่หน้านั้น ๆ -->
-        <a class="nav-link text-white <?= $page == "orders.php"? 'bg-gradient-primary':''; ?>" href="orders.php">
+        <a class="nav-link text-white <?= $page == "orders.php"? 'bg-gradient-info':''; ?>" href="orders.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">table_view</i>
           </div>
