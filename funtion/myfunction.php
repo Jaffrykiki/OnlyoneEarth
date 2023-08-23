@@ -52,6 +52,14 @@ function getAllOrders_seller($sellerId)
     return $query_run = mysqli_query($connection, $query);
 }
 
+// ดึงคำสั่งซื้อที่มีสถานะ "0" (ยังไม่ดำเนินการ) โดยมีไอดีของผู้ขาย
+function getAllproduct_seller($sellerId)
+{
+    global $connection;
+    $query = "SELECT * FROM products WHERE users_id = '$sellerId' AND num = 0";
+    return $query_run = mysqli_query($connection, $query);
+}
+
 // ดึงคำสั่งซื้อที่ไม่มีสถานะ "0" (สำเร็จแล้ว)
 function getOrderHistroy()
 {

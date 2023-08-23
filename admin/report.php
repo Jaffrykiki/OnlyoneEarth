@@ -130,6 +130,10 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
     </div>
 </div>
 
+<!-- Add the image below the container but above the footer -->
+<img src="../uploads/per.png" alt="Your Image" class="img-fluid" style="max-width: 20%; height: auto;">
+
+
 
 
 

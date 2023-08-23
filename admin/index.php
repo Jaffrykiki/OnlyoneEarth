@@ -133,7 +133,9 @@ $userCount = getUser(); // ฟังก์ชั่นเรียกดูผ�
     </div>
 </div>
 
-
-
+<!-- Add the images below the container but above the footer, with one on the left and the other on the right -->
+<div class="d-flex justify-content-between">
+    <img src="../uploads/Monkey_D_Garp.webp" alt="Left Image" class="img-fluid" style="max-width: 20%; height: auto;">
+</div>
 
 <?php include('includes/footer.php') ?>

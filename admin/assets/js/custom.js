@@ -27,8 +27,9 @@ $(document).ready(function () {
                 success: function (responce) {
                     if(responce == 200)
                     {
-                        swal("สำเร็จแล้ว!", "ลบสินค้ารียบร้อยแล้ว!", "success");
-                        $("#products_table").load(location.href + " #products_table");
+                        swal("สำเร็จแล้ว!", "ลบสินค้ารียบร้อยแล้ว!", "success").then(function() {
+                          location.reload(); // รีเฟรชหน้า
+                        });
                     }
                     else if(responce == 500)
                     {
