@@ -133,9 +133,28 @@ $userCount = getUser(); // ฟังก์ชั่นเรียกดูผ�
     </div>
 </div>
 
-<!-- Add the images below the container but above the footer, with one on the left and the other on the right -->
+<?php
+include("into.php");
+$p = (isset($_GET['p']) ? $_GET['p'] : '');
+    if($p=='daily'){
+      include('r_daily.php');
+    }elseif($p=='monthy'){
+      include('r_monthy.php');
+    }elseif($p=='yearly'){
+      include('r_yearly.php');
+    }elseif($p=='add'){
+      include('form.php');
+    }elseif($p=='adddb'){
+      include('form_db.php');
+    }else{
+      include('r_daily.php');
+    }
+
+?>
+
+<!-- Add the images below the container but above the footer, with one on the left and the other on the right
 <div class="d-flex justify-content-between">
     <img src="../uploads/Monkey_D_Garp.webp" alt="Left Image" class="img-fluid" style="max-width: 20%; height: auto;">
-</div>
+</div> -->
 
 <?php include('includes/footer.php') ?>
