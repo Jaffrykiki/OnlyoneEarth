@@ -7,7 +7,7 @@ $totalOrdersCount = getOrdersCount(); //ฟังก์ชั่นเรีย�
 $percentageIncrease = getPercentageIncrease(); //ฟังก์ชันสำหรับการดึงข้อมูลเปอร์เซ็นต์เพิ่มขึ้นจากฐานข้อมูล
 $totleOrderComplete = getOrdersComplete(); //ฟังก์ชั่นเรียกดูออเดอร์ที่ดำเนินการแล้ว
 $totleOrdercan = getOrdersCan(); //ฟังก์ชั่นเรียกดูออเดอร์ที่ยกเลิก
-$totalPriceWithStatus1 = getTotalPriceWithStatus1(); // ฟังก์ชั่นเรียกดูยอดขายทั้งหมด ที่มีสถานะดดำเนินการแล้ว
+$totalPriceWithStatus1 = getTotalPriceWithStatus1(); // ฟังก์ชั่นเรียกดูยอดขายทั้งหมด 
 $seller = getUsersWithCondition();  // ฟังก์ชั่นเรียกดูผ้ขาย ที่มีสถานะ verify = 1 และ role = 2
 $userCount = getUser(); // ฟังก์ชั่นเรียกดูผ้ซื้อ ที่มีสถานะ role_as = 0
 
@@ -135,7 +135,9 @@ $userCount = getUser(); // ฟังก์ชั่นเรียกดูผ�
 
 <?php
 include("into.php");
+// รับค่า parameter p จาก URL
 $p = (isset($_GET['p']) ? $_GET['p'] : '');
+// ใช้เงื่อนไขในการเลือกเนื้อหาที่จะแสดงตามค่า parameter p
     if($p=='daily'){
       include('r_daily.php');
     }elseif($p=='monthy'){
@@ -147,14 +149,13 @@ $p = (isset($_GET['p']) ? $_GET['p'] : '');
     }elseif($p=='adddb'){
       include('form_db.php');
     }else{
+        // ถ้าไม่ตรงกับเงื่อนไขใดเลย ให้แสดงเนื้อหาจากไฟล์ 'r_daily.php'
       include('r_daily.php');
     }
-
 ?>
 
-<!-- Add the images below the container but above the footer, with one on the left and the other on the right
 <div class="d-flex justify-content-between">
     <img src="../uploads/Monkey_D_Garp.webp" alt="Left Image" class="img-fluid" style="max-width: 20%; height: auto;">
-</div> -->
+</div>
 
 <?php include('includes/footer.php') ?>

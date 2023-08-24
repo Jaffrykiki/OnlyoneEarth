@@ -268,7 +268,7 @@ function getOrdersCan() {
 function getTotalPriceWithStatus1() {
     global $connection; // เชื่อมต่อฐานข้อมูล
 
-    $sql = "SELECT SUM(total_price) AS total FROM orders WHERE status = 1";
+    $sql = "SELECT SUM(price) AS total FROM order_items ";
     $result = $connection->query($sql);
 
     if ($result->num_rows > 0) {
