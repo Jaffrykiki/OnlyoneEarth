@@ -257,6 +257,7 @@ else if(isset($_POST['update_profile_btn']))
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
+
     // รับค่ารูปภาพเก่า
     $old_image = $_POST['old_image'];
 
@@ -325,7 +326,51 @@ else if(isset($_POST['update_profile_btn']))
             redirect("../profile.php?id=$user_id", "มีบางอย่างผิดพลาด");
         }
     }
+    
 }
+
+// กรณีที่ผู้ใช้กดปุ่ม "บันทึกการเปลี่ยนรหัสผ่าน"
+else if (isset($_POST['update_password_btn'])) {
+
+    $user_id = $_SESSION['auth_user']['id'];
+    $old_password = $_POST['old_password'];
+    $new_password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    // ตรวจสอบรหัสผ่านเดิมว่าถูกต้องหรือไม่
+    $user_result = getUsers($user_id);
+    $user = mysqli_fetch_assoc($user_result);
+    
+  
+    if ($old_password == $user['password']) {
+    // ตรวจสอบรหัสผ่านใหม่และยืนยันรหัสผ่านตรงกัน
+    if ($new_password === $confirm_password) {
+
+        // อัปเดตรหัสผ่านใหม่ในฐานข้อมูล
+        $hashed_password = ($new_password);
+        $update_password_query = "UPDATE `users` SET `password`='$hashed_password' WHERE id ='$user_id'";
+
+        // ดำเนินการอัปเดตรหัสผ่านในฐานข้อมูล
+        $update_password_query_run = mysqli_query($connection, $update_password_query);
+
+        if ($update_password_query_run) {
+            // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+            redirect("../resetpass.php?id=$user_id", "อัปเดตรหัสผ่านเรียบร้อยแล้ว");
+        } else {
+            // ถ้าการอัปเดตไม่สำเร็จ นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+            redirect("../resetpass.php?id=$user_id", "มีบางอย่างผิดพลาด");
+        }
+    } else {
+        // กรณีรหัสผ่านใหม่และยืนยันรหัสผ่านไม่ตรงกัน
+        redirect("../resetpass.php?id=$user_id", "รหัสผ่านใหม่และยืนยันรหัสผ่านไม่ตรงกัน");
+    }
+} else {
+    // กรณีรหัสผ่านเดิมไม่ถูกต้อง
+    // redirect("../resetpass.php?id=$user_id", "รหัสผ่านเดิมไม่ถูกต้อง");
+}
+
+}
+
 
 // กรณีที่ผู้ใช้กดปุ่ม "รายงานเรื่องมายังผู้ดูแลระบบ"
 else if(isset($_POST['report_btn']))

@@ -434,5 +434,13 @@ function getTotalPriceWithStatus1_seller($sellerId) {
     }
 }
 
+function getUsers()
+{
+    global $connection;
+    $userId = $_SESSION['auth_user']['id'];
+    $query = "SELECT * FROM users WHERE id ='$userId'";
+    return $query_run = mysqli_query($connection, $query);
+}
+
 
 

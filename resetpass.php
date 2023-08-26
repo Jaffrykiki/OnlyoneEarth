@@ -25,7 +25,7 @@ include('includes/navbar.php');
                                 <h5 class="fw-bold">ข้อมูลของฉัน</h5>
                                 <h5>จัดการข้อมูลส่วนตัวคุณเพื่อความปลอดภัยของบัญชีผู้ใช้นี้</h5> 
                                 <br>
-                                <h12>หากต้องการเปลี่ยนรหัสผ่าน</h12>  <a href="resetpass.php">คลิกที่นี้</a>
+                                <h12>หากต้องการกลับสู่หน้าโปรไฟล์</h12>  <a href="profile.php">คลิกที่นี้</a>
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -34,46 +34,25 @@ include('includes/navbar.php');
                                         <input disabled type="text" name="id" value="<?= $data['id']; ?>" class="form-control">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="fw-bold">ชื่อ</label>
+                                        <label class="fw-bold">รหัสผ่านเดิม</label>
                                         <!-- แสดงชื่อผู้ใช้ที่สามารถแก้ไขได้ -->
-                                        <input type="text" required name="name" value="<?= $data['name']; ?>" required class="form-control">
+                                        <input type="password" required name="old_password" value="" required class="form-control">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="fw-bold">อีเมล์</label>
+                                        <label class="fw-bold">รหัสผ่านใหม่</label>
                                         <!-- แสดงอีเมล์ผู้ใช้ที่สามารถแก้ไขได้ -->
-                                        <input type="text" required name="email" value="<?= $data['email']; ?>" required class="form-control">
+                                        <input type="password" required name="new_password" value="" required class="form-control">
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label class="fw-bold">เบอร์โทรศัพท์</label>
+                                        <label class="fw-bold">ยืนยันรหัสผ่าน</label>
                                         <!-- แสดงอีเมล์ผู้ใช้ที่สามารถแก้ไขได้ -->
-                                        <input type="text" required name="phone" value="<?= $data['phone']; ?>" required class="form-control">
+                                        <input type="password" required name="confirm_password" value="" required class="form-control">
                                     </div>
                                     <div class="">
-                                        <!-- แสดงอีเมล์ผู้ใช้ที่สามารถแก้ไขได้ -->
                                         <input type="hidden">
-                                        <button type="submit" name="update_profile_btn" class="btn btn-primary w-40">บันทึก</button>
+                                        <button type="submit" name="update_password_btn" class="btn btn-primary w-40">บันทึก</button>
                                     </div>
                                 </div>
-                        </div>
-                        <div class="col-md-4">
-                            <h5>รูปภาพของฉัน</h5>
-                            <hr>
-                            <div class="row align-items-center">
-                                    <div class="d-flex text-center justify-content-center align-items-center">
-                                        <!-- แสดงอีเมล์ผู้ใช้ที่สามารถแก้ไขได้ -->
-                                        <img src="uploads/<?= $data['img']; ?>" alt="Image" width="100" style="border-radius: 50%;">
-                                    </div>
-                                <hr>
-                                <h5>ขนาดไฟล์: สูงสุด 1 MB</h5>
-                                <h5>ไฟล์ที่รองรับ: .JPEG, .PNG</h5>
-                                <div class="col-md-12">
-                                    <label class="mb-0">อัปโหลดรูปภาพโปรไฟล์</label>
-                                    <!-- ส่งข้อมูลรูปภาพเดิมเพื่อนำไปใช้ในการอัปเดต -->
-                                    <input type="hidden" name="old_image" value="<?= $data['img']; ?>">
-                                    <!-- ส่งข้อมูลรูปภาพเดิมเพื่อนำไปใช้ในการอัปเดต -->
-                                    <input type="file"  name="img" accept=".jpeg, .jpg, .png" class="form-control mb-2">
-                                </div>
-                            </div>
                         </div>
                         </div>
                 </form>
@@ -84,8 +63,6 @@ include('includes/navbar.php');
     ?>
     </div>
 </div>
-<!-- ส่งข้อมูลรูปภาพเดิมเพื่อนำไปใช้ในการอัปเดต -->
-
 
 
 <?php include('includes/footer.php'); ?>
