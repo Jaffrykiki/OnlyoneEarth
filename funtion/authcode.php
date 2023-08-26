@@ -257,66 +257,76 @@ else if(isset($_POST['update_profile_btn']))
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
-    // รับค่าผู้ใช้และข้อมูลจากแบบฟอร์ม
-    $path = "../uploads";
-
-    // รับข้อมูลรูปภาพใหม่และเก่า
-    $new_image = $_FILES['img']['name'];
+    // รับค่ารูปภาพเก่า
     $old_image = $_POST['old_image'];
 
-    // ตรวจสอบว่ามีการอัปโหลดรูปภาพใหม่หรือไม่
+    // รับข้อมูลรูปภาพใหม่
+    $new_image = $_FILES['img']['name'];
+
     if($new_image != "")
-    { 
-        // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันเป็นส่วนหนึ่งของชื่อไฟล์
+    {
+        // ส่วนของการตรวจสอบและอัปโหลดรูปภาพใหม่
         $image_ext = strtolower(pathinfo($new_image, PATHINFO_EXTENSION));
-        // ตรวจสอบชนิดของไฟล์รูปภาพ
         $allowed_image_extensions = array("jpeg", "jpg", "png");
-        $update_filenname = time().'.'.$image_ext;
-
-        // ตรวจสอบขนาดไฟล์รูปภาพ
         $max_file_size = 1024 * 1024; // 1 MB
-    }
-    else
-    {
-        // ถ้าไม่มีการอัปโหลดรูปภาพใหม่ ใช้ชื่อไฟล์เก่า
-        $update_filenname = $old_image;
-    }
-   
-    if(in_array($image_ext, $allowed_image_extensions) && $_FILES['img']['size'] <= $max_file_size)
-    {
-        $update_filename = time() . '.' . $image_ext;
-    // สร้างคำสั่ง SQL สำหรับการอัปเดตข้อมูลผู้ใช้
-        $update_user_query ="UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`img`='$update_filenname' WHERE id ='$user_id'" ;
-    // ดำเนินการอัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
-        $update_user_query_run = mysqli_query($connection, $update_user_query);
 
-    // ตรวจสอบว่าการอัปเดตสำเร็จหรือไม่
-    if ($update_user_query_run) 
-    {
-        // ถ้ามีการอัปโหลดรูปภาพใหม่ ย้ายไฟล์ไปยังที่เก็บและลบไฟล์เก่า
-        if($_FILES['img']['name'] != "")
+        if(in_array($image_ext, $allowed_image_extensions) && $_FILES['img']['size'] <= $max_file_size)
         {
-            move_uploaded_file($_FILES['img']['tmp_name'], $path. '/' .$update_filenname);
-            if(file_exists("../uploads/".$old_image))
+            // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันเป็นส่วนหนึ่งของชื่อไฟล์
+            $update_filenname = time() . '.' . $image_ext;
+
+            // สร้างคำสั่ง SQL สำหรับการอัปเดตข้อมูลผู้ใช้ (รวมถึงรูปภาพ)
+            $update_user_query = "UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`img`='$update_filenname' WHERE id ='$user_id'";
+            
+            // ดำเนินการอัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
+            $update_user_query_run = mysqli_query($connection, $update_user_query);
+
+            if ($update_user_query_run)
             {
-                unlink("../uploads/".$old_image);
+                // ย้ายไฟล์รูปภาพใหม่ไปยังที่เก็บและลบไฟล์เก่า
+                move_uploaded_file($_FILES['img']['tmp_name'], $path. '/' .$update_filenname);
+                if(file_exists("../uploads/".$old_image))
+                {
+                    unlink("../uploads/".$old_image);
+                }
+                
+                // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+                redirect("../profile.php?id=$user_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
+            }
+            else
+            {
+                // ถ้าการอัปเดตไม่สำเร็จ นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+                redirect("../profile.php?id=$user_id", "มีบางอย่างผิดพลาด");
             }
         }
-        // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
-        redirect("../profile.php?id=$user_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
+        else
+        {
+            // ถ้าไฟล์รูปภาพไม่ถูกต้องหรือขนาดเกินกว่า 1 MB
+            redirect("../profile.php?id=$user_id", "ไฟล์รูปภาพไม่ถูกต้องหรือขนาดเกินกว่า 1 MB");
+        }
     }
     else
     {
-        // ถ้าการอัปเดตไม่สำเร็จ นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
-        redirect("../profile.php?id=$user_id", "มีบางอย่างผิดพลาด");
+        // ส่วนของการอัปเดตข้อมูลเฉพาะที่ไม่เกี่ยวข้องกับรูปภาพ
+        // สร้างคำสั่ง SQL สำหรับการอัปเดตข้อมูลผู้ใช้ (ไม่รวมรูปภาพ)
+        $update_user_query = "UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone' WHERE id ='$user_id'";
+        
+        // ดำเนินการอัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
+        $update_user_query_run = mysqli_query($connection, $update_user_query);
+
+        if ($update_user_query_run)
+        {
+            // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+            redirect("../profile.php?id=$user_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
+        }
+        else
+        {
+            // ถ้าการอัปเดตไม่สำเร็จ นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+            redirect("../profile.php?id=$user_id", "มีบางอย่างผิดพลาด");
+        }
     }
 }
-    else
-    {
-    redirect("../profile.php?id=$user_id", "ไฟล์รูปภาพไม่ถูกต้องหรือขนาดเกินกว่า 1 MB");
-    }
 
-} 
 // กรณีที่ผู้ใช้กดปุ่ม "รายงานเรื่องมายังผู้ดูแลระบบ"
 else if(isset($_POST['report_btn']))
 {
