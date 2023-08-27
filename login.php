@@ -4,53 +4,55 @@ session_start();
 include('includes/header.php');
 include('connection/dbcon.php');
 
-
+// ตรวจสอบว่าผู้ใช้เข้าสู่ระบบอยู่หรือไม่
 if (isset($_SESSION['auth'])) {
     header('location: index.php');
 }
 
 require 'google-api/vendor/autoload.php';
 
-// Creating new google client instance
+// สร้างอินสแตนซ์ของ Google Client
 $client = new Google_Client();
 
-// Enter your Client ID
+// กำหนด Client ID
 $client->setClientId('228571355522-v5ft31amc6llqu45u3nscaugqp0hulca.apps.googleusercontent.com');
-// Enter your Client Secrect
+// กำหนด Client Secret
 $client->setClientSecret('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');
-// Enter the Redirect URL
+// กำหนด Redirect URL
 $client->setRedirectUri('http://localhost/OnlyoneEarth/login.php');
 
-// Adding those scopes which we want to get (email & profile Information)
+// เพิ่มขอบเขตของข้อมูลที่ต้องการ (email และ profile Information)
 $client->addScope("email");
 $client->addScope("profile");
 
+// ตรวจสอบว่ามีการรับรหัสสำหรับอนุญาติผ่าน Google หรือไม่
 if (isset($_GET['code'])) :
 
     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
 
     if (!isset($token["error"])) {
 
+        // กำหนด Access Token ให้กับ Client
         $client->setAccessToken($token['access_token']);
 
-        // รับข้อมูลโปรไฟล์
+        // รับข้อมูลโปรไฟล์ผู้ใช้จาก Google
         $google_oauth = new Google_Service_Oauth2($client);
         $google_account_info = $google_oauth->userinfo->get();
 
-        // จัดเก็บข้อมูลลงในฐานข้อมูล
+        // สำหรับการจัดเก็บข้อมูลลงในฐานข้อมูล
         $id = mysqli_real_escape_string($connection, $google_account_info->id);
         $full_name = mysqli_real_escape_string($connection, trim($google_account_info->name));
         $email = mysqli_real_escape_string($connection, $google_account_info->email);
         $profile_pic = mysqli_real_escape_string($connection, $google_account_info->picture);
 
-        // ตรวจสอบว่ามีผู้ใช้อยู่แล้วหรือไม่
+         // ตรวจสอบว่ามีผู้ใช้อยู่แล้วหรือไม่
         $get_user = mysqli_query($connection, "SELECT * FROM `users` WHERE `google_id`='$id'");
         if (mysqli_num_rows($get_user) > 0) {
 
-            // ถ้ามีบัญชีในระบบแล้ว
+            // หากมีบัญชีในระบบ
             $_SESSION['auth'] = true;
 
-            // ดึงข้อมูลผู้ใช้จากการค้นหาในฐานข้อมูล
+            // ดึงข้อมูลผู้ใช้จากฐานข้อมูล
             $userdate = mysqli_fetch_array($get_user);
             $users_id = $userdate['id'];
             echo "true";
@@ -64,17 +66,17 @@ if (isset($_GET['code'])) :
                 'email' => $email,
                 'img' => $profile_pic
             ];
-            // ถ้ามีบัญชีในระบบแล้ว
+
+            // ไปยังหน้าหลักหลังจากเข้าสู่ระบบ
             header('Location: index.php');
             exit;
         } else {
 
-            // if user not exists we will insert the user
-            // $insert = mysqli_query($connection, "INSERT INTO `users`(`google_id`,`name`,`email`,`profile_image`) VALUES('$id','$full_name','$email','$profile_pic')");
+            // หากผู้ใช้ยังไม่มีบัญชี
             $insert = mysqli_query($connection, "INSERT INTO `users` ( `google_id`, `name`, `email`, `phone`, `password`, `verify_token`, `verify_status`, `role_as`, `img`, `created_at`) VALUES ( '$id', '$full_name', '$email', '', '', '', '0', '0', '$profile_pic', current_timestamp())");
 
             if ($insert) {
-                // ดึง ID ที่ถูกสร้างขึ้นใหม่   
+                // ดึง ID ที่ถูกสร้างใหม่ 
                 $users_id = mysqli_insert_id($connection);
 
                 // เก็บข้อมูลผู้ใช้ในเซสชัน
@@ -85,6 +87,8 @@ if (isset($_GET['code'])) :
                     'email' => $email,
                     'img' => $profile_pic
                 ];
+
+                // ไปยังหน้าหลักหลังจากการสร้างบัญชี
                 header('Location: index.php');
                 exit;
             } else {
@@ -96,7 +100,7 @@ if (isset($_GET['code'])) :
         exit;
     }
 else :
-
+    
 ?>
 
     <!-- ส่วนของการแสดงผลแบบฟอร์มเข้าสู่ระบบ -->
