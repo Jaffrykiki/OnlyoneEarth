@@ -3,7 +3,7 @@
   <!-- แท็ก <ul> เป็นรายการของ Nav Links ทางซ้าย -->
     
   <ul class="navbar-nav ms-auto">
-    <?php if (isset($_SESSION['auth_user']) && $_SESSION['auth_user']['verify_status'] == 1) { ?>
+  <?php if (isset($_SESSION['auth_user']) && isset($_SESSION['auth_user']['verify_status']) && $_SESSION['auth_user']['verify_status'] == 1) { ?>
         <li class="nav-item">
             <a class="nav-link active" href="/OnlyoneEarth/seller/index.php">ไปที่ร้านของคุณ</a>
         </li>
