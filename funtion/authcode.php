@@ -211,7 +211,8 @@ else if(isset($_POST['login_btn']))
             'name' => $username,
             'email' => $useremail,
             'id' => $users_id,
-            'img' => $img
+            'img' => $img,
+            'verify_status' => $verify_status
         ];
         
         // ตรวจสอบบทบาทของผู้ใช้และเปลี่ยนเส้นทางตาม
@@ -257,15 +258,20 @@ else if(isset($_POST['update_profile_btn']))
     $email = $_POST['email'];
     $phone = $_POST['phone'];
 
+     // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
+     $path = "../uploads";
+
 
     // รับค่ารูปภาพเก่า
     $old_image = $_POST['old_image'];
 
     // รับข้อมูลรูปภาพใหม่
     $new_image = $_FILES['img']['name'];
+    
 
     if($new_image != "")
     {
+        
         // ส่วนของการตรวจสอบและอัปโหลดรูปภาพใหม่
         $image_ext = strtolower(pathinfo($new_image, PATHINFO_EXTENSION));
         $allowed_image_extensions = array("jpeg", "jpg", "png");
@@ -273,12 +279,13 @@ else if(isset($_POST['update_profile_btn']))
 
         if(in_array($image_ext, $allowed_image_extensions) && $_FILES['img']['size'] <= $max_file_size)
         {
+            
             // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันเป็นส่วนหนึ่งของชื่อไฟล์
             $update_filenname = time() . '.' . $image_ext;
 
             // สร้างคำสั่ง SQL สำหรับการอัปเดตข้อมูลผู้ใช้ (รวมถึงรูปภาพ)
             $update_user_query = "UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`img`='$update_filenname' WHERE id ='$user_id'";
-            
+
             // ดำเนินการอัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
             $update_user_query_run = mysqli_query($connection, $update_user_query);
 
@@ -290,9 +297,8 @@ else if(isset($_POST['update_profile_btn']))
                 {
                     unlink("../uploads/".$old_image);
                 }
-                
                 // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
-                redirect("../profile.php?id=$user_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
+                redirect("../profile.php?id=$user_id", "อัปเดตรูปเรียบร้อยแล้ว");
             }
             else
             {
@@ -341,7 +347,6 @@ else if (isset($_POST['update_password_btn'])) {
     $user_result = getUsers($user_id);
     $user = mysqli_fetch_assoc($user_result);
     
-  
     if ($old_password == $user['password']) {
     // ตรวจสอบรหัสผ่านใหม่และยืนยันรหัสผ่านตรงกัน
     if ($new_password === $confirm_password) {
@@ -366,7 +371,7 @@ else if (isset($_POST['update_password_btn'])) {
     }
 } else {
     // กรณีรหัสผ่านเดิมไม่ถูกต้อง
-    // redirect("../resetpass.php?id=$user_id", "รหัสผ่านเดิมไม่ถูกต้อง");
+    redirect("../resetpass.php?id=$user_id", "รหัสผ่านเดิมไม่ถูกต้อง");
 }
 
 }

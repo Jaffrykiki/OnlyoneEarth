@@ -16,6 +16,12 @@ include('../funtion/myfunction.php');
      // รับชื่อไฟล์รูปภาพที่อัปโหลด
     $image = $_FILES['image']['name'];
 
+    // ตรวจสอบนามสกุลของไฟล์ภาพ
+    $image_ext = pathinfo($image, PATHINFO_EXTENSION);
+    $allowed_extensions = array('jpg', 'jpeg', 'png'); // นามสกุลที่อนุญาตให้อัปโหลด
+
+    if (in_array($image_ext, $allowed_extensions)) {
+
     // กำหนดตำแหน่งที่เก็บไฟล์
     $path = "../uploads";
 
@@ -60,6 +66,10 @@ include('../funtion/myfunction.php');
         // นำทางไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน "all fields are mandatory"
         redirect("add-product.php", "all fields are mandatory");
     }
+}    else {
+    // นำทางไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน "สกุลไฟล์ไม่ถูกต้อง"
+    redirect("add-product.php", "สกุลไฟล์ไม่ถูกต้อง");
+}
 }
 // เช็คว่ามีการส่งข้อมูลผ่านการ POST มาหรือไม่ ถ้ากดปุ่ม update_product_btn
 else if (isset($_POST['update_product_btn']))

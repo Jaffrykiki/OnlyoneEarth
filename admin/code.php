@@ -203,7 +203,8 @@ else if (isset($_POST['update_product_btn'])) {
             // ย้ายไฟล์รูปภาพไปยังโฟลเดอร์ที่กำหนด
             move_uploaded_file($_FILES['image']['tmp_name'], $path . '/' . $update_filenname);
             // ตรวจสอบว่ามีไฟล์รูปภาพเก่าอยู่ในโฟลเดอร์ และลบไฟล์รูปภาพเก่า
-            if (file_exists("../uploads/" . $old_image)) {
+            if (file_exists("../uploads/" . $old_image)) 
+            {
                 unlink("../uploads/" . $old_image);
             }
         }

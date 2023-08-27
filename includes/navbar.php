@@ -1,12 +1,20 @@
 <!-- สร้าง Navbar ด้วย class ของ Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-success shadow">
   <!-- แท็ก <ul> เป็นรายการของ Nav Links ทางซ้าย -->
+    
   <ul class="navbar-nav ms-auto">
-    <!-- แท็ก <ul> เป็นรายการของ Nav Links ทางซ้าย -->
-    <li class="nav-item">
-      <a class="nav-link active" href="register_seller.php">เริ่มต้นเป็นผู้ขาย</a>
-    </li>
-  </ul>
+    <?php if (isset($_SESSION['auth_user']) && $_SESSION['auth_user']['verify_status'] == 1) { ?>
+        <li class="nav-item">
+            <a class="nav-link active" href="/OnlyoneEarth/seller/index.php">ไปที่ร้านของคุณ</a>
+        </li>
+    <?php } else { ?>
+        <li class="nav-item">
+            <a class="nav-link active" href="register_seller.php">เริ่มต้นเป็นผู้ขาย</a>
+        </li>
+    <?php } ?>
+</ul>
+
+
   <!-- ใช้ <div> เป็นคอนเทนเนอร์สำหรับแท็ก Navbar Brand และปุ่ม Navbar Toggler -->
   <div class="container">
     <style>

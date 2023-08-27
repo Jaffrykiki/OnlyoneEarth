@@ -35,23 +35,34 @@ $page = substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], "/") + 
           <span class="nav-link-text ms-1">จัดการผู้ใช้</span>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white <?= $page == "category.php" ? 'bg-gradient-warning' : ''; ?>" href="category.php">
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white <?= in_array($page, ["category.php", "add-category.php"]) ? 'bg-gradient-warning' : ''; ?>" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">format_list_bulleted</i>
           </div>
-          <span class="nav-link-text ms-1">หมวดหมู่ทั้งหมด</span>
+          <span class="nav-link-text ms-1">จัดการหมวดหมู่สินค้า</span>
         </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item <?= $page == "category.php" ? 'active' : ''; ?>" href="category.php">หมวดหมู่ทั้งหมด</a></li>
+          <li><a class="dropdown-item <?= $page == "add-category.php" ? 'active' : ''; ?>" href="add-category.php">เพิ่มหมวดหมู่สินค้า</a></li>
+        </ul>
       </li>
-      <li class="nav-item">
-        <a class="nav-link text-white <?= $page == "add-category.php" ? 'bg-gradient-warning' : ''; ?> " href="add-category.php">
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white <?= in_array($page, ["products.php", "add-product.php"]) ? 'bg-gradient-warning' : ''; ?>" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">playlist_add</i>
+            <i class="material-icons opacity-10">format_list_bulleted</i>
           </div>
-          <span class="nav-link-text ms-1">เพิ่มหมวดหมู่สินค้า</span>
+          <span class="nav-link-text ms-1">จัดการสินค้า</span>
         </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item <?= $page == "products.php" ? 'active' : ''; ?>" href="products.php">สินค้าทั้งหมด</a></li>
+          <li><a class="dropdown-item <?= $page == "add-product.php" ? 'active' : ''; ?>" href="add-product.php">เพิ่มสินค้า</a></li>
+        </ul>
       </li>
-      <li class="nav-item">
+
+      <!-- <li class="nav-item">
         <a class="nav-link text-white <?= $page == "products.php" ? 'bg-gradient-warning' : ''; ?>" href="products.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
             <i class="material-icons opacity-10">table_view</i>
@@ -66,7 +77,7 @@ $page = substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], "/") + 
           </div>
           <span class="nav-link-text ms-1">เพิ่มสินค้า</span>
         </a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "orders.php" ? 'bg-gradient-warning' : ''; ?>" href="orders.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
