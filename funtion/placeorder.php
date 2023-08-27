@@ -127,7 +127,6 @@ else if (isset($_SESSION['auth']))
             {
                 $_SESSION['message'] = "สั่งซื้อเรียบร้อยแล้ว";
                 header('Location: ../my-orders.php');
-                die();
             }else {
                 echo 201; 
             }
