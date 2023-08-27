@@ -55,7 +55,7 @@ include('authenticate.php'); // เรียกใช้ไฟล์ authenticat
                                         <!-- แสดงรายการสินค้าแต่ละรายการในตะกร้า -->
                                         <div class="row align-items-center">
                                             <div class="col-md-2">
-                                                <img src="uploads/<?= $citem['image']; ?>" alt="Image" width="160" height="160" >
+                                                <img src="uploads/<?= $citem['image_filename']; ?>" alt="Image" width="160" height="160" >
                                             </div>
                                             <div class="col-md-3">
                                                 <h5><?= $citem['name']; ?></h5>

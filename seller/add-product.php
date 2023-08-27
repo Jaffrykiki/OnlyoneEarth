@@ -26,7 +26,7 @@ include('includes/header.php');
                                     <option selected>เลือกหมวดหมู่</option>
                                     <?php
                                     // ดึงข้อมูลหมวดหมู่ทั้งหมด
-                                    $categories = getAll("category");
+                                    $categories = getAll_category();
 
                                     // ตรวจสอบว่ามีข้อมูลหมวดหมู่หรือไม่
                                     if (mysqli_num_rows($categories) > 0) 

@@ -134,7 +134,7 @@ $data = mysqli_fetch_array($orderData);
                                             ?>
                                                     <tr>
                                                         <td class="align-middle">
-                                                            <img src="uploads/<?= $item['image']; ?>" width="160px" height="160px" alt="<?= $item['name']; ?>">
+                                                            <img src="uploads/<?= $item['image_filename']; ?>" width="160px" height="160px" alt="<?= $item['name']; ?>">
                                                             <?= $item['name']; ?>
                                                         </td>
                                                         <td class="align-middle">

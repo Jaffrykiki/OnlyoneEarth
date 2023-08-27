@@ -109,7 +109,7 @@ fclose($file);
                                 <div class="mb-1 border">
                                     <div class="row align-items-center">
                                         <div class="col-md-2">
-                                            <img src="uploads/<?= $citem['image']; ?>" alt="Image" width="80px">
+                                            <img src="uploads/<?= $citem['image_filename']; ?>" alt="Image" width="80px">
                                         </div>
                                         <div class="col-md-5">
                                             <label><?= $citem['name']; ?></label>

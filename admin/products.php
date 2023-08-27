@@ -29,9 +29,21 @@ $query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
 		$pagenum = $last;
 	}
 
-	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
+    $limit = 'LIMIT ' . ($pagenum - 1) * $page_rows . ',' . $page_rows;
 
-	$nquery=mysqli_query($connection,"SELECT * from  products $limit");
+    $query = "
+        SELECT p.id, p.category_id, p.users_id, p.name, p.detail, p.price, p.image, p.num, p.trending, p.created_at, pi.image_filename
+        FROM products p
+        LEFT JOIN (
+            SELECT product_id, MIN(image_filename) as image_filename
+            FROM product_images
+            GROUP BY product_id
+        ) pi ON p.id = pi.product_id
+        $limit
+    ";
+    
+    $nquery = mysqli_query($connection, $query);
+    
 
 	$paginationCtrls = '';
 
@@ -99,7 +111,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                         <tbody>
                             <?php
                             // เรียกใช้ฟังก์ชัน getAll("products") เพื่อดึงข้อมูลรายการสินค้าทั้งหมด
-                            $Products = getAll_product();
+                            // $Products = getAll_product();
 
                             // ตรวจสอบว่ามีรายการสินค้าหรือไม่
                             if (isset($_GET['searchTerm']) && !empty($_GET['searchTerm'])) {
@@ -137,7 +149,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                         <td><?= $item['users_id']; ?></td>
                                         <td><?= $item['name']; ?></td>
                                         <td>
-                                            <img src="../uploads/<?= $item['image']; ?>" width="130px" height="130px" alt="<?= $item['name']; ?>">
+                                            <img src="../uploads/<?= $item['image_filename']; ?>" width="130px" height="130px" alt="<?= $item['name']; ?>">
                                         </td>
                                         <td>
                                             <a href="edit-product.php?id=<?= $item['id']; ?>" class="btn btn-primary">แก้ไข</a>
