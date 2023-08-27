@@ -120,9 +120,14 @@ $data = mysqli_fetch_array($orderData);
                                             $userId = $_SESSION['auth_user']['id'];
 
                                             // สร้างคำสั่ง SQL ในการดึงข้อมูลออเดอร์และรายการสินค้าที่เกี่ยวข้อง
-                                            $order_query = "SELECT o.id as oid, o.tracking_no, o.user_id, oi. *,oi.qty as orderqty, p.* FROM orders o, order_items oi,
-                                        products p WHERE o.user_id='$userId' AND oi.order_id=o.id AND p.id=oi.prod_id 
-                                        AND o.tracking_no='$tracking_no' ";
+                                            $order_query = "SELECT o.id as oid, o.tracking_no, o.user_id, oi. *,oi.qty as orderqty, p.*, pi.image_filename
+                                            FROM orders o
+                                            INNER JOIN order_items oi ON oi.order_id = o.id
+                                            INNER JOIN products p ON p.id = oi.prod_id
+                                            LEFT JOIN product_images pi ON p.id = pi.product_id
+                                            WHERE o.user_id='$userId' AND o.tracking_no='$tracking_no'
+                                            LIMIT 1 
+                                            ";
 
                                             // ทำการ query ไปยังฐานข้อมูล   
                                             $order_query_run = mysqli_query($connection, $order_query);

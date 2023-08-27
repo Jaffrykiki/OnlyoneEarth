@@ -86,13 +86,6 @@ else if (isset($_SESSION['auth']))
                 $totalPrice += $citem['price'] * $citem['prod_qty'];
             }
 
-        //shama
-        // $totalPrice = 0;
-        // foreach ($query_run as $citem) 
-        // {
-        //     $totalPrice += $citem['price'] * $citem['prod_qty'];
-            
-        // }
 
         //เพิ่มข้อมูลเข้าไปในตาราง orders
         $tracking_no = "Somtuy".rand(1111,9999).substr($phone,2);

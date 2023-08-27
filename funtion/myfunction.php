@@ -41,7 +41,11 @@ function getAll_product_seller($sellerId)
 function getByID($table, $id)
 {
     global $connection;
-    $query = "SELECT * FROM $table WHERE  id ='$id' "; // SQL ที่ใช้ดึงข้อมูลจาก ID ที่กำหนด
+    $query = "SELECT t.*, pi.image_filename
+    FROM $table t
+    LEFT JOIN product_images pi ON t.id = pi.product_id
+    WHERE t.id = '$id'
+    "; // SQL ที่ใช้ดึงข้อมูลจาก ID ที่กำหนด
     return $query_run = mysqli_query($connection, $query);
 }
 

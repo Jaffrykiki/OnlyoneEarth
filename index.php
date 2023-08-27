@@ -99,7 +99,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                     <div class="card shadow">
                                         <div class="card-body">
                                             <div class="shadow">
-                                                <img src="uploads/<?= $item['image']; ?>" width="300" height="300" alt="Product image" class="w-100">
+                                                <img src="uploads/<?= $item['image_filename']; ?>" width="300" height="300" alt="Product image" class="w-100">
                                                 <h5 class="text-center"><?= $item['name']; ?></h5>
                                             </div>
                                         </div>

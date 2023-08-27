@@ -59,7 +59,7 @@ if (isset($_GET['category']))
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="shadow">
-                                                        <img src="uploads/<?= $item['image']; ?>" width="300px" height="180px" alt="Product image" class="w-100">
+                                                        <img src="uploads/<?= $item['image_filename']; ?>" width="300px" height="180px" alt="Product image" class="w-100">
                                                         <h4 class="text-center"><?= $item['name']; ?></h4>
                                                     </div>
                                                 </div>

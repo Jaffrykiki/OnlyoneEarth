@@ -21,7 +21,12 @@ function getAllActive($table)
 function getAllTrending()
 {
     global $connection;
-    $query = "SELECT * FROM products WHERE trending= '1' ";
+    $query = "SELECT p.*, pi.image_filename
+    FROM products p
+    LEFT JOIN product_images pi ON p.id = pi.product_id
+    WHERE p.trending = '1'
+    GROUP BY p.name
+    ";
     return $query_run = mysqli_query($connection, $query);
 }
 
@@ -46,7 +51,12 @@ function getNameActive($table, $name)
 function getProdByCategory($category_id)
 {
     global $connection;
-    $query = "SELECT * FROM products WHERE category_id= '$category_id'  ";
+    $query = "SELECT p.*, pi.image_filename
+    FROM products p
+    LEFT JOIN product_images pi ON p.id = pi.product_id
+    WHERE p.category_id = '$category_id' 
+    GROUP BY p.name
+    ";
     return $query_run = mysqli_query($connection, $query);
 }
 
