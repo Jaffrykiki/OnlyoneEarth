@@ -2,6 +2,9 @@
 include('../middleware/sellerMiddleware.php'); // เรียกใช้ middleware เพื่อตรวจสอบสิทธิ์ผู้ใช้
 include('includes/header.php');
 
+// ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
+$sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
+
 ?>
 
 <div class="container">
@@ -26,7 +29,7 @@ include('includes/header.php');
                         <tbody>
                             <?php
                             // ดึงข้อมูลสินค้าทั้งหมด
-                            $products = getAll("products",true);
+                            $products = getAll_product_seller($sellerId);
 
                             // ตรวจสอบว่ามีข้อมูลสินค้าหรือไม่
                             if (mysqli_num_rows($products) > 0) {

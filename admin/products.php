@@ -99,7 +99,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                         <tbody>
                             <?php
                             // เรียกใช้ฟังก์ชัน getAll("products") เพื่อดึงข้อมูลรายการสินค้าทั้งหมด
-                            $Products = getAll("products");
+                            $Products = getAll_product();
 
                             // ตรวจสอบว่ามีรายการสินค้าหรือไม่
                             if (isset($_GET['searchTerm']) && !empty($_GET['searchTerm'])) {

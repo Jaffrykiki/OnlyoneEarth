@@ -102,7 +102,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                         <tbody>
                             <?php
                             // ดึงข้อมูลผู้ใช้ทั้งหมดจากฐานข้อมูล
-                            $users = getAll("users");
+                            $users = getAll_user();
                             // ตรวจสอบการค้นหาผู้ใช้
                             if (isset($_GET['searchTerm']) && !empty($_GET['searchTerm'])) {
                                 $searchTerm = $_GET['searchTerm'];

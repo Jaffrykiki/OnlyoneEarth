@@ -109,17 +109,8 @@ else if (isset($_POST['add_product_btn'])) {
     $num = $_POST['num'];
     $trending = isset($_POST['trending']) ? '1' : '0';
 
-    // รับชื่อไฟล์รูปภาพ
-    $image = $_FILES['image']['name'];
-
     // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
     $path = "../uploads";
-
-    // ดึงนามสกุลไฟล์ภาพ
-    $image_ext = pathinfo($image, PATHINFO_EXTENSION);
-
-    // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันด้วยการใช้เวลาปัจจุบันและนามสกุลไฟล์
-    $filename = time() . '.' . $image_ext;
 
     // ตรวจสอบว่ามีชื่อและรายละเอียดต้องไม่ว่าง
     if ($name != "" && $detail != "") {
@@ -127,14 +118,40 @@ else if (isset($_POST['add_product_btn'])) {
         $users_id = $_SESSION['auth_user']['id'];
 
         // สร้างคำสั่ง SQL เพื่อเพิ่มข้อมูลสินค้าในฐานข้อมูล
-        $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,trending,image) VALUES 
-        ('$category_id', $users_id ,'$name','$detail','$price','$num','$trending','$filename') ";
+        $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,trending) VALUES 
+        ('$category_id', $users_id ,'$name','$detail','$price','$num','$trending') ";
 
         // ทำการ query คำสั่ง SQL และเก็บผลลัพธ์ในตัวแปร $product_query_run
         $product_query_run = mysqli_query($connection, $product_query);
 
         // ตรวจสอบผลลัพธ์การ query เพื่อทำการเปลี่ยนเส้นทางหน้าเว็บ
         if ($product_query_run) {
+
+            $product_id = mysqli_insert_id($connection); // ได้ ID ของสินค้าที่เพิ่มล่าสุด
+
+            $allowed_extensions = array('png', 'jpg', 'jpeg', 'gif');
+
+            foreach ($_FILES['images']['tmp_name'] as $index => $tmp_name) {
+                $image = $_FILES['images']['name'][$index];
+                $image_ext = pathinfo($image, PATHINFO_EXTENSION);
+                
+            if (in_array(strtolower($image_ext), $allowed_extensions)) {
+                $filename = time() . '_' . $index . '.' . $image_ext;
+
+                $product_image_query = "INSERT INTO product_images (product_id, image_filename) VALUES ('$product_id', '$filename')";
+                $product_image_query_run = mysqli_query($connection, $product_image_query);
+
+                if ($product_image_query_run) {
+                    move_uploaded_file($tmp_name, $path . '/' . $filename);
+                } else {
+                    // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
+                    redirect("add-product.php", "มีบางอย่างผิดพลาด");
+                }
+            } else {
+                // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
+                redirect("add-product.php", "ประเภทไฟล์ไม่ถูกต้อง");
+            }
+        } 
             // ย้ายไฟล์รูปภาพไปยังโฟลเดอร์ที่กำหนด
             move_uploaded_file($_FILES['image']['tmp_name'], $path . '/' . $filename);
 
@@ -149,10 +166,7 @@ else if (isset($_POST['add_product_btn'])) {
             // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
             redirect("add-product.php", "มีบางอย่างผิดพลาด");
         }
-    } else {
-        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
-        redirect("add-product.php", "all fields are mandatory");
-    }
+    } 
 }
 // เมื่อกดปุ่ม "อัปเดตสินค้า"
 else if (isset($_POST['update_product_btn'])) {
@@ -203,8 +217,7 @@ else if (isset($_POST['update_product_btn'])) {
             // ย้ายไฟล์รูปภาพไปยังโฟลเดอร์ที่กำหนด
             move_uploaded_file($_FILES['image']['tmp_name'], $path . '/' . $update_filenname);
             // ตรวจสอบว่ามีไฟล์รูปภาพเก่าอยู่ในโฟลเดอร์ และลบไฟล์รูปภาพเก่า
-            if (file_exists("../uploads/" . $old_image)) 
-            {
+            if (file_exists("../uploads/" . $old_image)) {
                 unlink("../uploads/" . $old_image);
             }
         }
@@ -246,10 +259,7 @@ else if (isset($_POST['delete_product_btn'])) {
 
     // ตรวจสอบผลลัพธ์การ query เพื่อทำการแสดงข้อความหรือเปลี่ยนเส้นทางหน้า
     if ($logs_query_run) {
-        // ตรวจสอบว่ามีไฟล์รูปภาพในโฟลเดอร์และทำการลบไฟล์รูปภาพ
-        if (file_exists("../uploads/" . $image)) {
-            unlink("../uploads/" . $image);
-        }
+
         // สร้างคำสั่ง SQL เพื่อลบข้อมูลสินค้าที่ตรงกับ product_id
         $delete_query = "DELETE FROM products WHERE id='$product_id'";
 
@@ -257,12 +267,14 @@ else if (isset($_POST['delete_product_btn'])) {
         $delete_query_run  = mysqli_query($connection, $delete_query);
 
         if ($delete_query_run) {
+            // ตรวจสอบว่ามีไฟล์รูปภาพในโฟลเดอร์และทำการลบไฟล์รูปภาพ
+            if (file_exists("../uploads/" . $image)) {
+                unlink("../uploads/" . $image);
+            }
             echo 200; // สำเร็จ: HTTP 200 OK
         } else {
             echo 500; // ผิดพลาด: HTTP 500 Internal Server Error
         }
-    } else {
-        echo 500; // ผิดพลาด: HTTP 500 Internal Server Error
     }
 }
 // เมื่อกดปุ่ม "อัปเดตผู้ใช้"
@@ -358,7 +370,7 @@ else if (isset($_POST['update_order_btn'])) {
         // สำเร็จในการอัปเดตหมวดหมู่
         // เพิ่ม Logs เข้าสู่ตาราง order_logs
         $users_id = $_SESSION['auth_user']['id']; // แทนที่ด้วยรหัสผู้ใช้งานจริง
-        
+
         // กำหนดข้อความที่เกี่ยวข้องกับสถานะในตัวแปร $event
         if ($order_status == 0) {
             $event = "อัปเดตออเดอร์: อยู่ระหว่างดำเนินการ";
@@ -368,14 +380,14 @@ else if (isset($_POST['update_order_btn'])) {
             $event = "อัปเดตออเดอร์: ยกเลิกคำสั่งซื้อ";
         }
 
-         // สร้างคำสั่ง SQL เพื่อเลือก id จากตาราง orders โดยใช้เงื่อนไข tracking_no
-         $select_order_id_query = "SELECT id FROM orders WHERE tracking_no = '$track_no'";
-         $select_order_id_result = mysqli_query($connection, $select_order_id_query);
-         $order_id_row = mysqli_fetch_assoc($select_order_id_result);
-         $order_id = $order_id_row['id'];
+        // สร้างคำสั่ง SQL เพื่อเลือก id จากตาราง orders โดยใช้เงื่อนไข tracking_no
+        $select_order_id_query = "SELECT id FROM orders WHERE tracking_no = '$track_no'";
+        $select_order_id_result = mysqli_query($connection, $select_order_id_query);
+        $order_id_row = mysqli_fetch_assoc($select_order_id_result);
+        $order_id = $order_id_row['id'];
 
-         $insert_logs_query = "INSERT INTO orders_logs (u_id , ord_id  , event) VALUES ('$users_id', '$order_id', '$event')";
-         mysqli_query($connection, $insert_logs_query);
+        $insert_logs_query = "INSERT INTO orders_logs (u_id , ord_id  , event) VALUES ('$users_id', '$order_id', '$event')";
+        mysqli_query($connection, $insert_logs_query);
 
         // หลังจากอัปเดตสถานะคำสั่งซื้อเสร็จสมบูรณ์ ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าและแสดงข้อความผลลัพธ์
         redirect("view-order.php?t=$track_no", "อัปเดตสถานะคำสั่งซื้อสำเร็จแล้ว");

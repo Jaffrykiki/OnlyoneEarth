@@ -4,21 +4,38 @@ include('../connection/dbcon.php');
 
 
 
-// เรียกดูข้อมูลสินค้าทั้งหมด โดยสามารถระบุเงื่อนไขการกรองข้อมูลได้
-function getAll($table, $where = false)
+// เรียกดูข้อมูลสินค้าทั้งหมด
+function getAll_product()
 {
-    $query = "";
-    if ($where) {
-        $users_id = $_SESSION['auth_user']['id']; // เข้าถึง ID ของผู้ใช้ที่ลงชื่อเข้าใช้
-        $query = "SELECT * FROM $table WHERE users_id = $users_id"; //SQL ที่ต้องการดึงข้อมูล     
-    } else {
-        $query = "SELECT * FROM $table";
-    }
-
     global $connection; // เรียกใช้ตัวแปรเชื่อมต่อฐานข้อมูล
-
+    $query = "SELECT * FROM products";
     return $query_run = mysqli_query($connection, $query); //SQL และคืนผลลัพธ์
 }
+//เรียกดูหมวดหมู่สินค้าทั้งหมด
+function getAll_category()
+{
+    global $connection; // เรียกใช้ตัวแปรเชื่อมต่อฐานข้อมูล
+    $query = "SELECT * FROM category";
+    return $query_run = mysqli_query($connection, $query); //SQL และคืนผลลัพธ์
+}
+//เรียกดูหมวดหมู่สินค้าทั้งหมด
+function getAll_user()
+{
+    global $connection; // เรียกใช้ตัวแปรเชื่อมต่อฐานข้อมูล
+    $query = "SELECT * FROM users";
+    return $query_run = mysqli_query($connection, $query); //SQL และคืนผลลัพธ์
+}
+
+
+
+// เรียกดูข้อมูลสินค้าทั้งหมดของผู้ขาย
+function getAll_product_seller($sellerId)
+{
+    global $connection; // เรียกใช้ตัวแปรเชื่อมต่อฐานข้อมูล
+    $query = "SELECT * FROM products WHERE users_id = '$sellerId'";
+    return $query_run = mysqli_query($connection, $query); //SQL และคืนผลลัพธ์
+}
+
 
 // เรียกดูข้อมูลที่มี ID ตามที่ระบุ
 function getByID($table, $id)

@@ -24,7 +24,7 @@ include('includes/header.php');
                                 <select name ="category_id" class="form-select mb-2">
                                     <option selected>เลือกหมวดหมู่</option>
                                     <?php
-                                    $categories = getAll("category");
+                                    $categories = getAll_category();
 
                                     if (mysqli_num_rows($categories) > 0) 
                                     {
@@ -53,7 +53,7 @@ include('includes/header.php');
                             </div>
                             <div class="col-md-12">
                                 <label class="mb-0">อัปโหลดรูปภาพสินค้า</label>
-                                <input  type="file" required name="image" class="form-control mb-2">
+                                <input  type="file" required name="images[]" multiple accept="image/*" class="form-control mb-2">
                             </div>
                             <div class="col-md-6">
                                 <label class="mb-0">ราคา</label>

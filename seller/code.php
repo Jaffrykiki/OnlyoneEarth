@@ -3,48 +3,60 @@ include('../connection/dbcon.php');
 include('../funtion/myfunction.php');
 
 // เช็คว่ามีการส่งข้อมูลผ่านการ POST มาหรือไม่ ถ้ากดปุ่ม add_product_btn
- if (isset($_POST['add_product_btn'])) 
-{
-    // รับค่าจากฟอร์ม
+// เมื่อกดปุ่ม "เพิ่มสินค้า"
+if (isset($_POST['add_product_btn'])) {
+    // รับค่าต่าง ๆ จากฟอร์ม
     $category_id = $_POST['category_id'];
     $name = $_POST['name'];
     $detail = $_POST['detail'];
     $price = $_POST['price'];
     $num = $_POST['num'];
-    
 
-     // รับชื่อไฟล์รูปภาพที่อัปโหลด
-    $image = $_FILES['image']['name'];
 
-    // ตรวจสอบนามสกุลของไฟล์ภาพ
-    $image_ext = pathinfo($image, PATHINFO_EXTENSION);
-    $allowed_extensions = array('jpg', 'jpeg', 'png'); // นามสกุลที่อนุญาตให้อัปโหลด
-
-    if (in_array($image_ext, $allowed_extensions)) {
-
-    // กำหนดตำแหน่งที่เก็บไฟล์
+    // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
     $path = "../uploads";
 
-    // แยกนามสกุลไฟล์ภาพและสร้างชื่อใหม่
-    $image_ext = pathinfo($image, PATHINFO_EXTENSION);
-    $filename = time() . '.' . $image_ext;
-
-    // เช็คข้อมูลที่รับมาจากฟอร์ม
-    if ($name != "" && $detail != "") 
-    {
-        // รับค่า ID ของผู้ใช้จากเซสชัน
+    // ตรวจสอบว่ามีชื่อและรายละเอียดต้องไม่ว่าง
+    if ($name != "" && $detail != "") {
+        // ดึงค่า id ของผู้ใช้จาก session
         $users_id = $_SESSION['auth_user']['id'];
 
-        // สร้างคำสั่ง SQL สำหรับเพิ่มสินค้าลงในฐานข้อมูล
-        $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,image) VALUES 
-        ('$category_id', $users_id ,'$name','$detail','$price','$num','$filename') ";
+        // สร้างคำสั่ง SQL เพื่อเพิ่มข้อมูลสินค้าในฐานข้อมูล
+        $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num) VALUES 
+        ('$category_id', $users_id ,'$name','$detail','$price','$num') ";
 
-        // ประมวลผลคำสั่ง SQL และการอัปโหลดไฟล์ภาพ
+        // ทำการ query คำสั่ง SQL และเก็บผลลัพธ์ในตัวแปร $product_query_run
         $product_query_run = mysqli_query($connection, $product_query);
 
-        if ($product_query_run) 
-        {
-            // ย้ายไฟล์ภาพที่อัปโหลดไปยังตำแหน่งที่กำหนด
+        // ตรวจสอบผลลัพธ์การ query เพื่อทำการเปลี่ยนเส้นทางหน้าเว็บ
+        if ($product_query_run) {
+
+            $product_id = mysqli_insert_id($connection); // ได้ ID ของสินค้าที่เพิ่มล่าสุด
+
+            $allowed_extensions = array('png', 'jpg', 'jpeg', 'gif');
+
+            foreach ($_FILES['images']['tmp_name'] as $index => $tmp_name) {
+                $image = $_FILES['images']['name'][$index];
+                $image_ext = pathinfo($image, PATHINFO_EXTENSION);
+                
+            if (in_array(strtolower($image_ext), $allowed_extensions)) {
+                $filename = time() . '_' . $index . '.' . $image_ext;
+
+                $product_image_query = "INSERT INTO product_images (product_id, image_filename) VALUES ('$product_id', '$filename')";
+                $product_image_query_run = mysqli_query($connection, $product_image_query);
+
+                if ($product_image_query_run) {
+                    move_uploaded_file($tmp_name, $path . '/' . $filename);
+                } else {
+                    // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
+                    redirect("add-product.php", "มีบางอย่างผิดพลาด");
+                }
+            } else {
+                // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
+                redirect("add-product.php", "ประเภทไฟล์ไม่ถูกต้อง");
+            }
+        } 
+            // ย้ายไฟล์รูปภาพไปยังโฟลเดอร์ที่กำหนด
             move_uploaded_file($_FILES['image']['tmp_name'], $path . '/' . $filename);
 
             // เพิ่มข้อมูล logs ในตาราง products_logs
@@ -52,24 +64,13 @@ include('../funtion/myfunction.php');
             $logs_query = "INSERT INTO products_logs (u_id, p_id, event) VALUES ('$users_id', LAST_INSERT_ID(), '$event')";
             $logs_query_run = mysqli_query($connection, $logs_query);
 
-            // นำทางไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน "เพิ่มสินค้าสำเร็จแล้ว"
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
             redirect("add-product.php", "เพิ่มสินค้าสำเร็จแล้ว");
-        } 
-        else 
-        {
-            // นำทางไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน "มีบางอย่างผิดพลาด"
+        } else {
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
             redirect("add-product.php", "มีบางอย่างผิดพลาด");
         }
     } 
-    else 
-    {
-        // นำทางไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน "all fields are mandatory"
-        redirect("add-product.php", "all fields are mandatory");
-    }
-}    else {
-    // นำทางไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน "สกุลไฟล์ไม่ถูกต้อง"
-    redirect("add-product.php", "สกุลไฟล์ไม่ถูกต้อง");
-}
 }
 // เช็คว่ามีการส่งข้อมูลผ่านการ POST มาหรือไม่ ถ้ากดปุ่ม update_product_btn
 else if (isset($_POST['update_product_btn']))
@@ -167,12 +168,7 @@ else if(isset($_POST['delete_product_btn']))
 
     if ($logs_query_run) 
     {
-        // ตรวจสอบว่ามีไฟล์รูปเก่าในตำแหน่งเก็บไฟล์หรือไม่ และลบไฟล์รูปเก่า
-        if(file_exists("../uploads/".$image))
-        {
-            unlink("../uploads/".$image);
-        }
-        
+
         // สร้างคำสั่ง SQL สำหรับลบข้อมูลสินค้า
         $delete_query = "DELETE FROM products WHERE id='$product_id' ";
 
@@ -180,13 +176,17 @@ else if(isset($_POST['delete_product_btn']))
         $delete_query_run  = mysqli_query($connection, $delete_query);
 
         if ($delete_query_run) {
+
+            // ตรวจสอบว่ามีไฟล์รูปเก่าในตำแหน่งเก็บไฟล์หรือไม่ และลบไฟล์รูปเก่า
+            if(file_exists("../uploads/".$image))
+        {
+            unlink("../uploads/".$image);
+        }
             echo 200; // สำเร็จ: HTTP 200 OK
         } else {
             echo 500; // ผิดพลาด: HTTP 500 Internal Server Error
         }
-    } else {
-        echo 500; // ผิดพลาด: HTTP 500 Internal Server Error
-    }
+    } 
 }
 // เช็คว่ามีการส่งข้อมูลผ่านการ POST มาหรือไม่ ถ้ากดปุ่ม update_order_btn 
 else if(isset($_POST['update_order_btn'])) {
@@ -237,4 +237,3 @@ else
     // นำทางไปยังหน้า "../index.php"
     header('Location : ../index.php');
 }
-?>

@@ -98,7 +98,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                         <tbody>
                             <?php
                             // ดึงข้อมูลหมวดหมู่ทั้งหมดด้วยฟังก์ชัน getAll() จาก Myfunction
-                            $caregories = getAll("category");
+                            $caregories = getAll_category();
                             if (isset($_GET['searchTerm']) && !empty($_GET['searchTerm'])) {
                                 $searchTerm = $_GET['searchTerm'];
                                 // <!-- ดึงข้อมูลสินค้าจากคำค้นหา -->
