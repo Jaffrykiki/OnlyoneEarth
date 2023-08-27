@@ -83,6 +83,12 @@ if (isset($_GET['product'])) {
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
+                                <h5>ชื่อผู้ขาย:<span class="text-success fw-bold"><?= $product['seller_name']; ?></span> </h5>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <h5>รหัสผู้ขาย:<span class="text-success fw-bold"><?= $product['users_id']; ?></span> </h5>
                             </div>
                         </div>

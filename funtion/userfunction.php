@@ -42,6 +42,18 @@ function getAllProducts()
 function getNameActive($table, $name)
 {
     global $connection;
+    $query = "SELECT t.*, u.name as seller_name
+    FROM $table t
+    LEFT JOIN users u ON t.users_id = u.id
+    WHERE t.name = '$name'
+    "; // สร้างคำสั่ง SQL เพื่อค้นหาข้อมูลที่ตรงกับชื่อที่ระบุ
+    return $query_run = mysqli_query($connection, $query); // ส่งคำสั่ง SQL ไปประมวลผลที่ฐานข้อมูล
+
+}
+// ฟังก์ชันสำหรับการค้นหาข้อมูลโดยชื่อในตาราง
+function getNameActive_category($table, $name)
+{
+    global $connection;
     $query = "SELECT * FROM $table WHERE  name ='$name' "; // สร้างคำสั่ง SQL เพื่อค้นหาข้อมูลที่ตรงกับชื่อที่ระบุ
     return $query_run = mysqli_query($connection, $query); // ส่งคำสั่ง SQL ไปประมวลผลที่ฐานข้อมูล
 

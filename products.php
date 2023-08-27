@@ -9,7 +9,7 @@ if (isset($_GET['category']))
 {
     $category_name = $_GET['category'];     // ดึงค่า 'category' จาก URL และเก็บในตัวแปร $category_name
     // เรียกใช้ฟังก์ชัน getNameActive() เพื่อดึงข้อมูลหมวดหมู่จากฐานข้อมูล
-    $category_data = getNameActive("category", $category_name);
+    $category_data = getNameActive_category("category", $category_name);
     $category = mysqli_fetch_array($category_data);
 
     // ตรวจสอบว่ามีข้อมูลหมวดหมู่ในตัวแปร $category หรือไม่
