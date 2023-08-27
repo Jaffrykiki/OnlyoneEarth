@@ -7,13 +7,13 @@ include('includes/navbar.php');
 include('includes/slider.php');
 include('connection/dbcon.php');
 
-//query
+// โค้ด query จำนวนรายการสินค้าทั้งหมด
 $query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
 	$row = mysqli_fetch_row($query);
 
 	$rows = $row[0];
 
-	$page_rows = 8;  //จำนวนข้อมูลที่ต้องการให้แสดงใน 1 หน้า  ตย. 5 record / หน้า 
+	$page_rows = 8;  // จำนวนข้อมูลที่ต้องการแสดงใน 1 หน้า
 
 	$last = ceil($rows/$page_rows);
 
@@ -36,6 +36,7 @@ $query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
 
     $limit = 'LIMIT ' . ($pagenum - 1) * $page_rows . ',' . $page_rows;
 
+    // โค้ด query รายการสินค้าที่แบ่งหน้า
     $query = "
         SELECT p.id, p.category_id, p.users_id, p.name, p.detail, p.price, p.image, p.num, p.trending, p.created_at, pi.image_filename
         FROM products p
@@ -51,10 +52,12 @@ $query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
 
 	$paginationCtrls = '';
 
+    
+    // โค้ดสร้างลิงก์เปลี่ยนหน้า
 	if($last != 1){
 
 	if ($pagenum > 1) {
-$previous = $pagenum - 1;
+    $previous = $pagenum - 1;
 		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previous.'#og" class="btn btn-info">Previous</a> &nbsp; &nbsp; ';
 
 		for($i = $pagenum-4; $i < $pagenum; $i++){
@@ -81,7 +84,6 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
 	}
 ?>
 <!-- เริ่มต้นส่วนของการแสดงสินค้าที่กำลังมาแรง -->
-
 <div class="py-5">
     <div class="container">
         <div class="row">
@@ -90,7 +92,8 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                 <div class="underline mb-2"></div>
                 <div class="owl-carousel">
                     <?php
-                    $trendingProducts = getAllTrending(); // เรียกใช้ฟังก์ชันที่ดึงข้อมูลสินค้าที่กำลังมาแรงทั้งหมด
+                      // ดึงข้อมูลสินค้าที่กำลังมาแรงและแสดงผล
+                    $trendingProducts = getAllTrending();
                     if (mysqli_num_rows($trendingProducts) > 0) {
                         foreach ($trendingProducts as $item) {
                     ?>
@@ -120,25 +123,31 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
 <div  id="og" class="py-5">
     <div class="container">
         <div class="row">
+            <!-- ตั้งค่าการจัดตำแหน่งและจัดกลุ่มแสดงผล -->
             <div class="d-flex justify-content-between align-items-center"> <!-- ใช้ flexbox เพื่อจัดตำแหน่งทางซ้ายและขวา -->
                 <h1  class="m-0">สินค้าทั่วไป</h1> <!-- ใช้ margin 0 เพื่อลบระยะห่างด้านบนและล่างของหัวเรื่อง -->
+                <!-- ฟอร์มค้นหาสินค้า -->
                 <form class="d-flex m-0" role="search" style="max-width: 300px;">
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
+            <!-- แสดงรายการสินค้าทั่วไป -->
             <div  class="row row-cols-1 row-cols-md-4 ">
                 <?php
-                $Products = getAllProducts(); // เรียกใช้ฟังก์ชันที่ดึงข้อมูลสินค้าทั้งหมด
+                // ดึงข้อมูลสินค้าทั้งหมด
+                $Products = getAllProducts(); 
                 if (mysqli_num_rows($Products) > 0)
                     foreach ($Products as $item)
                 ?>
                 <?php
         $Products = getAllProducts("products");
+        // ถ้ามีการกำหนดค่า searchTerm และไม่ว่างเปล่า
         if (isset($_GET['searchTerm']) && !empty($_GET['searchTerm'])) {
             $searchTerm = $_GET['searchTerm'];
-            // <!-- ดึงข้อมูลสินค้าจากคำค้นหา -->
+            // ดึงข้อมูลสินค้าจากคำค้นหา
             $products = searchProducts($searchTerm);
+            // ถ้าพบผลลัพธ์จากการค้นหา
             if (!empty($products)) {
                 foreach ($products as $product) {
                 ?>
@@ -182,6 +191,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                 ?>
                 <br>    
             </div>
+            <!-- แสดงปุ่มเปลี่ยนหน้า -->
             <div id="about-me" id="pagination_controls"><?php echo $paginationCtrls; ?></div>		
         </div>
     </div>
