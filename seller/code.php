@@ -2,7 +2,7 @@
 include('../connection/dbcon.php');
 include('../funtion/myfunction.php');
 
-// เช็คว่ามีการส่งข้อมูลผ่านการ POST มาหรือไม่ ถ้ากดปุ่ม add_product_btn
+
 // เมื่อกดปุ่ม "เพิ่มสินค้า"
 if (isset($_POST['add_product_btn'])) {
     // รับค่าต่าง ๆ จากฟอร์ม
@@ -72,7 +72,7 @@ if (isset($_POST['add_product_btn'])) {
         }
     } 
 }
-// เช็คว่ามีการส่งข้อมูลผ่านการ POST มาหรือไม่ ถ้ากดปุ่ม update_product_btn
+//  ถ้ากดปุ่ม update_product_btn
 else if (isset($_POST['update_product_btn']))
 {
     // รับค่าจากฟอร์ม
@@ -141,7 +141,7 @@ else if (isset($_POST['update_product_btn']))
         redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
     }
 }
-// เช็คว่ามีการส่งข้อมูลผ่านการ POST มาหรือไม่ ถ้ากดปุ่ม delete_product_btn 
+// ถ้ากดปุ่ม delete_product_btn 
 else if(isset($_POST['delete_product_btn']))
 {
     // รับค่า product_id จากฟอร์มและทำการ escape เพื่อป้องกันการโจมตี SQL Injection
@@ -188,7 +188,7 @@ else if(isset($_POST['delete_product_btn']))
         }
     } 
 }
-// เช็คว่ามีการส่งข้อมูลผ่านการ POST มาหรือไม่ ถ้ากดปุ่ม update_order_btn 
+// ถ้ากดปุ่ม update_order_btn 
 else if(isset($_POST['update_order_btn'])) {
     
     // รับค่า tracking_no และ order_status จากฟอร์ม

@@ -2,7 +2,6 @@
 
 include('funtion/userfunction.php');
 include('includes/header.php');
-// include('includes/navbar.php');
 
 include('authenticate.php'); // เรียกใช้ไฟล์ authenticate.php ที่เป็นการตรวจสอบสิทธิ์การเข้าถึงหน้านี้
 
