@@ -103,11 +103,15 @@ $data = mysqli_fetch_array($orderData);
                                     // สร้างคำสั่ง SQL สำหรับดึงข้อมูลสินค้าในออเดอร์
                                     $order_query = "SELECT o.id as oid, o.tracking_no, o.user_id, oi.*, oi.qty as orderqty, p.*, pi.image_filename
                                     FROM orders o
-                                    JOIN order_items oi ON oi.order_id = o.id
+                                    JOIN order_items oi ON o.id = oi.order_id
                                     JOIN products p ON p.id = oi.prod_id
-                                    LEFT JOIN product_images pi ON pi.product_id = p.id
+                                    LEFT JOIN (
+                                        SELECT product_id, MIN(image_filename) AS image_filename
+                                        FROM product_images
+                                        GROUP BY product_id
+                                    ) AS pi ON p.id = pi.product_id
                                     WHERE o.tracking_no = '$tracking_no'
-                                    LIMIT 1;
+                                    
                                      ";
 
                                     // รันคำสั่ง SQL
