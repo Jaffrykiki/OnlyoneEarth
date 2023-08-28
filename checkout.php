@@ -128,7 +128,7 @@ fclose($file);
                             }
                             ?>
                             <hr>
-                            <h5>ราคารวม : <span class="float-end fw-bold"><?= $totalPrice ?></span></h5>
+                            <h5>ราคารวม : <span class="float-end fw-bold"><?= $totalPrice ?> บาท</span></h5>
                             <div class="">
                                 <input type="hidden" name="payment_mode" value="COD"> <!-- ตั้งค่าวิธีการชำระเงินเป็น COD (Cash on Delivery) -->
                                 <button type="submit" name="placeOrderBtn" class="btn btn-success w-100">สั่งซื้อสินค้า | ชำระเงินปลายทาง</button>

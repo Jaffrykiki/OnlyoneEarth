@@ -136,7 +136,9 @@ else :
                                     <label for="exampleInputPassword1" class="form-label">รหัสผ่าน</label>
                                     <input type="password" required name="password" class="form-control" placeholder="ป้อนรหัสผ่านของคุณ" id="exampleInputPassword1">
                                 </div>
-                                <button type="submit" name="login_btn" class="btn btn-success ">เข้าสู่ระบบ</button>
+                                <button type="submit" name="login_btn" class="btn btn-success" style="display: block; margin: 0 auto;">เข้าสู่ระบบ</button> 
+                                <br>
+                                <a href="reset_pass.php" style="color: red;">ลืมรหัสผ่าน</a>
                                 <!-- Register buttons -->
                                 <div class="text-center mb-2">
                                     <p>เพิ่งเคยเข้ามาใน Only One Earth ใช่หรือไม่? </p>

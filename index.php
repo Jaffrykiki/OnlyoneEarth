@@ -155,7 +155,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                 <div class="item">
                                     <a href="product-view.php?product=<?= $product['name']; ?>">
                                         <div class="card shadow">
-                                            <img src="uploads/<?= $product['image']; ?>" width="300" height="300" alt="Product image" class="w-100">
+                                            <img src="uploads/<?= $product['image_filename']; ?>" width="300" height="300" alt="Product image" class="w-100">
                                             <div class="card-body">
                                                 <h5 class="card-title"><?= $product['name']; ?></h5>
                                             </div>

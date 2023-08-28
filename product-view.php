@@ -93,17 +93,17 @@ if (isset($_GET['product'])) {
                             </div>
                         </div>
 
+                         <!-- ปุ่มเพิ่ม/ลดจำนวนสินค้าในตะกร้า -->
                         <div class="row">
                             <div class="col-md-4">
-                                <!-- ปุ่มเพิ่ม/ลดจำนวนสินค้าในตะกร้า -->
                                 <div class="input-group mb-3" style="width:140px">
                                     <button class="input-group-text decrement-btn">-</button>
                                     <input type="text" class="form-control text-center input-qty bg-white" value="1" disabled>
                                     <button class="input-group-text increment-btn">+</button>
                                 </div>
                             </div>
-
                         </div>
+
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <?php
@@ -137,7 +137,7 @@ if (isset($_GET['product'])) {
 }
 include('includes/footer.php'); ?>
 
-<!-- ส่วน JavaScript -->
+<!-- ส่วน JavaScript เปลี่ยนรูปภาพ-->
 <script>
     var images = [
         <?php foreach ($image_filenames as $filename) { ?> "<?= $filename; ?>",
@@ -154,3 +154,4 @@ include('includes/footer.php'); ?>
     // เรียกใช้ฟังก์ชัน changeImage() ทุก 3 วินาที
     setInterval(changeImage, 3000);
 </script>
+

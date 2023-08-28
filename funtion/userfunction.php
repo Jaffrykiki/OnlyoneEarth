@@ -156,7 +156,15 @@ function searchCategories($searchTerm)
 function searchProducts($searchTerm)
 {
     global $connection; // เชื่อมต่อฐานข้อมูล
-    $query = "SELECT * FROM products WHERE name LIKE '%$searchTerm%'"; // ค้นหาข้อมูลสินค้า
+    $query = "SELECT products.*, product_images.image_filename
+    FROM products
+    LEFT JOIN (
+        SELECT product_id, MIN(image_filename) AS image_filename
+        FROM product_images
+        GROUP BY product_id
+    ) AS product_images ON products.id = product_images.product_id
+    WHERE products.name LIKE '%$searchTerm%'    
+    "; // ค้นหาข้อมูลสินค้า
     $result = mysqli_query($connection, $query);
 
     $product = array();
