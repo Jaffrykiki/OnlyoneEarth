@@ -144,10 +144,6 @@ $p = (isset($_GET['p']) ? $_GET['p'] : '');
       include('r_monthy.php');
     }elseif($p=='yearly'){
       include('r_yearly.php');
-    }elseif($p=='add'){
-      include('form.php');
-    }elseif($p=='adddb'){
-      include('form_db.php');
     }else{
         // ถ้าไม่ตรงกับเงื่อนไขใดเลย ให้แสดงเนื้อหาจากไฟล์ 'r_daily.php'
       include('r_daily.php');

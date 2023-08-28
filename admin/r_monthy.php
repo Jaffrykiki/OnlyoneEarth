@@ -8,7 +8,7 @@
             
             // ส่วนนี้เป็นการสร้างคิวรี่เพื่อเรียกดูข้อมูลสำหรับรายงานรายเดือน
             $query = "
-            SELECT price, SUM(price) AS totol, DATE_FORMAT(created_at, '%M-%Y') AS created_at
+            SELECT price,qty, SUM(price * qty) AS totol, DATE_FORMAT(created_at, '%M-%Y') AS created_at
             FROM order_items
             GROUP BY DATE_FORMAT(created_at, '%m%')
             ORDER BY DATE_FORMAT(created_at, '%Y-%m-%d') 

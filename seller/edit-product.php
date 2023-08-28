@@ -45,7 +45,7 @@ include('includes/header.php');
                                             
                                             <option selected>เลือกหมวดหมู่</option>
                                             <?php
-                                            $categories = getAll("category");
+                                            $categories = getAll_category();
 
                                             if (mysqli_num_rows($categories) > 0) {
                                                 foreach ($categories as $item) {
@@ -75,10 +75,10 @@ include('includes/header.php');
                                     <div class="col-md-12">
                                         <label class="mb-0">อัปโหลดรูปภาพสินค้า</label>
                                          <!-- อัปโหลดรูปภาพใหม่ และแสดงรูปภาพปัจจุบัน -->
-                                        <input type="hidden" name="old_image" value="<?= $data['image']; ?>">
+                                        <input type="hidden" name="old_image" value="<?= $data['image_filename']; ?>">
                                         <input type="file" name="image" class="form-control mb-2">
                                         <label class="mb-0">ภาพปัจจุบัน</label>
-                                        <img src="../uploads/<?= $data['image']; ?>"  alt="Product image" height="150px" width="150px">
+                                        <img src="../uploads/<?= $data['image_filename']; ?>"  alt="Product image" height="150px" width="150px">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="mb-0">ราคา</label>

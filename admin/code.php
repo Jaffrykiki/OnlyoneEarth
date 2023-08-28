@@ -142,6 +142,7 @@ else if (isset($_POST['add_product_btn'])) {
                 $product_image_query_run = mysqli_query($connection, $product_image_query);
 
                 if ($product_image_query_run) {
+                    
                     move_uploaded_file($tmp_name, $path . '/' . $filename);
                 } else {
                     // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
@@ -151,13 +152,11 @@ else if (isset($_POST['add_product_btn'])) {
                 // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
                 redirect("add-product.php", "ประเภทไฟล์ไม่ถูกต้อง");
             }
-        } 
-            // ย้ายไฟล์รูปภาพไปยังโฟลเดอร์ที่กำหนด
-            move_uploaded_file($_FILES['image']['tmp_name'], $path . '/' . $filename);
+        }             
 
             // เพิ่มข้อมูล logs ในตาราง products_logs
             $event = "เพิ่มสินค้าใหม่: $name";
-            $logs_query = "INSERT INTO products_logs (u_id, p_id, event) VALUES ('$users_id', LAST_INSERT_ID(), '$event')";
+            $logs_query = "INSERT INTO products_logs (u_id, p_id, event) VALUES ('$users_id','$product_id', '$event')";
             $logs_query_run = mysqli_query($connection, $logs_query);
 
             // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน

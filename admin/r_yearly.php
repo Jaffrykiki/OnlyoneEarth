@@ -4,7 +4,7 @@
             <?php
             // สร้างคิวรี่สำหรับดึงข้อมูลรายงานรายปี
             $query = "
-            SELECT 	price, SUM(	price) AS totol, DATE_FORMAT(created_at, '%Y') AS created_at
+            SELECT 	price,qty, SUM(price * qty) AS totol, DATE_FORMAT(created_at, '%Y') AS created_at
             FROM order_items
             GROUP BY DATE_FORMAT(created_at, '%Y%')
             ORDER BY DATE_FORMAT(created_at, '%Y') DESC

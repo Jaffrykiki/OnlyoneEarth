@@ -4,7 +4,7 @@
             <?php
             //กำหนดให้คำนวณราคารวมของรายได้ในแต่ละวัน โดยใช้ DATE_FORMAT เพื่อกำหนดรูปแบบวันที่และ GROUP BY เพื่อกลุ่มข้อมูลตามวันที่ และ ORDER BY เพื่อให้ข้อมูลเรียงลำดับตามวันที่
             $query = "
-            SELECT prod_id,	price, SUM(	price) AS totol, DATE_FORMAT(created_at, '%d-%M-%Y') AS created_at
+            SELECT prod_id,	price,qty, SUM(price * qty) AS totol, DATE_FORMAT(created_at, '%d-%M-%Y') AS created_at
             FROM order_items
             GROUP BY DATE_FORMAT(created_at, '%d%')
             ORDER BY DATE_FORMAT(created_at, '%Y-%m-%d')  
@@ -119,7 +119,7 @@
 
                     $limit = 'LIMIT ' . ($pagenum - 1) * $page_rows . ',' . $page_rows;
 
-                    $nquery = mysqli_query($connection, "SELECT oi.*, p.`name` AS product_name FROM `order_items` AS oi JOIN 
+                    $nquery = mysqli_query($connection, "SELECT oi.*, p.`name` AS product_name, (oi.`price` * oi.`qty`) AS total_price FROM `order_items` AS oi JOIN 
                     `products` AS p ON oi.`prod_id` = p.`id`ORDER BY oi.`id` $limit ");
 
                     $paginationCtrls = '';
@@ -165,10 +165,10 @@
                             <tr>
                                 <td><?php echo $row2['created_at']; ?></td>
                                 <td><?php echo $row2['product_name']; ?></td>
-                                <td align="right"><?php echo number_format($row2['price'], 2); ?></td>
+                                <td align="right"><?php echo number_format($row2['total_price'], 2); ?></td>
                             </tr>
                         <?php
-                            @$amount_total += $row2['price'];
+                            @$amount_total += $row2['total_price'];
                         }
                         ?>
                         <tr class="table-danger">
