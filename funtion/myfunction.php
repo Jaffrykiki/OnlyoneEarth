@@ -136,7 +136,41 @@ function searchCategories($searchTerm)
 function searchProducts($searchTerm)
 {
     global $connection; // เชื่อมต่อฐานข้อมูล
-    $query = "SELECT * FROM products WHERE users_id LIKE '%$searchTerm%' OR id LIKE '%$searchTerm%' OR name LIKE '%$searchTerm%'"; // ค้นหาข้อมูลสินค้า
+    $query = "SELECT products.*, product_images.image_filename
+    FROM products
+    LEFT JOIN (
+        SELECT product_id, MIN(image_filename) AS image_filename
+        FROM product_images
+        GROUP BY product_id
+    ) AS product_images ON products.id = product_images.product_id
+    WHERE products.name LIKE '%$searchTerm%'
+    
+    "; // ค้นหาข้อมูลสินค้า
+    $result = mysqli_query($connection, $query);
+
+    $product = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $product[] = $row;
+    }
+    return $product;
+}
+// ฟังก์ชันสำหรับค้นหาสินค้า
+function searchProducts_seller($searchTerm)
+{
+    // ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
+    $sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $query = "SELECT products.*, product_images.image_filename
+    FROM products
+    LEFT JOIN (
+        SELECT product_id, MIN(image_filename) AS image_filename
+        FROM product_images
+        GROUP BY product_id
+    ) AS product_images ON products.id = product_images.product_id
+    WHERE products.name LIKE '%$searchTerm%'
+    AND products.users_id = '$sellerId'
+    "; // ค้นหาข้อมูลสินค้า
     $result = mysqli_query($connection, $query);
 
     $product = array();

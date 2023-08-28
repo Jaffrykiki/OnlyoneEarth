@@ -126,7 +126,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                             <td><?= $product['users_id']; ?></td>
                                             <td><?= $product['name']; ?></td>
                                             <td>
-                                                <img src="../uploads/<?= $product['image']; ?>" width="130px" height="130px" alt="<?= $item['name']; ?>">
+                                                <img src="../uploads/<?= $product['image_filename']; ?>" width="130px" height="130px" alt="<?= $product['name']; ?>">
                                             </td>
                                             <td>
                                                 <a href="edit-product.php?id=<?= $product['id']; ?>" class="btn btn-primary">แก้ไข</a>

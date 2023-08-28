@@ -123,7 +123,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                             if (isset($_GET['searchTerm']) && !empty($_GET['searchTerm'])) {
                                 $searchTerm = $_GET['searchTerm'];
                                 // <!-- ดึงข้อมูลสินค้าจากคำค้นหา -->
-                                $products = searchProducts($searchTerm);
+                                $products = searchProducts_seller($searchTerm);
                                 if (!empty($products)) {
                                     foreach ($products as $product) {
                             ?>
@@ -132,7 +132,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                             <td><?= $product['users_id']; ?></td>
                                             <td><?= $product['name']; ?></td>
                                             <td>
-                                                <img src="../uploads/<?= $product['image']; ?>" width="130px" height="130px" alt="<?= $item['name']; ?>">
+                                                <img src="../uploads/<?= $product['image_filename']; ?>" width="130px" height="130px" alt="<?= $product['name']; ?>">
                                             </td>
                                             <td>
                                                 <a href="edit-product.php?id=<?= $product['id']; ?>" class="btn btn-primary">แก้ไข</a>
