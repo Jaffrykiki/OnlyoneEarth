@@ -13,6 +13,7 @@ include('includes/header.php');
             <?php
             // ตรวจสอบว่ามีการส่งพารามิเตอร์ 'id' ผ่าน URL หรือไม่
             if (isset($_GET['id'])) {
+                
                 $id = $_GET['id'];
                 // ดึงข้อมูลหมวดหมู่ที่ต้องการแก้ไขจากฐานข้อมูล
                 $category =  getByID("category", $id);

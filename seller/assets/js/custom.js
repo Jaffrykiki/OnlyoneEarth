@@ -27,18 +27,17 @@ $(document).ready(function () {
                 'delete_product_btn': true
             },
             success: function (responce) {
-                if(responce == 200) 
-                { // หากการร้องขอสำเร็จ
-                  // แสดง SweetAlert แจ้งเตือนสำเร็จและรีโหลดส่วนของหน้าเว็บที่เกี่ยวข้อง
-                    swal("สำเร็จ", "ลบสินค้ารียบร้อยแล้ว!", "success");
-                    $("#products_table").load(location.href + " #products_table");
+                    if(responce == 200)
+                    {
+                        swal("สำเร็จแล้ว!", "ลบสินค้ารียบร้อยแล้ว!", "success").then(function() {
+                          location.reload(); // รีเฟรชหน้า
+                        });
+                    }
+                    else if(responce == 500)
+                    {
+                        swal("ผิดพลาด!", "มีบางอย่างผิดพลาด!", "warning");
+                    }
                 }
-                else if(responce == 500)
-                { // หากการร้องขอผิดพลาด
-                  // แสดง SweetAlert แจ้งเตือนผิดพลาด
-                    swal("ผิดพลาด!", "มีบางอย่างผิดพลาด!", "ผิดพลาด");
-                }
-            }
           });
         }
       });

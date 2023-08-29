@@ -22,7 +22,7 @@ include('includes/header.php');
                 // ตรวจสอบว่ามีข้อมูลผลิตภัณฑ์ที่ได้จากฐานข้อมูลหรือไม่
                 if (mysqli_num_rows($product) > 0) {
 
-                     // ดึงข้อมูลของผลิตภัณฑ์จากผลลัพธ์ที่ได้
+                    // ดึงข้อมูลของผลิตภัณฑ์จากผลลัพธ์ที่ได้
                     $data = mysqli_fetch_array($product);
             ?>
                     <div class="card">
@@ -32,8 +32,9 @@ include('includes/header.php');
                                 <a href="products.php" class="btn btn-primary float-end">กลับ</a>
                             </h4>
                         </div>
+
                         <div class="card-body" style="margin-top: -40px;">
-                        <!-- แบบฟอร์มสำหรับแก้ไขผลิตภัณฑ์ -->
+                            <!-- แบบฟอร์มสำหรับแก้ไขผลิตภัณฑ์ -->
                             <form action="code.php" method="POST" enctype="multipart/form-data">
                                 <div class="row mb-4">
                                     <div class="col-md-5">
@@ -42,12 +43,12 @@ include('includes/header.php');
                                         <select name="category_id" class="form-select mb-2">
                                             <option selected>เลือกหมวดหมู่</option>
                                             <?php
-                                             // ดึงข้อมูลหมวดหมู่ทั้งหมดจากฐานข้อมูล
+                                            // ดึงข้อมูลหมวดหมู่ทั้งหมดจากฐานข้อมูล
                                             $categories = getAll_category();
                                             if (mysqli_num_rows($categories) > 0) {
                                                 foreach ($categories as $item) {
                                             ?>
-                                             <!-- แสดงรายการหมวดหมู่ในแบบเลือก -->
+                                                    <!-- แสดงรายการหมวดหมู่ในแบบเลือก -->
                                                     <option value="<?= $item['id']; ?>" <?= $data['category_id'] == $item['id'] ? 'selected' : '' ?>><?= $item['name']; ?></option>
                                             <?php
                                                 }
@@ -66,18 +67,32 @@ include('includes/header.php');
                                     </div>
                                     <div class="col-md-12">
                                         <label class="mb-0">รายละเอียดสินค้า</label>
-                                            <!-- ฟิลด์สำหรับกรอกรายละเอียดผลิตภัณฑ์ -->
+                                        <!-- ฟิลด์สำหรับกรอกรายละเอียดผลิตภัณฑ์ -->
                                         <textarea row="3" required name="detail" placeholder="ป้อนรายละเอียดสินค้า" class="form-control mb-2"><?= $data['detail']; ?></textarea>
                                     </div>
+                                    <?php
+                                    $old_images = array(); // สร้าง array เพื่อเก็บรายชื่อรูปภาพเก่า
+
+                                    // ใช้ foreach เพื่อวนลูปแต่ละแถวของผลลัพธ์ที่ได้จากการ query
+                                    foreach ($product as $datay) {
+                                        array_push($old_images, $datay['image_filename']); // เพิ่มรายชื่อรูปภาพเก่าลงใน array
+                                    }
+                                    ?>
                                     <div class="col-md-12">
                                         <label class="mb-0">อัปโหลดรูปภาพสินค้า</label>
-                                         <!-- ฟิลด์ที่ซ่อนไว้สำหรับเก็บชื่อรูปภาพเดิม -->
-                                        <input type="hidden" name="old_image" value="<?= $data['image_filename']; ?>">
-                                         <!-- ฟิลด์สำหรับเลือกและอัปโหลดรูปภาพใหม่ -->
-                                        <input type="file" name="image" class="form-control mb-2">
+                                        <!-- ฟิลด์ที่ซ่อนไว้สำหรับเก็บชื่อรูปภาพเดิม -->
+                                        <input type="hidden" name="old_images" value="<?php echo implode(',', $old_images); ?>">
+                                        <!-- ฟิลด์สำหรับเลือกและอัปโหลดรูปภาพใหม่ -->
+                                        <input type="file" name="images[]" class="form-control mb-2" multiple accept="image/*">
                                         <label class="mb-0">ภาพปัจจุบัน</label>
-                                         <!-- แสดงภาพปัจจุบันของผลิตภัณฑ์ -->
-                                        <img src="../uploads/<?= $data['image_filename']; ?>" alt="Product image" height="150px" width="150px">
+                                        <!-- แสดงรูปภาพปัจจุบันของผลิตภัณฑ์ -->
+                                        <?php
+                                        if (mysqli_num_rows($product) > 0) {
+                                            foreach ($product as $dataa) {
+                                                echo '<img src="../uploads/' . $dataa['image_filename'] . '" alt="Product image" height="150px" width="150px">';
+                                            }
+                                        }
+                                        ?>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="mb-0">ราคา</label>
