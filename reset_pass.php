@@ -1,6 +1,8 @@
 <?php 
 include('includes/header.php');
 
+
+
 ?>
     
     <!-- ส่วนของการแสดงผลแบบฟอร์มเข้าสู่ระบบ -->
@@ -32,7 +34,7 @@ include('includes/header.php');
                                     <label for="exampleInputEmail1" class="form-label">อีเมล์</label>
                                     <input type="email" required name="email" class="form-control" placeholder="ป้อนอีเมล์ของคุณ" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
-                                <button type="submit" name="login_btn" class="btn btn-success" style="display: block; margin: 0 auto;">ต่อไป</button> 
+                                <button type="submit" name="send_otp_btn" class="btn btn-success" style="display: block; margin: 0 auto;">ต่อไป</button> 
                                 <br>
                             </form>
                                 <div class="row">

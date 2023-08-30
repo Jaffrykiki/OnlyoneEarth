@@ -52,7 +52,6 @@ function sendemail_verify($name,$email,$verify_token)
     echo 'ส่งข้อความแล้ว';
 }
 
-
 // กรณีที่ผู้ใช้กดปุ่ม "สมัครสมาชิกทั่วไป"
 if (isset($_POST['register_btn'])) 
 {
@@ -376,7 +375,6 @@ else if (isset($_POST['update_password_btn'])) {
 
 }
 
-
 // กรณีที่ผู้ใช้กดปุ่ม "รายงานเรื่องมายังผู้ดูแลระบบ"
 else if(isset($_POST['report_btn']))
 {
@@ -433,3 +431,76 @@ else if(isset($_POST['report_btn']))
         redirect("../help_center.php", "กรุณาแนบไฟล์รูปภาพ");
     }
 }
+
+// กรณีที่ผู้ใช้กดปุ่ม "ลืมรหัสแล้วให้ส่งรหัสยืนยัน"
+else if(isset($_POST['send_otp_btn']))
+{
+    $email = $_POST['email'];
+
+    // Generate OTP
+    $otp = rand(100000, 999999);
+
+    $mail = new PHPMailer;
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->Port = 587;
+    $mail->SMTPAuth = true;
+    $mail->Username = 'jaffry8426@gmail.com'; // Your Gmail email address
+    $mail->Password = 'oeopsrzbqwfycrpj';  // Your Gmail password or app-specific password
+    $mail->SMTPSecure = 'tls';
+
+    $mail->CharSet = 'UTF-8';  // Set the character set to UTF-8
+
+    $mail->From = 'your@gmail.com';  // Same as the Username
+    $mail->FromName = 'Your Name';
+    $mail->addAddress($email);  // Recipient's email address
+
+    $mail->Subject = 'รหัส OTP สำหรับการยืนยันตัวตน';
+    $mail->Body = "รหัส OTPในการรีเซ็ตรหัสผ่าน ของคุณคือ: $otp";
+
+    if (!$mail->send()) {
+        echo 'Message could not be sent.';
+        echo 'Mailer Error: ' . $mail->ErrorInfo;
+    } else {
+        // Save OTP in session for confirmation in the next step
+        $_SESSION['otp'] = $otp;
+
+        // เก็บค่าอีเมล์ในเซสชัน
+        $_SESSION['reset_email'] = $email;
+
+        // Redirect to OTP confirmation page
+        header('Location: ../confirm_otp.php');
+        exit;
+    }
+}
+
+else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset_password_btn'])) {
+
+    $new_password = $_POST['new_password'];
+    $confirm_new_password = $_POST['confirm_new_password'];
+
+    // อีเมล์ที่เก็บในเซสชัน
+    $email = $_SESSION['reset_email'];
+
+    if ($new_password === $confirm_new_password) {
+
+        // ทำการเข้ารหัสรหัสผ่านใหม่ก่อน
+        $hashed_password = ($new_password);
+
+         // คำสั่ง SQL ในการอัปเดตรหัสผ่านในฐานข้อมูล
+        $update_sql = "UPDATE users SET password = '$hashed_password' WHERE email = '$email'";
+        $update_sql_run = mysqli_query($connection, $update_sql); 
+        
+        
+        //ลบข้อมูลที่เก็บไว้ในเซสชัน เช่น otp และ reset_email
+        unset($_SESSION['otp']);
+        unset($_SESSION['reset_email']);
+
+                    // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+                    redirect("../login.php", "ทำการรีเซ็ตรหัสผ่านเรียบร้อยแล้ว");
+    } else {
+        redirect("../reset_pass.php", "มีบางอย่างผิดพลาด");
+    }
+    
+}
+
