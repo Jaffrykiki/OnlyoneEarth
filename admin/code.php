@@ -302,6 +302,9 @@ else if (isset($_POST['update_users_btn'])) {
     $phone = $_POST['phone'];
     $password = $_POST['password'];
 
+    // ดึงค่า id ของผู้ใช้จาก session
+    $admin_id = $_SESSION['auth_user']['id'];
+
     // กำหนดตำแหน่งที่เก็บไฟล์รูปภาพ
     $path = "../uploads";
 
@@ -337,12 +340,18 @@ else if (isset($_POST['update_users_btn'])) {
                 unlink("../uploads/" . $old_image);
             }
         }
-        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าและแสดงข้อความแจ้งเตือน
-        redirect("edit-users.php?id=$users_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
-    } else {
-        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าและแสดงข้อความแจ้งเตือน
-        redirect("edit-users.php?id=$users_id", "มีบางอย่างผิดพลาด");
-    }
+    } 
+        // เพิ่มข้อมูล logs ในตาราง products_logs
+        $event = "แก้ไขผู้ใช้: $name";
+        $logs_query = "INSERT INTO users_logs (a_id, u_id, event) VALUES ('$admin_id', '$users_id', '$event')";
+        $logs_query_run = mysqli_query($connection, $logs_query);
+        if ($logs_query_run) {
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+            redirect("edit-users.php?id=$users_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
+        } else {
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+            redirect("edit-users.php?id=$users_id", "มีบางอย่างผิดพลาด");
+        }
 }
 // เมื่อกดปุ่ม "ลบผู้ใช้"
 else if (isset($_POST['delete_users_btn'])) {
@@ -354,6 +363,14 @@ else if (isset($_POST['delete_users_btn'])) {
     $user_query_run = mysqli_query($connection, $user_query);
     $user_data = mysqli_fetch_array($user_query_run);
     $img = $user_data['img'];
+
+    // ดึงค่า id ของผู้ใช้จาก session
+    $admin_id = $_SESSION['auth_user']['id'];
+
+    // เพิ่มข้อมูล logs ในตาราง products_logs
+    $event = "ลบผู้ใช้";
+    $logs_query = "INSERT INTO users_logs (a_id, u_id, event) VALUES ('$admin_id', '$users_id', '$event')";
+    $logs_query_run = mysqli_query($connection, $logs_query);
 
     // สร้างคำสั่ง SQL เพื่อลบข้อมูลผู้ใช้
     $delete_query = "DELETE FROM users WHERE id='$users_id' ";

@@ -249,6 +249,20 @@ function getLogs_Pro()
     return $query;
  
 }
+//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง category_logs ในฐานข้อมูล
+function getLogs_users()
+{
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $query = " SELECT `u_logs_id`, `a_id`, `u_id`, `event`, `created_at` FROM `users_logs`";  // ค้นหาLogs
+    
+  
+    // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $query = mysqli_query($connection, $query); 
+
+    // คืนผลลัพธ์การ query กลับไป
+    return $query;
+ 
+}
 //ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง orders_categoryในฐานข้อมูล
 function getLogs_Order()
 {
