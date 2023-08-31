@@ -42,7 +42,7 @@ $sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตาม�
                                         <td> <?= $item['name']; ?> </td>
                                         <td>
                                             <!-- แสดงรูปภาพสินค้า -->
-                                            <img src="../uploads/<?= $item['image']; ?>" width="130px" height="130px" alt="<?= $item['name']; ?>">
+                                            <img src="../uploads/<?= $item['image_filename']; ?>" width="130px" height="130px" alt="<?= $item['name']; ?>">
                                         </td>
                                         <td>สินค้าชิ้นนี้ของคุณหมดแล้วในร้าน</td>
                                     </tr>

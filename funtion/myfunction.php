@@ -77,7 +77,14 @@ function getAllOrders_seller($sellerId)
 function getAllproduct_seller($sellerId)
 {
     global $connection;
-    $query = "SELECT * FROM products WHERE users_id = '$sellerId' AND num = 0";
+    $query = "SELECT products.*, 
+    (SELECT image_filename 
+     FROM product_images 
+     WHERE product_images.product_id = products.id 
+     LIMIT 1) AS image_filename
+    FROM products
+    WHERE products.users_id = '$sellerId' AND products.num = 0;
+    ";
     return $query_run = mysqli_query($connection, $query);
 }
 
