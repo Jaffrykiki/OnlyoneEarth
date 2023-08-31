@@ -32,6 +32,7 @@ include('includes/navbar.php');
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>
+                
                 <hr>
                 <div class="row">
                     
@@ -57,6 +58,7 @@ include('includes/navbar.php');
                             echo "ค้นหาหมวดหมู่สินค้าไม่เจอ";
                         }
                     } else  if (mysqli_num_rows($caregories) > 0) {
+                        // วน loop แสดงข้อมูลสินค้า
                         foreach ($caregories as $item) {
                             ?>
 

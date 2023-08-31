@@ -162,6 +162,7 @@ function searchProducts($searchTerm)
     }
     return $product;
 }
+
 // ฟังก์ชันสำหรับค้นหาสินค้า
 function searchProducts_seller($searchTerm)
 {

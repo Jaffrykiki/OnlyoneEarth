@@ -211,7 +211,8 @@ else if(isset($_POST['login_btn']))
             'email' => $useremail,
             'id' => $users_id,
             'img' => $img,
-            'verify_status' => $verify_status
+            'verify_status' => $verify_status,
+            'role_as' => $role_as
         ];
         
         // ตรวจสอบบทบาทของผู้ใช้และเปลี่ยนเส้นทางตาม
