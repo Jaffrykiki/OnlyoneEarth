@@ -385,23 +385,8 @@ else if(isset($_POST['report_btn']))
     $subject = $_POST["subject"];
     $details = $_POST["details"];
 
-    // ข้อมูลของไฟล์รูปภาพ
-    $image_name = $_FILES["image"]["name"];
-    $image_tmp_name = $_FILES["image"]["tmp_name"];
-    $image_size = $_FILES["image"]["size"];
-    $image_type = $_FILES["image"]["type"];
-
-    // เช็คประเภทของไฟล์รูปภาพ (ตัวอย่างเช็คว่าเป็นไฟล์รูปภาพเท่านั้น)
-    if (strpos($image_type, "image") !== false) {
-        // ตั้งค่าที่เก็บไฟล์
-        $upload_dir = "../uploads/";
-        $upload_path = $upload_dir . $image_name;
-
-        // ข้อมูลเก่าเกี่ยวกับไฟล์รูปภาพ
-        $old_image = ''; // ต้องระบุชื่อไฟล์รูปภาพเก่าที่จะถูกลบ
-
         // เพิ่มข้อมูลเรื่องลงในฐานข้อมูล
-        $report_query = "INSERT INTO `reports`( `user_id`, `subject`, `details`, `img`) VALUES ('$user_id','$subject', '$details','$upload_path')";
+        $report_query = "INSERT INTO `reports`( `user_id`, `subject`, `details`) VALUES ('$user_id','$subject', '$details')";
 
         // ดำเนินการอัปเดตข้อมูลผู้ใช้ในฐานข้อมูล
         $report_query_run = mysqli_query($connection, $report_query);
@@ -409,15 +394,6 @@ else if(isset($_POST['report_btn']))
         // ตรวจสอบว่าการอัปเดตสำเร็จหรือไม่
         if ($report_query_run) 
         {
-            // อัปโหลดไฟล์รูปภาพใหม่
-            move_uploaded_file($image_tmp_name, $upload_path);
-
-            // ลบไฟล์รูปภาพเก่า (ถ้ามี)
-            if(file_exists("../uploads/".$old_image))
-            {
-                unlink("../uploads/".$old_image);
-            }
-
             // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
             redirect("../help_center.php", "รายงานเรื่องไปยังผู้ดูแลระบบเรียบร้อยแล้ว");
         }
@@ -427,11 +403,8 @@ else if(isset($_POST['report_btn']))
             redirect("../help_center.php", "มีบางอย่างผิดพลาด");
         }
     }
-    else
-    {
-        redirect("../help_center.php", "กรุณาแนบไฟล์รูปภาพ");
-    }
-}
+
+
 
 // กรณีที่ผู้ใช้กดปุ่ม "ลืมรหัสแล้วให้ส่งรหัสยืนยัน"
 else if(isset($_POST['send_otp_btn']))

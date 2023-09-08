@@ -93,7 +93,7 @@ if (isset($_GET['product'])) {
                             </div>
                         </div>
 
-                         <!-- ปุ่มเพิ่ม/ลดจำนวนสินค้าในตะกร้า -->
+                        <!-- ปุ่มเพิ่ม/ลดจำนวนสินค้าในตะกร้า -->
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="input-group mb-3" style="width:140px">
@@ -154,4 +154,3 @@ include('includes/footer.php'); ?>
     // เรียกใช้ฟังก์ชัน changeImage() ทุก 3 วินาที
     setInterval(changeImage, 3000);
 </script>
-

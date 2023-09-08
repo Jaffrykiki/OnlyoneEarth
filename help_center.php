@@ -2,7 +2,7 @@
 
 include('funtion/userfunction.php');
 include('includes/header.php');
-
+include('includes/navbar.php');
 include('authenticate.php');
 
 
@@ -17,7 +17,7 @@ include('authenticate.php');
                 <!-- เริ่มฟอร์มสำหรับการแก้ไขข้อมูลผู้ใช้ -->
                 <form action="funtion/authcode.php" method="POST" enctype="multipart/form-data">
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-8">
                             <?php
                             // วน loop แสดงข้อมูลผู้ใช้ที่ได้รับมา 
                             $items = getUsers();
@@ -44,19 +44,9 @@ include('authenticate.php');
                                     </div>
                                     <div class="">
                                         <input type="hidden">
-                                        <button type="submit" name="report_btn" class="btn btn-primary w-40">บันทึก</button>
+                                        <button type="submit" name="report_btn" class="btn btn-primary w-40">รายงาน</button>
                                     </div>
                                 </div>
-                        </div>
-                        <div class="col-md-4">
-                            <h5>แนบรูปภาพปัญหาของคุณ</h5>
-                            <div class="row align-items-center">
-                                <hr>
-                                <div class="col-md-12">
-                                    <label class="mb-0">อัปโหลดรูปภาพ</label>
-                                    <input type="file" id="image" name="image" class="form-control mb-2">
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </form>

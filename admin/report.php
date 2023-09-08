@@ -85,7 +85,6 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                 <th>ชื่อผู้รายงาน</th>
                                 <th>เรื่อง</th>
                                 <th>รายละเอียด</th>
-                                <th>รูปภาพสินค้า</th>
                                 <th>วันที่รายงาน</th>
                             </tr>
                         </thead>
@@ -103,9 +102,6 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                         <td> <?= $item['user_id']; ?> </td>
                                         <td> <?= $item['subject']; ?> </td>
                                         <td> <?= $item['details']; ?> </td>
-                                        <td>
-                                                <img src="../uploads/<?= $item['img']; ?>" width="130px" height="130px">
-                                            </td>
                                         <td> <?= $item['created_at']; ?> </td>
                                        
                                     </tr>

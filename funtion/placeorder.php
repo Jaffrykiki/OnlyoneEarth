@@ -61,7 +61,6 @@ else if (isset($_SESSION['auth']))
         $ordersBySeller = array(); // เก็บข้อมูลการสั่งซื้อตามคนขาย
 
         foreach ($query_run as $citem) {
-            // echo "adasdas". $citem['users_id'];
             $sellerId = $citem['users_id'];
             if (!isset($ordersBySeller[$sellerId])) {
                 $ordersBySeller[$sellerId] = array(
