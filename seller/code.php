@@ -150,7 +150,7 @@ else if (isset($_POST['delete_product_btn'])) {
     $product_id = mysqli_real_escape_string($connection, $_POST['product_id']);
 
     // สร้างคำสั่ง SQL เพื่อเลือกข้อมูลสินค้าที่จะลบ
-    $product_query = "SELECT product_images.image_filename
+    $product_query = "SELECT products.name, product_images.image_filename
     FROM products
     JOIN product_images ON products.id = product_images.product_id
     WHERE products.id = '$product_id'";
@@ -164,7 +164,8 @@ else if (isset($_POST['delete_product_btn'])) {
 
     // เพิ่มข้อมูล logs ในตาราง products_logs
     $users_id = $_SESSION['auth_user']['id']; // แทนที่ด้วยรหัสผู้ใช้งานจริง
-    $event = "ลบสินค้า";
+    $product_name = $product_data['name'];
+    $event = "ลบสินค้า:$product_name";
     $logs_query = "INSERT INTO products_logs (u_id, p_id, event) VALUES ('$users_id', '$product_id', '$event')";
     $logs_query_run = mysqli_query($connection, $logs_query);
 

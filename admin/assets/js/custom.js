@@ -28,7 +28,7 @@ $(document).ready(function () {
                     if(responce == 200)
                     {
                         swal("สำเร็จแล้ว!", "ลบสินค้ารียบร้อยแล้ว!", "success").then(function() {
-                          location.reload(); // รีเฟรชหน้า
+                          location.reload();
                         });
                     }
                     else if(responce == 500)

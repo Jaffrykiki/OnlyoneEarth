@@ -38,7 +38,7 @@ $query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
 
     // โค้ด query รายการสินค้าที่แบ่งหน้า
     $query = "
-        SELECT p.id, p.category_id, p.users_id, p.name, p.detail, p.price, p.image, p.num, p.trending, p.created_at, pi.image_filename
+        SELECT p.id, p.category_id, p.users_id, p.name, p.detail, p.price,p.num, p.trending, p.created_at, pi.image_filename
         FROM products p
         LEFT JOIN (
             SELECT product_id, MIN(image_filename) as image_filename

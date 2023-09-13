@@ -32,7 +32,7 @@ $query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
     $limit = 'LIMIT ' . ($pagenum - 1) * $page_rows . ',' . $page_rows;
 
     $query = "
-        SELECT p.id, p.category_id, p.users_id, p.name, p.detail, p.price, p.image, p.num, p.trending, p.created_at, pi.image_filename
+        SELECT p.id, p.category_id, p.users_id, p.name, p.detail, p.price, p.num, p.trending, p.created_at, pi.image_filename
         FROM products p
         LEFT JOIN (
             SELECT product_id, MIN(image_filename) as image_filename
@@ -96,7 +96,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                     </div>
                     <a  href="logs_products.php" class="btn btn-secondary float-end">ตรวจสอบบันทึก</a>
                 </div>
-                <div id="og" class="card-body table-responsive" id="products_table">
+                <div id="og" class="card-body table-responsive" id="product_table">
                     <table class="table table-success table-striped">
                         <thead>
                             <tr>
