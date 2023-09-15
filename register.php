@@ -67,11 +67,16 @@ include('includes/header.php');
                             <button type="submit" name="register_btn" class="btn btn-primary">ยืนยัน</button>
                         </form>
                         <!-- สิ้นสุดฟอร์มสำหรับส่งข้อมูลการสมัครสมาชิก -->
-                        <div class="row">
-                            <div class="col-md-12 text-center">
+
+                        <div class="row text-center" style="margin-top: 20px;">
+                            <div class="col-md-6">
                                 <a href="index.php" class="btn btn-warning">กลับไปหน้าหลัก</a>
                             </div>
+                            <div class="col-md-6">
+                                <a href="login.php" class="btn btn-success">เข้าสู่ระบบ</a>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>
