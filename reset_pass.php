@@ -1,7 +1,6 @@
 <?php 
+session_start();
 include('includes/header.php');
-
-
 
 ?>
     
@@ -10,7 +9,7 @@ include('includes/header.php');
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <?php
+                <?php
                     // ตรวจสอบว่ามีข้อความเซสชันเก็บไว้หรือไม่ ถ้ามีให้แสดงข้อความแจ้งเตือน
                     if (isset($_SESSION['message'])) {
                     ?>

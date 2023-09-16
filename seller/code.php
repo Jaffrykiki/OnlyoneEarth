@@ -73,6 +73,7 @@ if (isset($_POST['add_product_btn'])) {
 }
 //  ถ้ากดปุ่ม update_product_btn
 else if (isset($_POST['update_product_btn'])) {
+
     // รับค่าจากฟอร์ม
     $product_id = $_POST['product_id'];
     $category_id = $_POST['category_id'];
@@ -84,64 +85,60 @@ else if (isset($_POST['update_product_btn'])) {
     // ดึงค่า id ของผู้ใช้จาก session
     $users_id = $_SESSION['auth_user']['id'];
 
-
-    // สร้างคำสั่ง SQL สำหรับอัปเดตข้อมูลสินค้า
-    $update_product_query = "UPDATE products SET category_id='$category_id',name='$name',detail='$detail',price='$price',num='$num' 
-    WHERE  id ='$product_id'";
-
-    // ทำงานคำสั่ง SQL สำหรับอัปเดตข้อมูลสินค้า
-    $update_product_query_run = mysqli_query($connection, $update_product_query);
-
-
-    if ($update_product_query_run) {
-        // รับข้อมูลรูปภาพใหม่และรูปภาพเดิมจากฟอร์ม
-        $new_images = $_FILES['images']['name'];
-        $old_images_str = $_POST['old_images']; // รับค่าจากฟอร์ม
-        $old_images = explode(',', $old_images_str); // แยกสตริงเป็นอาร์เรย์
-
-        // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
-        $path = "../uploads";
-        if (count($new_images) === count($old_images)) {
-            // วนลูปเพื่ออัปเดตรูปภาพในตาราง product_images
-            foreach ($new_images as $key => $new_image) {
-                $old_image = $old_images[$key]; // ดึงชื่อรูปภาพเก่าจากอาร์เรย์
-
-                if ($new_image != "") {
-                    // ดึงนามสกุลไฟล์ภาพใหม่
-                    $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
-                    // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันด้วยเวลาปัจจุบันและนามสกุลไฟล์
-                    $update_filename = time() . '_' . $key . '.' . $image_ext;
-
-                    // อัปโหลดไฟล์ภาพใหม่ไปยังโฟลเดอร์ที่กำหนด
-                    move_uploaded_file($_FILES['images']['tmp_name'][$key], $path . '/' . $update_filename);
-
-                    // อัปเดตชื่อไฟล์รูปภาพในตาราง product_images
-                    $update_image_query = "UPDATE product_images SET image_filename='$update_filename' WHERE product_id='$product_id' AND image_filename='$old_image'";
-                    $update_image_query_run = mysqli_query($connection, $update_image_query);
-                }
-            }
-        } else {
-            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-            redirect("edit-product.php?id=$product_id", "จำนวนรูปภาพไม่ตรงกัน");
-            exit; // จบการทำงานทันทีหลังจาก redirect
-        }
-        if (!$update_image_query_run) {
-            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-            redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
-            exit; // จบการทำงานทันทีหลังจาก redirect
-        }
-    }
-
     // เพิ่มข้อมูล logs ในตาราง products_logs
     $event = "แก้ไขสินค้า";
     $logs_query = "INSERT INTO products_logs (u_id, p_id, event) VALUES ('$users_id', '$product_id', '$event')";
     $logs_query_run = mysqli_query($connection, $logs_query);
+
     if ($logs_query_run) {
-        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-        redirect("edit-product.php?id=$product_id", "อัปเดตสินค้าเรียบร้อยแล้ว");
-    } else {
-        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-        redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
+        // สร้างคำสั่ง SQL สำหรับอัปเดตข้อมูลสินค้า
+        $update_product_query = "UPDATE products SET category_id='$category_id',name='$name',detail='$detail',price='$price',num='$num' 
+        WHERE  id ='$product_id'";
+
+        // ทำงานคำสั่ง SQL สำหรับอัปเดตข้อมูลสินค้า
+        $update_product_query_run = mysqli_query($connection, $update_product_query);
+
+        if ($update_product_query_run) {
+
+            // รับข้อมูลรูปภาพใหม่และรูปภาพเดิมจากฟอร์ม
+            $new_images = $_FILES['images']['name'];
+            $old_images_str = $_POST['old_images']; // รับค่าจากฟอร์ม
+            $old_images = explode(',', $old_images_str); // แยกสตริงเป็นอาร์เรย์
+
+            // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
+            $path = "../uploads";
+            if (count($new_images) === count($old_images)) {
+                // วนลูปเพื่ออัปเดตรูปภาพในตาราง product_images
+                foreach ($new_images as $key => $new_image) {
+                    $old_image = $old_images[$key]; // ดึงชื่อรูปภาพเก่าจากอาร์เรย์
+
+                    if ($new_image != "") {
+                        // ดึงนามสกุลไฟล์ภาพใหม่
+                        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
+                        // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันด้วยเวลาปัจจุบันและนามสกุลไฟล์
+                        $update_filename = time() . '_' . $key . '.' . $image_ext;
+
+                        // อัปโหลดไฟล์ภาพใหม่ไปยังโฟลเดอร์ที่กำหนด
+                        move_uploaded_file($_FILES['images']['tmp_name'][$key], $path . '/' . $update_filename);
+
+                        // อัปเดตชื่อไฟล์รูปภาพในตาราง product_images
+                        $update_image_query = "UPDATE product_images SET image_filename='$update_filename' WHERE product_id='$product_id' AND image_filename='$old_image'";
+                        $update_image_query_run = mysqli_query($connection, $update_image_query);
+                    }
+                }
+            } else {
+                // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+                redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าแล้ว");
+            }
+            if (!$update_image_query_run) {
+                // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+                redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
+                exit; // จบการทำงานทันทีหลังจาก redirect
+            }
+        } else {
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+            redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
+        }
     }
 }
 // ถ้ากดปุ่ม delete_product_btn 
@@ -169,7 +166,7 @@ else if (isset($_POST['delete_product_btn'])) {
     $logs_query = "INSERT INTO products_logs (u_id, p_id, event) VALUES ('$users_id', '$product_id', '$event')";
     $logs_query_run = mysqli_query($connection, $logs_query);
 
-     // ดึงข้อมูลรูปภาพที่เกี่ยวข้องกับสินค้าที่จะลบ
+    // ดึงข้อมูลรูปภาพที่เกี่ยวข้องกับสินค้าที่จะลบ
     $product_images_query = "SELECT image_filename FROM product_images WHERE product_id = '$product_id'";
     $product_images_result = mysqli_query($connection, $product_images_query);
 

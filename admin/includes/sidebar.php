@@ -61,23 +61,6 @@ $page = substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], "/") + 
           <li><a class="dropdown-item <?= $page == "add-product.php" ? 'active' : ''; ?>" href="add-product.php">เพิ่มสินค้า</a></li>
         </ul>
       </li>
-
-      <!-- <li class="nav-item">
-        <a class="nav-link text-white <?= $page == "products.php" ? 'bg-gradient-warning' : ''; ?>" href="products.php">
-          <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">table_view</i>
-          </div>
-          <span class="nav-link-text ms-1">สินค้าทั้งหมด</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-white <?= $page == "add-product.php" ? 'bg-gradient-warning' : ''; ?>" href="add-product.php">
-          <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-            <i class="material-icons opacity-10">add_shopping_cart</i>
-          </div>
-          <span class="nav-link-text ms-1">เพิ่มสินค้า</span>
-        </a>
-      </li> -->
       <li class="nav-item">
         <a class="nav-link text-white <?= $page == "orders.php" ? 'bg-gradient-warning' : ''; ?>" href="orders.php">
           <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">

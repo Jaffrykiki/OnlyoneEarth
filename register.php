@@ -41,7 +41,7 @@ include('includes/header.php');
                             <div class="mb-3">
                                 <label class="form-label">ชื่อ</label>
                                 <!-- ช่องกรอกชื่อ -->
-                                <input type="text" name="name" required class="form-control" placeholder="ป้อนชื่อที่คุณต้องการสร้าง">
+                                <input type="text" name="name" required class="form-control" placeholder="ป้อนชื่อที่คุณต้องการสร้าง" pattern="[A-Za-z]+">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">เบอร์โทร</label>

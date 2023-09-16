@@ -411,6 +411,20 @@ else if(isset($_POST['send_otp_btn']))
 {
     $email = $_POST['email'];
 
+        // เพิ่มการตรวจสอบว่าอีเมลอยู่ในฐานข้อมูลหรือไม่
+    // ตัวอย่างนี้เป็นการตรวจสอบข้อมูลจากฐานข้อมูลของคุณ โดยใช้ SQL Query
+    $query = "SELECT * FROM users WHERE email = '$email'";
+    $result = mysqli_query($connection, $query);
+
+    if (mysqli_num_rows($result) === 0) {
+        // ถ้าไม่พบอีเมลในฐานข้อมูล
+        $_SESSION['message'] = "ไม่มีอีเมล์ในระบบ";
+        header('Location: ../reset_pass.php');
+        exit;
+    }
+     else {
+        // ถ้าพบอีเมลในฐานข้อมูล
+
     // Generate OTP
     $otp = rand(100000, 999999);
 
@@ -445,6 +459,7 @@ else if(isset($_POST['send_otp_btn']))
         // Redirect to OTP confirmation page
         header('Location: ../confirm_otp.php');
         exit;
+        }
     }
 }
 
@@ -473,8 +488,8 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset_password_b
                     // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
                     redirect("../login.php", "ทำการรีเซ็ตรหัสผ่านเรียบร้อยแล้ว");
     } else {
-        redirect("../reset_pass.php", "มีบางอย่างผิดพลาด");
-    }
+        redirect("../reset_password.php", "รหัสผ่านของท่านไม่ตรงกัน");
+    } 
     
 }
 

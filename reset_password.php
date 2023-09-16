@@ -44,7 +44,7 @@ if (isset($_SESSION['reset_email'])) {
                             <form action="funtion/authcode.php" method="POST">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">รหัสผ่านใหม่</label>
-                                    <input type="password" required name="new_password" class="form-control" placeholder="ป้อนรหัสผ่านใหม่ของคุณ" id="new_password">
+                                    <input type="password" required name="new_password" class="form-control" placeholder="ป้อนรหัสผ่านใหม่ของคุณ" id="new_password" pattern=".{8,}" title="รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">ยืนยันรหัสผ่าน</label>
@@ -60,7 +60,7 @@ if (isset($_SESSION['reset_email'])) {
                             ?>
                                 <div class="row">
                                     <div class="col-md-12 text-center">
-                                        <a href="resset_pass.php" class="btn btn-warning">กลับ</a>
+                                        <a href="reset_pass.php" class="btn btn-warning">กลับ</a>
                                     </div>
                                 </div>
                         </div>

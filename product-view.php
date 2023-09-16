@@ -73,7 +73,7 @@ if (isset($_GET['product'])) {
                         </h4>
                         <hr>
                         <h6>รายละเอียดสินค้า:</h6>
-                        <p style="line-height: 1.6; font-size: 22px;"> <?= $product['detail']; ?> </p>
+                        <p style="line-height: 1.6; font-size: 22px; white-space: pre-line;"><?= $product['detail']; ?></p>
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
@@ -120,7 +120,8 @@ if (isset($_GET['product'])) {
                             </div>
                             <div class="col-md-6">
                                 <!-- ปุ่มเพิ่มสินค้าในสิ่งที่อยากได้ -->
-                                <button class="btn btn-warning px-4"><i class="fa fa-heart me-2"></i> เพิ่มลงในสิ่งที่อยากได้ของคุณ</button>
+                                <!-- <button class="btn btn-warning px-4"><i class="fa fa-heart me-2"></i> เพิ่มลงในสิ่งที่อยากได้ของคุณ</button> -->
+                                <!-- <button id="testButton">Click Me</button> -->
                             </div>
                         </div>
                     </div>
@@ -151,6 +152,9 @@ include('includes/footer.php'); ?>
         imageElement.src = "uploads/" + images[currentIndex];
     }
 
-    // เรียกใช้ฟังก์ชัน changeImage() ทุก 3 วินาที
-    setInterval(changeImage, 3000);
+    // เรียกใช้ฟังก์ชัน changeImage() ทุก 4 วินาที
+    setInterval(changeImage, 4000);
 </script>
+
+
+

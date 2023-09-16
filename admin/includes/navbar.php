@@ -5,7 +5,7 @@
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 <!-- ส่วนที่จะถูกแสดงทางขวามือของ Navbar -->
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                   <!-- คุณสามารถเพิ่มเนื้อหาเกี่ยวกับเมนูนี้ที่นี่ -->
+                <a class="btn btn-warning" href="../index.php">หน้าเว็บ</a>
                 </div>
             </div>
         </div>

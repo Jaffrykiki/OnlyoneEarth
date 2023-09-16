@@ -40,7 +40,7 @@ $data = mysqli_fetch_array($orderData);
                 <div class="card-body">
                     <!-- แสดงข้อมูลรายละเอียดออเดอร์ -->
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <h4>รายละเอียดการจัดส่ง</h4>
                             <hr>
                             <!-- แสดงข้อมูลการจัดส่ง -->

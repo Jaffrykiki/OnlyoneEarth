@@ -51,7 +51,7 @@ else if (isset($_SESSION['auth']))
 
 
         // ดึงสินค้าในตะกร้าของผู้ใช้
-        $query = "SELECT c.id as cid, c.user_id, c.prod_id, c.prod_qty, p.id as pid, p.name, p.image, p.price, p.users_id 
+        $query = "SELECT c.id as cid, c.user_id, c.prod_id, c.prod_qty, p.id as pid, p.name, p.price, p.users_id 
         FROM carts c
         JOIN products p ON c.prod_id = p.id
         WHERE c.user_id = '$userId' ORDER BY c.id DESC";
