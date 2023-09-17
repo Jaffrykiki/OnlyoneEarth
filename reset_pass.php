@@ -24,7 +24,7 @@ include('includes/header.php');
                     ?>
                     <div class="card">
                         <div class="card-header">
-                            <h4>ตั้งรหัสผ่านใหม่</h4>
+                            <h4>กรอกอีเมล์ของท่าน เพื่อทำการยืนยันตัวตน</h4>
                         </div>
                         <div class="card-body">
                             <!-- แบบฟอร์มสำหรับกรอกข้อมูลเข้าสู่ระบบ -->

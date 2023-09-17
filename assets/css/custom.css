@@ -20,3 +20,27 @@ a{
 .bg-f2f2f2{
     background-color: #f2f2f2;
 }
+
+/* คลาสสำหรับรูปภาพที่จะหยุดเปลี่ยนรูปเมื่อ hover */
+.stop-transition {
+    transition: none !important;
+}
+
+.product-image-container {
+    overflow: hidden; /* ซ่อนส่วนที่เกินขอบของรูปภาพ */
+    position: relative; /* ตั้งค่าเป็น relative เพื่อให้ absolute positioning ทำงาน */
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s; /* เพิ่มการเปลี่ยนแปลงแบบเรียบ Smooth ใน 0.3 วินาที */
+    transform: scale(1.0); /* ขนาดเริ่มต้น 100% */
+}
+
+
+
+.product-image:hover {
+    transform-origin: 50% 50%; /* จุดศูนย์กลางของการซูม (คือศูนย์กลางของรูปภาพ) */
+    transform: scale(1.2); /* ขยายขนาดรูปภาพเป็น 120% เมื่อ hover */
+}

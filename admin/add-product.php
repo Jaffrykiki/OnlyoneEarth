@@ -53,7 +53,7 @@ include('includes/header.php');
                             </div>
                             <div class="col-md-12">
                                 <label class="mb-0">อัปโหลดรูปภาพสินค้า</label>
-                                <input  type="file" required name="images[]" multiple accept="image/*" class="form-control mb-2">
+                                <input  type="file" required name="images[]" multiple accept="image/*" class="form-control mb-2" id="imageUpload">
                             </div>
                             <div class="col-md-6">
                                 <label class="mb-0">ราคา</label>
@@ -81,3 +81,24 @@ include('includes/header.php');
 <!-- เลือกหมวดหมู่สำหรับสินค้า -->
 
 <?php include('includes/footer.php') ?>
+
+<script>
+    // เมื่อมีการเลือกไฟล์ใน input
+document.getElementById('imageUpload').addEventListener('change', function(e) {
+    // ดึงรายการไฟล์ที่ถูกเลือก
+    var files = e.target.files;
+    
+    // เรียงลำดับไฟล์โดยใช้ชื่อไฟล์
+    var sortedFiles = Array.from(files).sort(function(a, b) {
+        return a.name.localeCompare(b.name);
+    });
+
+    // สร้าง FormData ใหม่และเพิ่มไฟล์เรียงลำดับลงในนั้น
+    var formData = new FormData();
+    sortedFiles.forEach(function(file) {
+        formData.append('images[]', file);
+    });
+
+});
+
+</script>

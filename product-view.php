@@ -60,7 +60,9 @@ if (isset($_GET['product'])) {
                             }
                             ?>
                             <!-- แสดงรูปภาพแรก -->
-                            <img src="uploads/<?= $image_filenames[0]; ?>" alt="Product Image" class="product-image" id="productImage">
+                            <div class="product-image-container">
+                                <img src="uploads/<?= $image_filenames[0]; ?>" alt="Product Image" class="product-image" id="productImage">
+                            </div>
                         </div>
                     </div>
 
@@ -139,6 +141,8 @@ if (isset($_GET['product'])) {
 include('includes/footer.php'); ?>
 
 <!-- ส่วน JavaScript เปลี่ยนรูปภาพ-->
+
+
 <script>
     var images = [
         <?php foreach ($image_filenames as $filename) { ?> "<?= $filename; ?>",
@@ -146,15 +150,26 @@ include('includes/footer.php'); ?>
     ];
     var currentIndex = 0;
     var imageElement = document.getElementById("productImage");
+    var isHovered = false;
 
     function changeImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        imageElement.src = "uploads/" + images[currentIndex];
+        if (!isHovered) {
+            currentIndex = (currentIndex + 1) % images.length;
+            imageElement.src = "uploads/" + images[currentIndex];
+        }
     }
 
-    // เรียกใช้ฟังก์ชัน changeImage() ทุก 4 วินาที
-    setInterval(changeImage, 4000);
+    var intervalId = setInterval(changeImage, 3000);
+
+    imageElement.addEventListener("mouseover", function() {
+        clearInterval(intervalId);
+        isHovered = true;
+        imageElement.style.transform = "scale(1.2)"; // ซูมรูปเมื่อ hover
+    });
+
+    imageElement.addEventListener("mouseout", function() {
+        intervalId = setInterval(changeImage, 3000);
+        isHovered = false;
+        imageElement.style.transform = "scale(1.0)"; // ยกเลิกการซูมเมื่อ unhover
+    });
 </script>
-
-
-
