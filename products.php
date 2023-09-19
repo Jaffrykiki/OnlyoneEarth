@@ -54,7 +54,7 @@ if (isset($_GET['category']))
                                 foreach ($products as $item) {
                             ?>
                                     <!-- แสดงสินค้าแต่ละรายการ -->
-                                    <div class="col-md-2 mb-2">
+                                    <div class="col-md-3 mb-2">
                                         <a href="product-view.php?product=<?= $item['name']; ?>">
                                             <div class="card shadow">
                                                 <div class="card-body">

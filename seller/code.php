@@ -106,42 +106,49 @@ else if (isset($_POST['update_product_btn'])) {
             $old_images_str = $_POST['old_images']; // รับค่าจากฟอร์ม
             $old_images = explode(',', $old_images_str); // แยกสตริงเป็นอาร์เรย์
 
-            // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
-            $path = "../uploads";
+            // ตรวจสอบว่ามีรูปภาพใหม่ถูกอัปโหลดหรือไม่
+            if (!empty(array_filter($new_images))) {
 
-                        // ลบรูปภาพเก่าทั้งหมดในโฟลเดอร์
-                        foreach ($old_images as $old_image) {
-                            $old_image_path = $path . '/' . $old_image;
-                            if (file_exists($old_image_path)) {
-                                unlink($old_image_path);
-                            }
-                        }
+                // ถ้ามีรูปภาพใหม่ถูกอัปโหลด
 
-                        // วนลูปเพื่ออัปเดตรูปภาพในตาราง product_images
-                        foreach ($new_images as $key => $new_image) {
-                            if ($new_image != "") {
-                                // ดึงนามสกุลไฟล์ภาพใหม่
-                                $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
-                                // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันด้วยเวลาปัจจุบันและนามสกุลไฟล์
-                                $update_filename = time() . '_' . $key . '.' . $image_ext;
-            
-                                // อัปโหลดไฟล์ภาพใหม่ไปยังโฟลเดอร์ที่กำหนด
-                                move_uploaded_file($_FILES['images']['tmp_name'][$key], $path . '/' . $update_filename);
-            
-                                // อัปเดตชื่อไฟล์รูปภาพในตาราง product_images
-                                $update_image_query = "UPDATE product_images SET image_filename='$update_filename' WHERE product_id='$product_id' AND image_filename='$old_images[$key]'";
-                                $update_image_query_run = mysqli_query($connection, $update_image_query);
-            
-                                if (!$update_image_query_run) {
-                                    // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-                                    redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
-                                    exit; // จบการทำงานทันทีหลังจาก redirect
-                                }
-                            }
+
+                // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
+                $path = "../uploads";
+
+                // ลบรูปภาพเก่าทั้งหมดในโฟลเดอร์
+                foreach ($old_images as $old_image) {
+                    $old_image_path = $path . '/' . $old_image;
+                    if (file_exists($old_image_path)) {
+                        unlink($old_image_path);
+                    }
+                }
+
+                // วนลูปเพื่ออัปเดตรูปภาพในตาราง product_images
+                foreach ($new_images as $key => $new_image) {
+                    if ($new_image != "") {
+                        // ดึงนามสกุลไฟล์ภาพใหม่
+                        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
+                        // สร้างชื่อไฟล์ใหม่ที่ไม่ซ้ำกันด้วยเวลาปัจจุบันและนามสกุลไฟล์
+                        $update_filename = time() . '_' . $key . '.' . $image_ext;
+
+                        // อัปโหลดไฟล์ภาพใหม่ไปยังโฟลเดอร์ที่กำหนด
+                        move_uploaded_file($_FILES['images']['tmp_name'][$key], $path . '/' . $update_filename);
+
+                        // อัปเดตชื่อไฟล์รูปภาพในตาราง product_images
+                        $update_image_query = "UPDATE product_images SET image_filename='$update_filename' WHERE product_id='$product_id' AND image_filename='$old_images[$key]'";
+                        $update_image_query_run = mysqli_query($connection, $update_image_query);
+
+                        if (!$update_image_query_run) {
+                            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+                            redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
+                            exit; // จบการทำงานทันทีหลังจาก redirect
                         }
-                        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-                        redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
-                        exit; // จบการทำงานทันทีหลังจาก redirect
+                    }
+                }
+            }
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+            redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
+            exit; // จบการทำงานทันทีหลังจาก redirect
         } else {
             // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
             redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
