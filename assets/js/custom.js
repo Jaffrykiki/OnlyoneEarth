@@ -45,8 +45,6 @@ $(document).ready(function ()  {
         var qty = $(this).closest('.product_data').find('.input-qty').val();
         var prod_id = $(this).val();
 
-        // console.log("Product ID:", prod_id);
-        // console.log("Quantity:", qty);
 
         
         // ส่งข้อมูลผ่าน Ajax เพื่อเพิ่มสินค้าลงตระกร้า
@@ -77,6 +75,10 @@ $(document).ready(function ()  {
                 else if(response == 500)
                 {
                     alertify.success("มีบางอย่างผิดพลาด ติดต่อแอดมินสมถุย");
+                }
+                else if(response == 600)
+                {
+                    alertify.success("สินค้ามีจำนวนไม่พอ");
                 }
             },            
         });
