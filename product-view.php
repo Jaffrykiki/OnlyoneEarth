@@ -94,11 +94,13 @@ if (isset($_GET['product'])) {
                                 <h5>รหัสผู้ขาย:<span class="text-success fw-bold"><?= $product['users_id']; ?></span> </h5>
                             </div>
                         </div>
+                        
 
                         <!-- ปุ่มเพิ่ม/ลดจำนวนสินค้าในตะกร้า -->
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="input-group mb-3" style="width:140px">
+                                <span class="input-group-text">จำนวนสินค้า</span>
                                     <button class="input-group-text decrement-btn">-</button>
                                     <input type="text" class="form-control text-center input-qty bg-white" value="1" disabled>
                                     <button class="input-group-text increment-btn">+</button>

@@ -41,12 +41,12 @@ include('includes/navbar.php');
                                     <div class="col-md-6 mb-3">
                                         <label class="fw-bold">อีเมล์</label>
                                         <!-- แสดงอีเมล์ผู้ใช้ที่สามารถแก้ไขได้ -->
-                                        <input type="text" required name="email" value="<?= $data['email']; ?>" required class="form-control">
+                                        <input type="text" required name="email" value="<?= $data['email']; ?>" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" pattern="[^@\s]+@[^@\s]+\.[a-zA-Z]{2,}">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="fw-bold">เบอร์โทรศัพท์</label>
                                         <!-- แสดงอีเมล์ผู้ใช้ที่สามารถแก้ไขได้ -->
-                                        <input type="text" required name="phone" value="<?= $data['phone']; ?>" required class="form-control">
+                                        <input type="text" required name="phone" value="<?= $data['phone']; ?>" required class="form-control" pattern="[0-9]{10}" title="โปรดป้อนหมายเลขโทรศัพท์ 10 หลัก">
                                     </div>
                                     <div class="">
                                         <!-- แสดงอีเมล์ผู้ใช้ที่สามารถแก้ไขได้ -->
