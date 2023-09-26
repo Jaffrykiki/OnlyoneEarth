@@ -149,7 +149,7 @@ fclose($file);
 <?php include('includes/footer.php'); ?>
 
 <!-- โหลดสคริปต์ของ PayPal SDK โดยใช้ client-id ของบัญชีธุรกิจ PayPal และสกุลเงิน USD -->
-<script src="https://www.paypal.com/sdk/js?client-id=AbFdqnQlPD3JEvVi1AM-SMgpmgwa9IFVZ_dLnFS8KrPqZWuaBfk5DnqVoGn9uONFhztlTUrqIg75U-pF&currency=USD"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=AbFdqnQlPD3JEvVi1AM-SMgpmgwa9IFVZ_dLnFS8KrPqZWuaBfk5DnqVoGn9uONFhztlTUrqIg75U-pF&currency=THB"></script>
 
 <script>
     // สร้างปุ่ม PayPal Checkout
@@ -199,7 +199,7 @@ fclose($file);
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: '0.1' //'<?= $totalPrice ?>'
+                        value: '<?= $totalPrice ?>'
                     }
                 }]
             });
