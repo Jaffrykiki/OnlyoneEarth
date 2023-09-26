@@ -100,7 +100,6 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                             <a href="products.php" class="form-control me-4" style="width: 100px; height: 50px; border-radius: 5px; ">กลับ</a>
                         </form>
                     </div>
-                    <a  href="logs_products.php" class="btn btn-secondary float-end">ตรวจสอบบันทึก</a>
                 </div>
                 <div id="og" class="card-body table-responsive" id="products_table">
                     <table class="table table-success table-striped">

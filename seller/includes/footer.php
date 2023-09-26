@@ -6,16 +6,16 @@
                 <!-- เมนูลิงก์ท้ายเว็บ -->
                 <ul class="nav nav-footer justify-content-center justify-content-lg-end">
                     <li class="nav-item">
-                        <a href="#" class="nav-link pe-0 text-muted" target="_blank">About Us</a>
+                        <a href="https://www.facebook.com/autsadawut.plaglamyong/" class="nav-link pe-0 text-muted" target="_blank">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link pe-0 text-muted" target="_blank">Service</a>
+                        <a href="https://www.facebook.com/autsadawut.plaglamyong/" class="nav-link pe-0 text-muted" target="_blank">Service</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link pe-0 text-muted" target="_blank">Contact</a>
+                        <a href="https://www.facebook.com/autsadawut.plaglamyong/" class="nav-link pe-0 text-muted" target="_blank">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link pe-0 text-muted" target="_blank">About</a>
+                        <a href="https://www.facebook.com/autsadawut.plaglamyong/" class="nav-link pe-0 text-muted" target="_blank">About</a>
                     </li>
                 </ul>
             </div>

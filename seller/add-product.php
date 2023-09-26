@@ -49,12 +49,11 @@ include('includes/header.php');
                             <!-- ส่วนอื่น ๆ ของฟอร์ม เช่น ชื่อ, รายละเอียด, รูปภาพ, ราคา, จำนวน -->
                             <div class="col-md-12">
                                 <label class="mb-0">ชื่อ</label>
-                                <input type="text" required name="name" placeholder="ป้อนชื่อหมวดหมู่" class="form-control mb-2">
+                                <input type="text" required name="name" placeholder="ป้อนชื่อสินค้า" class="form-control mb-2">
                             </div>
                             <div class="col-md-12">
                                 <label class="mb-0">รายละเอียดสินค้า</label>
-                               
-                               <textarea row="3" required name="detail" placeholder="ป้อนรายละเอียดสินค้า" class="form-control mb-2"  ></textarea>
+                                <textarea rows="3" required name="detail" placeholder="ป้อนรายละเอียดสินค้า (ไม่ต่ำกว่า 10 ตัวอักษร)" class="form-control mb-2" minlength="10"></textarea>
                             </div>
                             <div class="col-md-12">
                                 <label class="mb-0">อัปโหลดรูปภาพสินค้า</label>
@@ -62,11 +61,11 @@ include('includes/header.php');
                             </div>
                             <div class="col-md-6">
                                 <label class="mb-0">ราคา</label>
-                                <input type="text" required name="price" placeholder="ป้อนราคาสินค้า" class="form-control mb-2">
+                                <input type="text" required name="price" placeholder="ป้อนราคาสินค้า" class="form-control mb-2" pattern="[0-9]+(\.[0-9]{2})?" title="กรุณาป้อนราคาสินค้าให้ถูกต้อง (ตัวอย่าง: 100.00)">
                             </div>
                             <div class="col-md-6">
                                 <label class="mb-0">จำนวน</label>
-                                <input type="number" required name="num" placeholder="ป้อนจำนวนสินค้า" class="form-control mb-2">
+                                <input type="number" required name="num" placeholder="ป้อนจำนวนสินค้า" class="form-control mb-2" min="0" step="1">
                             </div>
                         </div>
                         <div class="col-md-12">
