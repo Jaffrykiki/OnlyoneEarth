@@ -199,7 +199,7 @@ else if (isset($_POST['update_product_btn'])) {
         if ($update_product_query_run) {
 
             // รับข้อมูลรูปภาพใหม่และรูปภาพเดิมจากฟอร์ม
-            $allowed_types = array('png', 'jpg', 'jpeg', 'gif'); 
+            $allowed_types = array('png', 'jpg', 'jpeg', 'gif');
             $new_images = $_FILES['images']['name'];
             $old_images_str = $_POST['old_images']; // รับค่าจากฟอร์ม
             $old_images = explode(',', $old_images_str); // แยกสตริงเป็นอาร์เรย์
@@ -263,10 +263,9 @@ else if (isset($_POST['update_product_btn'])) {
                 // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
                 redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
                 exit; // จบการทำงานทันทีหลังจาก redirect
-            } 
-        } 
-    }
-    else {
+            }
+        }
+    } else {
         // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
         redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
     }
@@ -345,44 +344,49 @@ else if (isset($_POST['update_users_btn'])) {
 
     // ตรวจสอบว่ามีการอัปโหลดไฟล์รูปภาพใหม่หรือไม่
     if ($new_image != "") {
-        // หานามสกุลของไฟล์รูปภาพใหม่
-        $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
 
-        // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันและนามสกุลของไฟล์
-        $update_filenname = time() . '.' . $image_ext;
-    } else {
-        // ถ้าไม่มีการอัปโหลดไฟล์รูปภาพใหม่ ใช้ชื่อไฟล์เดิม
-        $update_filenname = $old_image;
-    }
+        // ส่วนของการตรวจสอบและอัปโหลดรูปภาพใหม่
+        $image_ext = strtolower(pathinfo($new_image, PATHINFO_EXTENSION));
+        $allowed_image_extensions = array("jpeg", "jpg", "png");
+        $max_file_size = 1024 * 1024; // 1 MB
 
-    // สร้างคำสั่ง SQL เพื่ออัปเดตข้อมูลผู้ใช้
-    $update_user_query = "UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`password`='$password',`img`=' $update_filenname' WHERE id ='$users_id'";
-    $update_user_query_run = mysqli_query($connection, $update_user_query);
+        if (in_array($image_ext, $allowed_image_extensions) && $_FILES['img']['size'] <= $max_file_size) {
 
+            // สร้างชื่อไฟล์ใหม่โดยใช้เวลาปัจจุบันและนามสกุลของไฟล์
+            $update_filenname = time() . '.' . $image_ext;
 
-    // ตรวจสอบผลลัพธ์การ query เพื่อทำการแสดงข้อความหรือเปลี่ยนเส้นทางหน้า
-    if ($update_user_query_run) {
-        // ตรวจสอบว่ามีการอัปโหลดไฟล์รูปภาพใหม่หรือไม่
-        if ($_FILES['img']['name'] != "") {
-            // ย้ายไฟล์รูปภาพไปยังตำแหน่งที่เก็บ
+            // ย้ายไฟล์รูปภาพใหม่ไปยังที่เก็บและลบไฟล์เก่า
             move_uploaded_file($_FILES['img']['tmp_name'], $path . '/' . $update_filenname);
-            // ตรวจสอบว่ามีไฟล์รูปภาพเดิมในโฟลเดอร์และทำการลบ
             if (file_exists("../uploads/" . $old_image)) {
                 unlink("../uploads/" . $old_image);
             }
+        } else {
+            // ถ้าไฟล์รูปภาพไม่ถูกต้องหรือขนาดเกินกว่า 1 MB
+            redirect("edit-users.php?id=$users_id", "ไฟล์รูปภาพไม่ถูกต้องหรือขนาดเกินกว่า 1 MB");
+            // ไม่ต้องอัปเดตข้อมูลผู้ใช้หรือเพิ่มข้อมูล logs ในกรณีนี้
         }
     }
-    // เพิ่มข้อมูล logs ในตาราง products_logs
-    $event = "แก้ไขผู้ใช้: $name";
-    $logs_query = "INSERT INTO users_logs (a_id, u_id, event) VALUES ('$admin_id', '$users_id', '$event')";
-    $logs_query_run = mysqli_query($connection, $logs_query);
-    if ($logs_query_run) {
-        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-        redirect("edit-users.php?id=$users_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
-    } else {
-        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-        redirect("edit-users.php?id=$users_id", "มีบางอย่างผิดพลาด");
+    else {
+        // ถ้าไม่มีการอัปโหลดรูปภาพใหม่ ให้ใช้ชื่อไฟล์เดิม
+        $update_filenname = $old_image;
     }
+
+            // สร้างคำสั่ง SQL เพื่ออัปเดตข้อมูลผู้ใช้
+            $update_user_query = "UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`password`='$password',`img`='$update_filenname' WHERE id ='$users_id'";
+            $update_user_query_run = mysqli_query($connection, $update_user_query);
+
+            // เพิ่มข้อมูล logs ในตาราง products_logs
+            $event = "แก้ไขผู้ใช้: $name";
+            $logs_query = "INSERT INTO users_logs (a_id, u_id, event) VALUES ('$admin_id', '$users_id', '$event')";
+            $logs_query_run = mysqli_query($connection, $logs_query);
+
+            if ($update_user_query_run && $logs_query_run) {
+                // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+                redirect("edit-users.php?id=$users_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
+            } else {
+                // ถ้าการอัปเดตไม่สำเร็จ นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+                redirect("edit-users.php?id=$users_id", "มีบางอย่างผิดพลาด");
+            }
 }
 // เมื่อกดปุ่ม "ลบผู้ใช้"
 else if (isset($_POST['delete_users_btn'])) {

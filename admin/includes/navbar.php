@@ -5,7 +5,7 @@
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                 <!-- ส่วนที่จะถูกแสดงทางขวามือของ Navbar -->
                 <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                <a class="btn btn-warning" href="../index.php">หน้าเว็บ</a>
+                <a class="btn btn-warning" href="../index.php">Only One Earth</a>
                 </div>
             </div>
         </div>

@@ -49,27 +49,27 @@ include('includes/header.php');
                                     <div class="col-md-4">
                                         <label class="mb-0">อีเมล์</label>
                                         <!-- ฟิลด์สำหรับกรอกอีเมล์ผู้ใช้ -->
-                                        <input type="text" required name="email" value="<?= $data['email']; ?>" placeholder="ป้อนอีเมล์ที่ต้องการแก้ไข" class="form-control mb-2">
+                                        <input type="text" required name="email" value="<?= $data['email']; ?>" placeholder="ป้อนอีเมล์ที่ต้องการแก้ไข" class="form-control mb-2" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" title="โปรดป้อนอีเมล์ที่ถูกต้อง">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="mb-0">เบอร์โทรศัพท์</label>
                                         <!-- ฟิลด์สำหรับกรอกเบอร์โทรศัพท์ผู้ใช้ -->
-                                        <input type="text" required name="phone" value="<?= $data['phone']; ?>"  placeholder="ป้อนเบอร์โทรศัพท์" class="form-control mb-2">
+                                        <input type="text" required name="phone" value="<?= $data['phone']; ?>" placeholder="ป้อนเบอร์โทรศัพท์" class="form-control mb-2" pattern="[0-9]{10}" title="โปรดป้อนหมายเลขโทรศัพท์ 10 หลัก">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="mb-0">รหัสผ่าน</label>
                                         <!-- ฟิลด์สำหรับกรอกรหัสผ่านผู้ใช้ -->
-                                        <input type="number" required name="password" value="<?= $data['password']; ?>"  placeholder="ป้อนรหัสผ่าน" class="form-control mb-2">
+                                        <input type="text" required name="password" value="<?= $data['password']; ?>"  placeholder="ป้อนรหัสผ่าน" class="form-control mb-2" minlength="8" pattern=".{8,}" title="รหัสผ่านควรมีอย่างน้อย 8 ตัวอักษร">
                                     </div>
                                     <div class="col-md-12">
                                         <label class="mb-0">อัปโหลดรูปภาพผู้ใช้ใหม่</label>
                                         <!-- ฟิลด์ที่ซ่อนไว้สำหรับเก็บชื่อรูปภาพเดิม -->
                                         <input type="hidden" name="old_image" value="<?= $data['img']; ?>">
                                         <!-- ฟิลด์สำหรับอัปโหลดรูปภาพใหม่ -->
-                                        <input type="file" name="image" class="form-control mb-2">
+                                        <input type="file" name="img" class="form-control mb-2">
                                         <label class="mb-0">ภาพปัจจุบัน</label>
                                         <!-- แสดงภาพปัจจุบันของผู้ใช้ -->
-                                        <img src="../uploads/<?= $data['img']; ?>"  alt="Profile image" height="150px" width="150px">
+                                        <img src="../uploads/<?= $data['img']; ?>"  alt="Profile image" height="160px" width="160px">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
