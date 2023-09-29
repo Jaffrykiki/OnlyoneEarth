@@ -167,6 +167,9 @@ else if (isset($_POST['update_product_btn'])) {
             redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
             exit; // จบการทำงานทันทีหลังจาก redirect
             }
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+            redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
+            exit; // จบการทำงานทันทีหลังจาก redirect
         } 
     }
     else {

@@ -169,7 +169,7 @@ else if (isset($_POST['add_product_btn'])) {
 }
 // เมื่อกดปุ่ม "อัปเดตสินค้า"
 else if (isset($_POST['update_product_btn'])) {
-
+    
     // รับค่า product_id และ category_id จากฟอร์ม
     $product_id = mysqli_real_escape_string($connection, $_POST['product_id']);
     $category_id = mysqli_real_escape_string($connection, $_POST['category_id']);
@@ -189,6 +189,7 @@ else if (isset($_POST['update_product_btn'])) {
     $logs_query_run = mysqli_query($connection, $logs_query);
 
     if ($logs_query_run) {
+        
 
         // สร้างคำสั่ง SQL เพื่ออัปเดตข้อมูลสินค้าในฐานข้อมูล
         $update_product_query = "UPDATE products SET category_id='$category_id', name='$name', detail='$detail', price='$price', num='$num', trending='$trending' WHERE id='$product_id'";
@@ -197,7 +198,7 @@ else if (isset($_POST['update_product_btn'])) {
         $update_product_query_run = mysqli_query($connection, $update_product_query);
 
         if ($update_product_query_run) {
-
+            
             // รับข้อมูลรูปภาพใหม่และรูปภาพเดิมจากฟอร์ม
             $allowed_types = array('png', 'jpg', 'jpeg', 'gif');
             $new_images = $_FILES['images']['name'];
@@ -206,7 +207,7 @@ else if (isset($_POST['update_product_btn'])) {
 
             // ตรวจสอบว่ามีรูปภาพใหม่ถูกอัปโหลดหรือไม่
             if (!empty(array_filter($new_images))) {
-
+                
                 // ถ้ามีรูปภาพใหม่ถูกอัปโหลด
 
                 // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
@@ -242,28 +243,32 @@ else if (isset($_POST['update_product_btn'])) {
                                 $update_image_query_run = mysqli_query($connection, $update_image_query);
 
                                 if (!$update_image_query_run) {
+                                    
                                     // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
                                     redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาดในการอัปเดตรูปภาพ");
-                                    exit; // จบการทำงานทันทีหลังจาก redirect
+                                    
                                 }
                             } else {
                                 // ไม่สามารถอัปโหลดไฟล์ภาพใหม่ได้
                                 // แสดงข้อความแจ้งเตือนหรือทำการกลับไปที่หน้าแก้ไขสินค้า
                                 redirect("edit-product.php?id=$product_id", "ไม่สามารถอัปโหลดรูปภาพใหม่ได้");
-                                exit;
+                                
                             }
                         } else {
                             // ประเภทของไฟล์ไม่ถูกต้อง
                             // แสดงข้อความแจ้งเตือนหรือทำการกลับไปที่หน้าแก้ไขสินค้า
                             redirect("edit-product.php?id=$product_id", "กรุณาอัปโหลดไฟล์รูปภาพประเภทที่อนุญาตเท่านั้น (PNG, JPEG, GIF)");
-                            exit;
+                            
                         }
+                        
                     }
-                }
+                    
+                }     
                 // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-                redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
-                exit; // จบการทำงานทันทีหลังจาก redirect
+                redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");  
             }
+                            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+                            redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
         }
     } else {
         // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
