@@ -118,7 +118,7 @@ else if (isset($_POST['update_product_btn'])) {
                 // วนลูปเพื่ออัปเดตรูปภาพในตาราง product_images
                 foreach ($new_images as $key => $new_image) {
                     if ($new_image != "") {
-                        
+
                         // ดึงนามสกุลไฟล์ภาพใหม่
                         $image_ext = pathinfo($new_image, PATHINFO_EXTENSION);
 
@@ -164,15 +164,14 @@ else if (isset($_POST['update_product_btn'])) {
                     }
                 }
                 // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-            redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
-            exit; // จบการทำงานทันทีหลังจาก redirect
+                redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
+                exit; // จบการทำงานทันทีหลังจาก redirect
             }
             // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
             redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
             exit; // จบการทำงานทันทีหลังจาก redirect
-        } 
-    }
-    else {
+        }
+    } else {
         // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
         redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาด");
     }
@@ -271,8 +270,7 @@ else if (isset($_POST['update_order_btn'])) {
         // ถ้าไม่สำเร็จ redirect ไปยังหน้า "edit-category.php" พร้อมแสดงข้อความ "มีบางอย่างผิดพลาด"
         redirect("view-order.php?t=$track_no", "บางอย่างผิดพลาด");
     }
-}
-else if (isset($_POST['add_withdraw_btn'])) {
+} else if (isset($_POST['add_withdraw_btn'])) {
 
     $numbank = $_POST['numbank'];
     $name = $_POST['name'];
@@ -283,17 +281,27 @@ else if (isset($_POST['add_withdraw_btn'])) {
     // ดึงค่า id ของผู้ใช้จาก session
     $users_id = $_SESSION['auth_user']['id'];
 
-    // เตรียมคำสั่ง SQL สำหรับเพิ่มข้อมูล
-    $sql = "INSERT INTO withdrawals (seller_id,email, numbank, name, namebank, numdraw) VALUES ('$users_id','$email', '$numbank', '$name', '$namebank', $numdraw)";
+    // ดึงยอดรายได้ที่ผู้ขายขายได้
+    $availableWithdrawal = getTotalPriceWithdraw1_seller($users_id);
 
-    $sql_run = mysqli_query($connection, $sql);
+    // ตรวจสอบว่า numdraw ไม่เกินยอดรายได้ที่ผู้ขายขายได้
+    if ($numdraw <= $availableWithdrawal) {
 
-    if ($sql_run) {
-        // บันทึกข้อมูลสำเร็จ
-        redirect("withdraw.php", "เพิ่มรายการถอนสำเร็จแล้ว หากเสร็จสินการทำรายการจะแจ้งเตือนผ่านทางอีเมล์คุณ");
+        // เตรียมคำสั่ง SQL สำหรับเพิ่มข้อมูล
+        $sql = "INSERT INTO withdrawals (seller_id,email, numbank, name, namebank, numdraw) VALUES ('$users_id','$email', '$numbank', '$name', '$namebank', $numdraw)";
+
+        $sql_run = mysqli_query($connection, $sql);
+
+        if ($sql_run) {
+            // บันทึกข้อมูลสำเร็จ
+            redirect("withdraw.php", "เพิ่มรายการถอนสำเร็จแล้ว หากเสร็จสินการทำรายการจะแจ้งเตือนผ่านทางอีเมล์คุณ");
+        } else {
+            // บันทึกข้อมูลไม่สำเร็จ
+            redirect("withdraw.php", "มีบางอย่างผิดพลาด");
+        }
     } else {
-        // บันทึกข้อมูลไม่สำเร็จ
-        redirect("withdraw.php", "มีบางอย่างผิดพลาด");
+        // จำนวนเงินถอนเกินยอดรายได้ที่ผู้ขายขายได้
+        redirect("withdraw.php", "ไม่สามารถถอนได้ เนื่องจากจำนวนเงินถอนเกินยอดรายได้");
     }
 }
 // ถ้าไม่เข้าเงื่อนไขใดเลย ให้เปลี่ยนเส้นทางไปยังหน้า ../index.php
