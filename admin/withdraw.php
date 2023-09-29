@@ -4,7 +4,7 @@ include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ 
 include('includes/header.php'); 
 
 //query
-$query=mysqli_query($connection,"SELECT COUNT(id) FROM `orders`");
+$query=mysqli_query($connection,"SELECT COUNT(id) FROM `withdrawals`");
 	$row = mysqli_fetch_row($query);
 
 	$rows = $row[0];
@@ -32,7 +32,7 @@ $query=mysqli_query($connection,"SELECT COUNT(id) FROM `orders`");
 
 	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
 
-	$nquery=mysqli_query($connection,"SELECT * from  orders $limit");
+	$nquery=mysqli_query($connection,"SELECT * from  withdrawals $limit");
 
 	$paginationCtrls = '';
 
@@ -75,74 +75,66 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
             <!-- เริ่มต้นของการแสดงรายการคำสั่งซื้อ -->
             <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
-                    <h4 class="m-0">ออเดอร์ทั้งหมด 
+            <h4 class="m-0">รายการถอนเงิน 
                     <form class="d-flex m-0" role="search" style="max-width: 550px; height: 50px;">
                         <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit" style="width: 200px; height: 50px;">ค้นหา</button>
-                        <a href="orders.php" class="form-control me-4" style="width: 100px; height: 50px; border-radius: 5px; ">กลับ</a>
+                        <a href="withdraw.php" class="form-control me-4" style="width: 100px; height: 50px; border-radius: 5px; ">กลับ</a>
                     </form>
                     </h4>
-                    <a href="order-history.php" class="btn btn-warning float-end">ประวัติคำสั่งซื้อที่ดำเนินการแล้ว</a>
-                    <br> 
-                    <a href="logs_order.php" class="btn btn-secondary ">ตรวจสอบบันทึก</a>
                 </div>
-                <div class="card-body" id="">
-                    <table class="table table-info table-striped">
+                <div class="card-body" id="table-container" style="overflow-x:auto;">
+                    <table class="table table-warning table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>ชื่อผู้ซื้อ</th>
                                 <th>ไอดีผู้ขาย</th>
-                                <th>หมายเลขพัสดุ</th>
-                                <th>รวมการสั่งซื้อ</th>
-                                <th>วันที่สั่งซื้อ</th>
-                                <th>รายละเอียดเพิ่มเติม</th>
+                                <th>อีเมล์</th>
+                                <th>เลขที่บัญชีธนาคาร</th>
+                                <th>ชื่อบัญชี</th>
+                                <th>ชื่อธนาคาร</th>
+                                <th>จำนวนเงิน</th>
                             </tr>
                         </thead>
                         <tbody>
                             
                             <?php
-                            // เรียกใช้ฟังก์ชัน getAllOrders() เพื่อดึงข้อมูลรายการคำสั่งซื้อทั้งหมด
-                            $Orders = getAllOrders();
+                            // เรียกใช้ฟังก์ชัน getAllwithdraw() เพื่อดึงข้อมูลรายการถอนเงิน
+                            $withdraw = getAllwithdraw();
 
                             // ตรวจสอบว่ามีรายการสินค้าหรือไม่
                             if (isset($_GET['searchTerm']) && !empty($_GET['searchTerm'])) {
                                 $searchTerm = $_GET['searchTerm'];
                                 // <!-- ดึงข้อมูลสินค้าจากคำค้นหา -->
-                                $orders = searchOrders($searchTerm);
-                                if (!empty($orders)) {
-                                    foreach ($orders as $order) {
+                                $withdraws = searchwithdraw($searchTerm);
+                                if (!empty($withdraws)) {
+                                    foreach ($withdraws as $withdraw) {
                                     ?>
                                         <tr>
-                                        <td> <?= $order['id']; ?> </td>
-                                        <td> <?= $order['name']; ?> </td>
-                                        <td> <?= $order['sellerId']; ?> </td>
-                                        <td> <?= $order['tracking_no']; ?> </td>
-                                        <td> <?= $order['total_price']; ?> </td>
-                                        <td> <?= $order['created_at']; ?> </td>
-                                        <td>
-                                            <a href="view-order.php?t=<?= $order['tracking_no']; ?>" class="btn btn-primary">ดูรายละเอียด</a>
-                                        </td>
-                                    </tr>
+                                        <td> <?= $withdraw['seller_id']; ?> </td>
+                                        <td> <?= $withdraw['email']; ?> </td>
+                                        <td> <?= $withdraw['numbank']; ?> </td>
+                                        <td> <?= $withdraw['name']; ?> </td>
+                                        <td> <?= $withdraw['namebank']; ?> </td>
+                                        <td> <?= $withdraw['numdraw']; ?> </td>
+                                        </tr>
                                     <?php
                                     }
-                                } else if (empty($orders)) {
-                                    echo "ค้นหาออเดอร์ไม่เจอ";
+                                } else if (empty($withdraws)) {
+                                    echo "ค้นหารายการไม่เจอ";
                                 }
                              } // ตรวจสอบว่ามีรายการคำสั่งซื้อหรือไม่
-                             else if ($nquery && mysqli_num_rows($nquery) > 0) {
+
+                            else if ($nquery && mysqli_num_rows($nquery) > 0) {
+                                // วนลูปเพื่อแสดงข้อมูลรายการคำสั่งซื้อทั้งหมด
                                 while ($item = mysqli_fetch_assoc($nquery)) {
                             ?>
                                     <tr>
-                                        <td> <?= $item['id']; ?> </td>
-                                        <td> <?= $item['name']; ?> </td>
-                                        <td> <?= $item['sellerId']; ?> </td>
-                                        <td> <?= $item['tracking_no']; ?> </td>
-                                        <td> <?= $item['total_price']; ?> </td>
-                                        <td> <?= $item['created_at']; ?> </td>
-                                        <td>
-                                            <a href="view-order.php?t=<?= $item['tracking_no']; ?>" class="btn btn-primary">ดูรายละเอียด</a>
-                                        </td>
+                                        <td><?= $item['seller_id'];?></td>
+                                        <td><?= $item['email']; ?></td>
+                                        <td><?= $item['numbank'];?></td>
+                                        <td><?= $item['name']; ?></td>
+                                        <td><?= $item['namebank'];?></td>
+                                        <td><?= $item['numdraw'];?></td>
                                     </tr>
                                 <?php
                                 }
@@ -150,7 +142,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                 // ถ้าไม่มีรายการคำสั่งซื้อ
                                 ?>
                                 <tr>
-                                    <td colspan="5"> ไม่มีคำสั่งซื้อ </td>
+                                    <td colspan="5"> ไม่มีรายการถอนเงิน </td>
                                 </tr>
                             <?php
                             }
@@ -164,6 +156,10 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
         <div id="pagination_controls"><?php echo $paginationCtrls; ?></div>	
     </div>
 </div>
+
+<!-- Add the image below the container but above the footer -->
+<img src="../uploads/per.png" alt="Your Image" class="img-fluid" style="max-width: 20%; height: auto;">
+
 
 
 

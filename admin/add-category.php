@@ -24,7 +24,7 @@ include('includes/header.php');
                             <div class="col-md-5">
                                 <label for="">ชื่อหมวดหมู่</label>
                                 <!-- ช่องใส่ข้อมูลชื่อหมวดหมู่ -->
-                                <input type="text" name="name" placeholder="ป้อนชื่อหมวดหมู่" class="form-control">
+                                <input type="text" name="name" placeholder="ป้อนชื่อหมวดหมู่" class="form-control" pattern="[A-Za-z0-9ก-๙\s]*" title="กรุณากรอกข้อความและไม่ใส่ตัวอักษรพิเศษ">
                             </div>
                         </div>
                         <div class="col-md-12">

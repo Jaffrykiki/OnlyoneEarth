@@ -206,6 +206,25 @@ function searchOrders($searchTerm)
     }
     return $product;
 }
+// ฟังก์ชันสำหรับค้นหาออเดอร์
+function searchwithdraw($searchTerm)
+{
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $query = "SELECT * FROM withdrawals WHERE 
+    seller_id LIKE '%$searchTerm%' OR 
+    numbank LIKE '%$searchTerm%' OR 
+    namebank LIKE '%$searchTerm%' OR 
+    name LIKE '%$searchTerm%' OR
+    email LIKE '%$searchTerm%'";;  // ค้นหาออเดอร์
+    $result = mysqli_query($connection, $query);
+
+    $product = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $product[] = $row;
+    }
+    return $product;
+}
 
 //ฟังก์ชันสำหรับค้นหาออเดอร์ที่สำเร็จแล้ว
 function searchOrder_history($searchTerm)
@@ -281,6 +300,20 @@ function getAllReports()
 {
     global $connection; // เชื่อมต่อฐานข้อมูล
     $select_query = "SELECT * FROM reports";
+  
+    // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
+    $select_query = mysqli_query($connection, $select_query); 
+
+    // คืนผลลัพธ์การ query กลับไป
+    return $select_query;
+ 
+}
+
+//ฟังก์ชั่นเรียกดูรายการถอนเงิน
+function getAllwithdraw()
+{
+    global $connection; // เชื่อมต่อฐานข้อมูล
+    $select_query = "SELECT * FROM withdrawals";
   
     // ทำการ query คำสั่ง SQL ไปยังฐานข้อมูลและรับผลลัพธ์
     $select_query = mysqli_query($connection, $select_query); 

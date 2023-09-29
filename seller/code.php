@@ -269,6 +269,30 @@ else if (isset($_POST['update_order_btn'])) {
         redirect("view-order.php?t=$track_no", "บางอย่างผิดพลาด");
     }
 }
+else if (isset($_POST['add_withdraw_btn'])) {
+
+    $numbank = $_POST['numbank'];
+    $name = $_POST['name'];
+    $namebank = $_POST['namebank'];
+    $numdraw = $_POST['numdraw'];
+    $email = $_POST['email'];
+
+    // ดึงค่า id ของผู้ใช้จาก session
+    $users_id = $_SESSION['auth_user']['id'];
+
+    // เตรียมคำสั่ง SQL สำหรับเพิ่มข้อมูล
+    $sql = "INSERT INTO withdrawals (seller_id,email, numbank, name, namebank, numdraw) VALUES ('$users_id','$email', '$numbank', '$name', '$namebank', $numdraw)";
+
+    $sql_run = mysqli_query($connection, $sql);
+
+    if ($sql_run) {
+        // บันทึกข้อมูลสำเร็จ
+        redirect("withdraw.php", "เพิ่มรายการถอนสำเร็จแล้ว หากเสร็จสินการทำรายการจะแจ้งเตือนผ่านทางอีเมล์คุณ");
+    } else {
+        // บันทึกข้อมูลไม่สำเร็จ
+        redirect("withdraw.php", "มีบางอย่างผิดพลาด");
+    }
+}
 // ถ้าไม่เข้าเงื่อนไขใดเลย ให้เปลี่ยนเส้นทางไปยังหน้า ../index.php
 else {
     // นำทางไปยังหน้า "../index.php"
