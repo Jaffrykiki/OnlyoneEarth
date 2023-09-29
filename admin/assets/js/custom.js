@@ -122,4 +122,55 @@ $(document).ready(function () {
   
       });
 
+      //ยืนยันการถอนเงิน
+    $(document).on('click', '.accept_withdraw_btn', function (e) {
+
+   
+      e.preventDefault();
+
+      var id = $(this).val();
+      
+      console.log("Button clicked!"); // เพิ่มคำสั่งนี้เพื่อตรวจสอบว่าคลิกปุ่ม
+
+      console.log("ID:", id); // เพิ่มคำสั่งนี้เพื่อตรวจสอบค่า id
+      
+
+      swal({
+          title: "คุณแน่ใจใช่ไหม?",
+          text: "เมื่อยืนยันแล้ว คุณจะไม่สามารถกู้คืนได้!!",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            $.ajax({
+              method: "POST",
+              url: "code.php",
+              data: {
+                  'id':id,
+                  'accept_withdraw_btn': true
+              },
+              success: function (responce) {
+                console.log("Response:", responce); // เพิ่มคำสั่งนี้เพื่อตรวจสอบค่า responce
+                  if(responce == 200)
+                  {
+                      swal("สำเร็จแล้ว!", "ยืนยันเรียบร้อยแล้ว!", "success").then(function() {
+                        location.reload();
+                      });
+                  }
+                  else if(responce == 500)
+                  {
+                      swal("ผิดพลาด!", "มีบางอย่างผิดพลาด!", "warning");
+                  }
+              }
+            });
+          }
+        });
+
+  }); 
+
+    
+ 
+
 });

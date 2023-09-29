@@ -395,6 +395,7 @@ else if (isset($_POST['update_users_btn'])) {
 }
 // เมื่อกดปุ่ม "ลบผู้ใช้"
 else if (isset($_POST['delete_users_btn'])) {
+
     // รับค่า users_id จากฟอร์มและทำการ escape เพื่อป้องกันการโจมตี SQL Injection
     $users_id = mysqli_real_escape_string($connection, $_POST['users_id']);
 
@@ -468,6 +469,25 @@ else if (isset($_POST['update_order_btn'])) {
         // ถ้าไม่สำเร็จ redirect ไปยังหน้า "edit-category.php" พร้อมแสดงข้อความ "มีบางอย่างผิดพลาด"
         redirect("view-order.php?t=$track_no", "บางอย่างผิดพลาด");
     }
+}
+// ตรวจสอบว่ามีการส่งคำขอแบบ GET มาหรือไม่
+else if (isset($_POST["accept_withdraw_btn"])) {
+
+    $withdraw_id = mysqli_real_escape_string($connection, $_POST['id']);
+    
+    // SQL query เพื่ออัพเดตค่า status เป็น 1 ในตาราง withdrawals
+    $sql = "UPDATE withdrawals SET status = 1 WHERE id = $withdraw_id";
+    $sql_run  = mysqli_query($connection, $sql);
+
+     // ตรวจสอบผลลัพธ์การ query เพื่อทำการแสดงข้อความหรือเปลี่ยนเส้นทางหน้า
+     if ($sql_run) {
+        // ใช้ echo เพื่อแสดงผลสถานะลบเป็น HTTP Response Code 200
+        echo 200;
+    } else {
+        // ใช้ echo เพื่อแสดงผลสถานะผิดพลาดเป็น HTTP Response Code 500
+        echo 500;
+    }
+
 }
 
 // ถ้าไม่เข้าเงื่อนไขใดเลย ให้เปลี่ยนเส้นทางไปยังหน้า ../index.php
