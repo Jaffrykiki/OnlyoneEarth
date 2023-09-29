@@ -543,6 +543,27 @@ function getTotalPriceWithStatus1_seller($sellerId) {
         return 0;
     }
 }
+//ฟังก์ชั่นเรียกดู จำนวนเงินที่สามารถถอนได้
+function getTotalPriceWithdraw1_seller($sellerId) {
+    global $connection; // เชื่อมต่อฐานข้อมูล
+
+    // คำนวณยอดรายได้ทั้งหมดที่มีสถานะเป็น 1
+    $sqlTotalIncome = "SELECT SUM(total_price) AS totalIncome FROM orders WHERE sellerId = '$sellerId' AND status = 1";
+    $resultTotalIncome = $connection->query($sqlTotalIncome);
+    $rowTotalIncome = $resultTotalIncome->fetch_assoc();
+    $totalIncome = $rowTotalIncome['totalIncome'];
+
+    // คำนวณยอดเงินที่ผู้ขายสามารถถอนได้
+    $sqlTotalWithdrawals = "SELECT SUM(numdraw) AS totalWithdrawals FROM withdrawals WHERE seller_id = '$sellerId'";
+    $resultTotalWithdrawals = $connection->query($sqlTotalWithdrawals);
+    $rowTotalWithdrawals = $resultTotalWithdrawals->fetch_assoc();
+    $totalWithdrawals = $rowTotalWithdrawals['totalWithdrawals'];
+
+    $availableWithdrawal = $totalIncome - $totalWithdrawals;
+
+    return max($availableWithdrawal, 0); // ไม่สามารถถอนเงินเกินยอดรายได้ที่ผู้ขายขายสินค้าได้
+}
+
 
 function getUsers()
 {

@@ -12,6 +12,7 @@ $percentageIncrease = getPercentageIncrease_seller($sellerId); //ฟังก์
 $totleOrderComplete = getOrdersComplete_seller($sellerId); //ฟังก์ชั่นเรียกดูออเดอร์ที่ดำเนินการแล้ว
 $totleOrdercan = getOrdersCan_seller($sellerId); //ฟังก์ชั่นเรียกดูออเดอร์ที่ยกเลิก
 $totalPriceWithStatus1 = getTotalPriceWithStatus1_seller($sellerId); // ฟังก์ชั่นเรียกดูยอดขายทั้งหมด ที่มีสถานะดดำเนินการแล้ว
+$totalwithdraw = getTotalPriceWithdraw1_seller($sellerId);
 
 
 
@@ -101,6 +102,26 @@ $totalPriceWithStatus1 = getTotalPriceWithStatus1_seller($sellerId); // ฟั�
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
                     <p class="mb-0"><span class="text-success text-sm font-weight-bolder">ไปต่อ ไปอย่างมั่นคง!
+                        </span></p>
+                </div>
+            </div>
+        </div>
+                <!-- สรุปยอดขายทั้งหมด -->
+                <div class="col">
+            <div class="card  mb-2">
+                <div class="card-header p-3 pt-2">
+                    <div class="icon icon-lg icon-shape bg-gradient-primary shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">attach_money</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <h4 class="text-sm mb-0 text-capitalize">จำนวนเงินที่สามารถถอนได้</h4>
+                        <p class="mb-0">จำนวน:<?php echo $totalwithdraw; ?> บาท</p>
+                    </div>
+                </div>
+
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">อดออม
                         </span></p>
                 </div>
             </div>
