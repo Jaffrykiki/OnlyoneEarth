@@ -101,9 +101,10 @@ if (isset($_GET['product'])) {
                             <div class="col-md-4">
                                 <div class="input-group mb-3" style="width:140px">
                                 <span class="input-group-text">จำนวนสินค้า</span>
-                                    <button class="input-group-text decrement-btn">-</button>
-                                    <input type="text" class="form-control text-center input-qty bg-white" value="1" disabled>
-                                    <button class="input-group-text increment-btn">+</button>
+                                    <button class="input-group-text decrement-btn" style="margin-top: 10px;">-</button>
+                                    <input type="text" class="form-control text-center input-qty bg-white" style="margin-top: 10px;" value="1" disabled>
+                                    <button class="input-group-text increment-btn" style="margin-top: 10px;">+</button>
+                                    <span class="input-group-text" style="margin-top: 10px;">มีสินค้าทั้งหมด <?= $product['num']; ?> ชิ้น</span>
                                 </div>
                             </div>
                         </div>

@@ -154,7 +154,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                             <div class="col">
                                 <div class="item">
                                     <a href="product-view.php?product=<?= $product['name']; ?>">
-                                        <div class="card shadow">
+                                        <div class="card shadow" style="margin-bottom: 20px;">
                                             <img src="uploads/<?= $product['image_filename']; ?>" width="300" height="300" alt="Product image" class="w-100">
                                             <div class="card-body">
                                                 <h5 class="card-title"><?= $product['name']; ?></h5>
@@ -174,7 +174,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                         <div class="col">
                             <div class="item">
                                 <a href="product-view.php?product=<?= $item['name']; ?>">
-                                    <div class="card shadow">
+                                    <div class="card shadow" style="margin-bottom: 20px;">
                                         <img src="uploads/<?= $item['image_filename']; ?>" width="300" height="300" alt="Product image" class="w-100">
                                         <div class="card-body">
                                             <h5 class="card-title"><?= $item['name']; ?></h5>
@@ -245,4 +245,20 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
             }
         })
     });
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+    var titleElements = document.querySelectorAll(".card-title");
+    var maxTitleLength = 27; // จำนวนสูงสุดของตัวอักษรที่คุณต้องการแสดง
+
+    titleElements.forEach(function(titleElement) {
+        var titleText = titleElement.innerText;
+        if (titleText.length > maxTitleLength) {
+            titleElement.innerText = titleText.slice(0, maxTitleLength) + "...";
+        }
+    });
+});
+
 </script>
+
+

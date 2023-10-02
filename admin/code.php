@@ -169,7 +169,7 @@ else if (isset($_POST['add_product_btn'])) {
 }
 // เมื่อกดปุ่ม "อัปเดตสินค้า"
 else if (isset($_POST['update_product_btn'])) {
-    
+
     // รับค่า product_id และ category_id จากฟอร์ม
     $product_id = mysqli_real_escape_string($connection, $_POST['product_id']);
     $category_id = mysqli_real_escape_string($connection, $_POST['category_id']);
@@ -189,7 +189,7 @@ else if (isset($_POST['update_product_btn'])) {
     $logs_query_run = mysqli_query($connection, $logs_query);
 
     if ($logs_query_run) {
-        
+
 
         // สร้างคำสั่ง SQL เพื่ออัปเดตข้อมูลสินค้าในฐานข้อมูล
         $update_product_query = "UPDATE products SET category_id='$category_id', name='$name', detail='$detail', price='$price', num='$num', trending='$trending' WHERE id='$product_id'";
@@ -198,7 +198,7 @@ else if (isset($_POST['update_product_btn'])) {
         $update_product_query_run = mysqli_query($connection, $update_product_query);
 
         if ($update_product_query_run) {
-            
+
             // รับข้อมูลรูปภาพใหม่และรูปภาพเดิมจากฟอร์ม
             $allowed_types = array('png', 'jpg', 'jpeg', 'gif');
             $new_images = $_FILES['images']['name'];
@@ -207,7 +207,7 @@ else if (isset($_POST['update_product_btn'])) {
 
             // ตรวจสอบว่ามีรูปภาพใหม่ถูกอัปโหลดหรือไม่
             if (!empty(array_filter($new_images))) {
-                
+
                 // ถ้ามีรูปภาพใหม่ถูกอัปโหลด
 
                 // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
@@ -243,32 +243,27 @@ else if (isset($_POST['update_product_btn'])) {
                                 $update_image_query_run = mysqli_query($connection, $update_image_query);
 
                                 if (!$update_image_query_run) {
-                                    
+
                                     // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
                                     redirect("edit-product.php?id=$product_id", "มีบางอย่างผิดพลาดในการอัปเดตรูปภาพ");
-                                    
                                 }
                             } else {
                                 // ไม่สามารถอัปโหลดไฟล์ภาพใหม่ได้
                                 // แสดงข้อความแจ้งเตือนหรือทำการกลับไปที่หน้าแก้ไขสินค้า
                                 redirect("edit-product.php?id=$product_id", "ไม่สามารถอัปโหลดรูปภาพใหม่ได้");
-                                
                             }
                         } else {
                             // ประเภทของไฟล์ไม่ถูกต้อง
                             // แสดงข้อความแจ้งเตือนหรือทำการกลับไปที่หน้าแก้ไขสินค้า
                             redirect("edit-product.php?id=$product_id", "กรุณาอัปโหลดไฟล์รูปภาพประเภทที่อนุญาตเท่านั้น (PNG, JPEG, GIF)");
-                            
                         }
-                        
                     }
-                    
-                }     
+                }
                 // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-                redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");  
+                redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
             }
-                            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
-                            redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
+            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
+            redirect("edit-product.php?id=$product_id", "อัพเดดสินค้าเรียบร้อยแล้ว");
         }
     } else {
         // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "edit-product.php" พร้อมกับข้อความแจ้งเตือน
@@ -370,28 +365,27 @@ else if (isset($_POST['update_users_btn'])) {
             redirect("edit-users.php?id=$users_id", "ไฟล์รูปภาพไม่ถูกต้องหรือขนาดเกินกว่า 1 MB");
             // ไม่ต้องอัปเดตข้อมูลผู้ใช้หรือเพิ่มข้อมูล logs ในกรณีนี้
         }
-    }
-    else {
+    } else {
         // ถ้าไม่มีการอัปโหลดรูปภาพใหม่ ให้ใช้ชื่อไฟล์เดิม
         $update_filenname = $old_image;
     }
 
-            // สร้างคำสั่ง SQL เพื่ออัปเดตข้อมูลผู้ใช้
-            $update_user_query = "UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`password`='$password',`img`='$update_filenname' WHERE id ='$users_id'";
-            $update_user_query_run = mysqli_query($connection, $update_user_query);
+    // สร้างคำสั่ง SQL เพื่ออัปเดตข้อมูลผู้ใช้
+    $update_user_query = "UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone',`password`='$password',`img`='$update_filenname' WHERE id ='$users_id'";
+    $update_user_query_run = mysqli_query($connection, $update_user_query);
 
-            // เพิ่มข้อมูล logs ในตาราง products_logs
-            $event = "แก้ไขผู้ใช้: $name";
-            $logs_query = "INSERT INTO users_logs (a_id, u_id, event) VALUES ('$admin_id', '$users_id', '$event')";
-            $logs_query_run = mysqli_query($connection, $logs_query);
+    // เพิ่มข้อมูล logs ในตาราง products_logs
+    $event = "แก้ไขผู้ใช้: $name";
+    $logs_query = "INSERT INTO users_logs (a_id, u_id, event) VALUES ('$admin_id', '$users_id', '$event')";
+    $logs_query_run = mysqli_query($connection, $logs_query);
 
-            if ($update_user_query_run && $logs_query_run) {
-                // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
-                redirect("edit-users.php?id=$users_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
-            } else {
-                // ถ้าการอัปเดตไม่สำเร็จ นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
-                redirect("edit-users.php?id=$users_id", "มีบางอย่างผิดพลาด");
-            }
+    if ($update_user_query_run && $logs_query_run) {
+        // นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+        redirect("edit-users.php?id=$users_id", "อัปเดตข้อมูลเรียบร้อยแล้ว");
+    } else {
+        // ถ้าการอัปเดตไม่สำเร็จ นำผู้ใช้ไปยังหน้าโปรไฟล์พร้อมข้อความสถานะ
+        redirect("edit-users.php?id=$users_id", "มีบางอย่างผิดพลาด");
+    }
 }
 // เมื่อกดปุ่ม "ลบผู้ใช้"
 else if (isset($_POST['delete_users_btn'])) {
@@ -474,20 +468,29 @@ else if (isset($_POST['update_order_btn'])) {
 else if (isset($_POST["accept_withdraw_btn"])) {
 
     $withdraw_id = mysqli_real_escape_string($connection, $_POST['id']);
-    
+
     // SQL query เพื่ออัพเดตค่า status เป็น 1 ในตาราง withdrawals
     $sql = "UPDATE withdrawals SET status = 1 WHERE id = $withdraw_id";
     $sql_run  = mysqli_query($connection, $sql);
 
-     // ตรวจสอบผลลัพธ์การ query เพื่อทำการแสดงข้อความหรือเปลี่ยนเส้นทางหน้า
-     if ($sql_run) {
-        // ใช้ echo เพื่อแสดงผลสถานะลบเป็น HTTP Response Code 200
-        echo 200;
+    // ตรวจสอบผลลัพธ์การ query เพื่อทำการแสดงข้อความหรือเปลี่ยนเส้นทางหน้า
+    if ($sql_run) {
+        // เพิ่มการบันทึก Logs ในตาราง withdraw_logs
+        $user_id = $_SESSION['auth_user']['id']; // แทนที่ด้วยรหัสผู้ใช้งานจริง// เปลี่ยน $_SESSION['user_id'] เป็นตัวแปรที่เก็บ ID ของผู้ใช้งาน
+        $event = "ได้ทำการยืนยันการถอนเงิน"; // เปลี่ยนตามเหตุการณ์ที่ต้องการบันทึก
+        $timestamp = date("Y-m-d H:i:s"); // รับเวลาปัจจุบัน
+
+        $log_sql = "INSERT INTO withdraw_logs (user_id, wd_id, event, created_at) VALUES ('$user_id', '$withdraw_id', '$event', '$timestamp')";
+        $log_sql_run = mysqli_query($connection, $log_sql);
+
+        if ($log_sql_run) {
+            echo 200; // ใช้ echo เพื่อแสดงผลสถานะลบเป็น HTTP Response Code 200
+        } else {
+            echo 500; // ใช้ echo เพื่อแสดงผลสถานะผิดพลาดเป็น HTTP Response Code 500
+        }
     } else {
-        // ใช้ echo เพื่อแสดงผลสถานะผิดพลาดเป็น HTTP Response Code 500
         echo 500;
     }
-
 }
 
 // ถ้าไม่เข้าเงื่อนไขใดเลย ให้เปลี่ยนเส้นทางไปยังหน้า ../index.php
