@@ -559,7 +559,10 @@ function getTotalPriceWithdraw1_seller($sellerId) {
     $rowTotalWithdrawals = $resultTotalWithdrawals->fetch_assoc();
     $totalWithdrawals = $rowTotalWithdrawals['totalWithdrawals'];
 
-    $availableWithdrawal = $totalIncome - $totalWithdrawals;
+    // หัก 6% จากยอดรายได้ที่ผู้ขายสามารถถอนได้
+    $withdrawalPercentage = 0.06; // 6% เป็นเปอร์เซนต์
+    $deductedAmount = $totalIncome * $withdrawalPercentage;
+    $availableWithdrawal = $totalIncome - $deductedAmount - $totalWithdrawals;
 
     return max($availableWithdrawal, 0); // ไม่สามารถถอนเงินเกินยอดรายได้ที่ผู้ขายขายสินค้าได้
 }

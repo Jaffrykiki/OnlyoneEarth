@@ -121,7 +121,7 @@ $totalwithdraw = getTotalPriceWithdraw1_seller($sellerId);
 
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">อดออม
+                    <p class="mb-0"><span class="text-warning text-sm font-weight-bolder">หมายเหตุ:จะมีการหักเปอร์เป็นจำนวนเงิน 6 % จากยอดขาย
                         </span></p>
                 </div>
             </div>
