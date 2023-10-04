@@ -42,38 +42,38 @@ if (isset($_GET['product'])) {
         <div class="bg-light py-4">
             <div class="container product_data mt-3">
                 <div class="row">
-
                     <div class="col-md-4">
-                        <style>
-                            .product-image {
-                                width: 100%;
-                                height: auto;
-                            }
-                        </style>
                         <!-- แสดงรูปภาพสินค้า -->
-                        <div class="shadow">
-                            <!-- เริ่มลูป while เพื่อเก็บรายการรูปภาพทั้งหมดในอาร์เรย์ -->
-                            <?php
-                            $image_filenames = array();
-                            while ($image_row = mysqli_fetch_assoc($image_result)) {
-                                $image_filenames[] = $image_row['image_filename'];
-                            }
-                            ?>
-                            <!-- แสดงรูปภาพแรก -->
-                            <div class="product-image-container">
-                                <img src="uploads/<?= $image_filenames[0]; ?>" alt="Product Image" class="product-image" id="productImage" onclick="openLightbox('uploads/<?= $image_filenames[0]; ?>')">
-                            </div>
+                        <!-- เริ่มลูป while เพื่อเก็บรายการรูปภาพทั้งหมดในอาร์เรย์ -->
+                        <?php
+                        $image_filenames = array();
+                        while ($image_row = mysqli_fetch_assoc($image_result)) {
+                            $image_filenames[] = $image_row['image_filename'];
+                        }
+                        ?>
+                        <!-- แสดงรูปภาพแรก -->
+                        <div class="product-image-container">
+                            <img src="uploads/<?= $image_filenames[0]; ?>" alt="Product Image" class="product-image" id="productImage" onclick="openLightbox('uploads/<?= $image_filenames[0]; ?>', 0)">
+                        </div>
+                        <div class="image-container">
+                            <!-- แสดงรูปภาพอื่นๆ -->
+                            <?php for ($i = 1; $i < count($image_filenames); $i++) { ?>
+                                <div class="product-image-container">
+                                    <img src="uploads/<?= $image_filenames[$i]; ?>" alt="Product Image" class="product-image" id="productImage" onclick="openLightbox('uploads/<?= $image_filenames[$i]; ?>', <?= $i; ?>)">
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
+
                     <!-- HTML สำหรับปุ่มปิดใน Lightbox Image -->
                     <div id="lightbox" class="lightbox">
                         <span class="close-button" onclick="closeLightbox()">&times;</span>
                         <img src="" id="lightbox-image" class="lightbox-content">
                         <button id="prev-button" onclick="prevImage()">
-                        <i class="fa fa-arrow-left" aria-hidden="true" style="font-size: 40px;"></i>
+                            <i class="fa fa-arrow-left" aria-hidden="true" style="font-size: 40px;"></i>
                         </button>
                         <button id="next-button" onclick="nextImage()">
-                        <i class="fa fa-arrow-right" aria-hidden="true" style="font-size: 40px;"></i>
+                            <i class="fa fa-arrow-right" aria-hidden="true" style="font-size: 40px;"></i>
                         </button>
                     </div>
                     <div class="col-md-8">
@@ -138,7 +138,7 @@ if (isset($_GET['product'])) {
                 </div>
             </div>
         </div>
-        
+
         <!-- สิ้นสุดส่วนแสดงข้อมูลสินค้าบนหน้าเว็บ -->
 <?php
     } else {
@@ -157,9 +157,15 @@ include('includes/footer.php'); ?>
     var lightbox = document.getElementById("lightbox");
     var lightboxImage = document.getElementById("lightbox-image");
 
-    function openLightbox(imageSrc) {
+    // เพิ่มตัวแปรสำหรับการเก็บรหัสรูปภาพที่ถูกคลิก
+    var currentImageIndex = 0;
+
+    function openLightbox(imageSrc, imageIndex) {
         lightboxImage.src = imageSrc;
         lightbox.style.display = "block";
+
+        // อัปเดตตัวแปร currentImageIndex เมื่อรูปถูกคลิก
+        currentImageIndex = imageIndex;
     }
 
     function closeLightbox() {
@@ -173,22 +179,23 @@ include('includes/footer.php'); ?>
     var currentIndex = 0;
     var lightboxImage = document.getElementById("lightbox-image");
 
+    // แก้ไขฟังก์ชัน prevImage() และ nextImage() เพื่อใช้ currentImageIndex
     function prevImage() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        showImage(currentIndex);
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        showImage(currentImageIndex);
     }
 
     function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        showImage(currentIndex);
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        showImage(currentImageIndex);
     }
 
     function showImage(index) {
         lightboxImage.src = images[index];
     }
 
-    // เรียกใช้ฟังก์ชันแสดงรูปภาพแรก
-    showImage(currentIndex);
+    // // เรียกใช้ฟังก์ชันแสดงรูปภาพแรก
+    // showImage(currentIndex);
 
     // ฟังก์ชันตรวจสอบการกดปุ่ม ESC
     document.addEventListener("keydown", function(event) {
@@ -208,5 +215,4 @@ include('includes/footer.php'); ?>
             }
         });
     }
-
 </script>

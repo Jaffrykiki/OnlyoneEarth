@@ -102,6 +102,15 @@ a{
     transform: translateY(-50%);
 }
 
+.product-image-container {
+    margin-right: 15px; /* ระยะห่างระหว่างรูปภาพ */
+}
+
+.image-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px; /* แก้ไขค่านี้เพื่อปรับระยะห่างข้างบนตามที่คุณต้องการ */
+}
 
 
 

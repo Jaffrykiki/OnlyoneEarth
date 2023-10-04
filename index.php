@@ -3,41 +3,40 @@
 include('funtion/userfunction.php');
 
 include('includes/header.php');
-include('includes/navbar.php'); 
+include('includes/navbar.php');
 include('includes/slider.php');
 include('connection/dbcon.php');
 
 // โค้ด query จำนวนรายการสินค้าทั้งหมด
-$query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
-	$row = mysqli_fetch_row($query);
+$query = mysqli_query($connection, "SELECT COUNT(id) FROM `products`");
+$row = mysqli_fetch_row($query);
 
-	$rows = $row[0];
+$rows = $row[0];
 
-	$page_rows = 8;  // จำนวนข้อมูลที่ต้องการแสดงใน 1 หน้า
+$page_rows = 8;  // จำนวนข้อมูลที่ต้องการแสดงใน 1 หน้า
 
-	$last = ceil($rows/$page_rows);
+$last = ceil($rows / $page_rows);
 
-	if($last < 1){
-		$last = 1;
-	}
+if ($last < 1) {
+    $last = 1;
+}
 
-	$pagenum = 1;
+$pagenum = 1;
 
-	if(isset($_GET['pn'])){
-		$pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
-	}
+if (isset($_GET['pn'])) {
+    $pagenum = preg_replace('#[^0-9]#', '', $_GET['pn']);
+}
 
-	if ($pagenum < 1) {
-		$pagenum = 1;
-	}
-	else if ($pagenum > $last) {
-		$pagenum = $last;
-	}
+if ($pagenum < 1) {
+    $pagenum = 1;
+} else if ($pagenum > $last) {
+    $pagenum = $last;
+}
 
-    $limit = 'LIMIT ' . ($pagenum - 1) * $page_rows . ',' . $page_rows;
+$limit = 'LIMIT ' . ($pagenum - 1) * $page_rows . ',' . $page_rows;
 
-    // โค้ด query รายการสินค้าที่แบ่งหน้า
-    $query = "
+// โค้ด query รายการสินค้าที่แบ่งหน้า
+$query = "
         SELECT p.id, p.category_id, p.users_id, p.name, p.detail, p.price,p.num, p.trending, p.created_at, pi.image_filename
         FROM products p
         LEFT JOIN (
@@ -47,41 +46,41 @@ $query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
         ) pi ON p.id = pi.product_id
         $limit
     ";
-    
-    $nquery = mysqli_query($connection, $query);
 
-	$paginationCtrls = '';
+$nquery = mysqli_query($connection, $query);
 
-    
-    // โค้ดสร้างลิงก์เปลี่ยนหน้า
-	if($last != 1){
+$paginationCtrls = '';
 
-	if ($pagenum > 1) {
-    $previous = $pagenum - 1;
-		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previous.'#og" class="btn btn-info">Previous</a> &nbsp; &nbsp; ';
 
-		for($i = $pagenum-4; $i < $pagenum; $i++){
-			if($i > 0){
-		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
-        // $paginationCtrls .= '<a href="#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
-			}
-	}
+// โค้ดสร้างลิงก์เปลี่ยนหน้า
+if ($last != 1) {
+
+    if ($pagenum > 1) {
+        $previous = $pagenum - 1;
+        $paginationCtrls .= '<a href="' . $_SERVER['PHP_SELF'] . '?pn=' . $previous . '#og" class="btn btn-info">Previous</a> &nbsp; &nbsp; ';
+
+        for ($i = $pagenum - 4; $i < $pagenum; $i++) {
+            if ($i > 0) {
+                $paginationCtrls .= '<a href="' . $_SERVER['PHP_SELF'] . '?pn=' . $i . '#og" class="btn btn-primary">' . $i . '</a> &nbsp; ';
+                // $paginationCtrls .= '<a href="#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
+            }
+        }
+    }
+
+    $paginationCtrls .= '' . $pagenum . ' &nbsp; ';
+
+    for ($i = $pagenum + 1; $i <= $last; $i++) {
+        $paginationCtrls .= '<a href="' . $_SERVER['PHP_SELF'] . '?pn=' . $i . '#og" class="btn btn-primary">' . $i . '</a> &nbsp; ';
+        if ($i >= $pagenum + 4) {
+            break;
+        }
+    }
+
+    if ($pagenum != $last) {
+        $next = $pagenum + 1;
+        $paginationCtrls .= ' &nbsp; &nbsp; <a href="' . $_SERVER['PHP_SELF'] . '?pn=' . $next . '#og" class="btn btn-info">Next</a> ';
+    }
 }
-
-	$paginationCtrls .= ''.$pagenum.' &nbsp; ';
-
-	for($i = $pagenum+1; $i <= $last; $i++){
-		$paginationCtrls .= '<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'#og" class="btn btn-primary">'.$i.'</a> &nbsp; ';
-		if($i >= $pagenum+4){
-			break;
-		}
-	}
-
-if ($pagenum != $last) {
-$next = $pagenum + 1;
-$paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'#og" class="btn btn-info">Next</a> ';
-}
-	}
 ?>
 <!-- เริ่มต้นส่วนของการแสดงสินค้าที่กำลังมาแรง -->
 <div class="py-5">
@@ -92,7 +91,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                 <div class="underline mb-2"></div>
                 <div class="owl-carousel">
                     <?php
-                      // ดึงข้อมูลสินค้าที่กำลังมาแรงและแสดงผล
+                    // ดึงข้อมูลสินค้าที่กำลังมาแรงและแสดงผล
                     $trendingProducts = getAllTrending();
                     if (mysqli_num_rows($trendingProducts) > 0) {
                         foreach ($trendingProducts as $item) {
@@ -120,12 +119,12 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
 </div>
 
 <!-- ส่วนของการแสดงสินค้าทั่วไป -->
-<div  id="og" class="py-5">
+<div id="og" class="py-5">
     <div class="container">
         <div class="row">
             <!-- ตั้งค่าการจัดตำแหน่งและจัดกลุ่มแสดงผล -->
             <div class="d-flex justify-content-between align-items-center"> <!-- ใช้ flexbox เพื่อจัดตำแหน่งทางซ้ายและขวา -->
-                <h1  class="m-0">สินค้าทั่วไป</h1> <!-- ใช้ margin 0 เพื่อลบระยะห่างด้านบนและล่างของหัวเรื่อง -->
+                <h1 class="m-0">สินค้าทั่วไป</h1> <!-- ใช้ margin 0 เพื่อลบระยะห่างด้านบนและล่างของหัวเรื่อง -->
                 <!-- ฟอร์มค้นหาสินค้า -->
                 <form class="d-flex m-0" role="search" style="max-width: 300px;">
                     <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
@@ -133,10 +132,10 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                 </form>
             </div>
             <!-- แสดงรายการสินค้าทั่วไป -->
-            <div  class="row row-cols-1 row-cols-md-4 ">
+            <div class="row row-cols-1 row-cols-md-4 ">
                 <?php
                 // ดึงข้อมูลสินค้าทั้งหมด
-                $Products = getAllProducts(); 
+                $Products = getAllProducts();
                 if (mysqli_num_rows($Products) > 0)
                     foreach ($Products as $item)
                 ?>
@@ -175,9 +174,11 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                             <div class="item">
                                 <a href="product-view.php?product=<?= $item['name']; ?>">
                                     <div class="card shadow" style="margin-bottom: 20px;">
-                                        <img src="uploads/<?= $item['image_filename']; ?>" width="300" height="300" alt="Product image" class="w-100">
-                                        <div class="card-body">
-                                            <h5 class="card-title"><?= $item['name']; ?></h5>
+                                        <div class="card-body" >
+                                            <div class="shadow" style="margin-bottom: 20px;">
+                                                <img src="uploads/<?= $item['image_filename']; ?>" width="300" height="300" alt="Product image" class="w-100">
+                                                <h5 class="card-title"><?= $item['name']; ?></h5>
+                                            </div>
                                         </div>
                                     </div>
                             </div>
@@ -189,17 +190,17 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                 echo "ยังไม่มีสินค้า";
             }
                 ?>
-                <br>    
+                <br>
             </div>
             <!-- แสดงปุ่มเปลี่ยนหน้า -->
-            <div id="about-me" id="pagination_controls"><?php echo $paginationCtrls; ?></div>		
+            <div id="about-me" id="pagination_controls"><?php echo $paginationCtrls; ?></div>
         </div>
     </div>
 </div>
 
 <!-- ส่วนของเกี่ยวกับฉัน -->
-<div  class="py-5 bg-f2f2f2">
-    <div  class="container">
+<div class="py-5 bg-f2f2f2">
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h4>เกี่ยวกับฉัน</h4>
@@ -248,17 +249,14 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
 
 
     document.addEventListener("DOMContentLoaded", function() {
-    var titleElements = document.querySelectorAll(".card-title");
-    var maxTitleLength = 27; // จำนวนสูงสุดของตัวอักษรที่คุณต้องการแสดง
+        var titleElements = document.querySelectorAll(".card-title");
+        var maxTitleLength = 27; // จำนวนสูงสุดของตัวอักษรที่คุณต้องการแสดง
 
-    titleElements.forEach(function(titleElement) {
-        var titleText = titleElement.innerText;
-        if (titleText.length > maxTitleLength) {
-            titleElement.innerText = titleText.slice(0, maxTitleLength) + "...";
-        }
+        titleElements.forEach(function(titleElement) {
+            var titleText = titleElement.innerText;
+            if (titleText.length > maxTitleLength) {
+                titleElement.innerText = titleText.slice(0, maxTitleLength) + "...";
+            }
+        });
     });
-});
-
 </script>
-
-
