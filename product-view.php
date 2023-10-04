@@ -61,11 +61,21 @@ if (isset($_GET['product'])) {
                             ?>
                             <!-- แสดงรูปภาพแรก -->
                             <div class="product-image-container">
-                                <img src="uploads/<?= $image_filenames[0]; ?>" alt="Product Image" class="product-image" id="productImage">
+                                <img src="uploads/<?= $image_filenames[0]; ?>" alt="Product Image" class="product-image" id="productImage" onclick="openLightbox('uploads/<?= $image_filenames[0]; ?>')">
                             </div>
                         </div>
                     </div>
-
+                    <!-- HTML สำหรับปุ่มปิดใน Lightbox Image -->
+                    <div id="lightbox" class="lightbox">
+                        <span class="close-button" onclick="closeLightbox()">&times;</span>
+                        <img src="" id="lightbox-image" class="lightbox-content">
+                        <button id="prev-button" onclick="prevImage()">
+                        <i class="fa fa-arrow-left" aria-hidden="true" style="font-size: 40px;"></i>
+                        </button>
+                        <button id="next-button" onclick="nextImage()">
+                        <i class="fa fa-arrow-right" aria-hidden="true" style="font-size: 40px;"></i>
+                        </button>
+                    </div>
                     <div class="col-md-8">
                         <h4 class="fw-bold"><?= $product['name']; ?>
                             <!-- แสดงข้อความ 'กำลังมาแรง' ถ้าสินค้ามีค่า trending เป็นจริง -->
@@ -94,17 +104,17 @@ if (isset($_GET['product'])) {
                                 <h5>รหัสผู้ขาย:<span class="text-success fw-bold"><?= $product['users_id']; ?></span> </h5>
                             </div>
                         </div>
-                        
+
 
                         <!-- ปุ่มเพิ่ม/ลดจำนวนสินค้าในตะกร้า -->
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="input-group mb-3" style="width:140px">
-                                <span class="input-group-text">จำนวนสินค้า</span>
+                                    <span class="input-group-text">จำนวนสินค้า</span>
                                     <button class="input-group-text decrement-btn" style="margin-top: 10px;">-</button>
                                     <input type="text" class="form-control text-center input-qty bg-white" style="margin-top: 10px;" value="1" disabled>
                                     <button class="input-group-text increment-btn" style="margin-top: 10px;">+</button>
-                                    <span class="input-group-text" style="margin-top: 10px;">มีสินค้าทั้งหมด <?= $product['num']; ?> ชิ้น</span>
+                                    <span style="margin-top: 10px;">มีสินค้าทั้งหมด <?= $product['num']; ?> ชิ้น</span>
                                 </div>
                             </div>
                         </div>
@@ -123,16 +133,12 @@ if (isset($_GET['product'])) {
                                 }
                                 ?>
                             </div>
-                            <div class="col-md-6">
-                                <!-- ปุ่มเพิ่มสินค้าในสิ่งที่อยากได้ -->
-                                <!-- <button class="btn btn-warning px-4"><i class="fa fa-heart me-2"></i> เพิ่มลงในสิ่งที่อยากได้ของคุณ</button> -->
-                                <!-- <button id="testButton">Click Me</button> -->
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        
         <!-- สิ้นสุดส่วนแสดงข้อมูลสินค้าบนหน้าเว็บ -->
 <?php
     } else {
@@ -147,32 +153,60 @@ include('includes/footer.php'); ?>
 
 
 <script>
+    // JavaScript สำหรับเปิดและปิด Lightbox Image
+    var lightbox = document.getElementById("lightbox");
+    var lightboxImage = document.getElementById("lightbox-image");
+
+    function openLightbox(imageSrc) {
+        lightboxImage.src = imageSrc;
+        lightbox.style.display = "block";
+    }
+
+    function closeLightbox() {
+        lightbox.style.display = "none";
+    }
+
     var images = [
-        <?php foreach ($image_filenames as $filename) { ?> "<?= $filename; ?>",
+        <?php foreach ($image_filenames as $filename) { ?> "uploads/<?= $filename; ?>",
         <?php } ?>
     ];
     var currentIndex = 0;
-    var imageElement = document.getElementById("productImage");
-    var isHovered = false;
+    var lightboxImage = document.getElementById("lightbox-image");
 
-    function changeImage() {
-        if (!isHovered) {
-            currentIndex = (currentIndex + 1) % images.length;
-            imageElement.src = "uploads/" + images[currentIndex];
-        }
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
     }
 
-    var intervalId = setInterval(changeImage, 3000);
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+    }
 
-    imageElement.addEventListener("mouseover", function() {
-        clearInterval(intervalId);
-        isHovered = true;
-        imageElement.style.transform = "scale(1.2)"; // ซูมรูปเมื่อ hover
+    function showImage(index) {
+        lightboxImage.src = images[index];
+    }
+
+    // เรียกใช้ฟังก์ชันแสดงรูปภาพแรก
+    showImage(currentIndex);
+
+    // ฟังก์ชันตรวจสอบการกดปุ่ม ESC
+    document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") {
+            closeLightbox(); // เรียกฟังก์ชันปิด Lightbox เมื่อกดปุ่ม ESC
+        }
     });
 
-    imageElement.addEventListener("mouseout", function() {
-        intervalId = setInterval(changeImage, 3000);
-        isHovered = false;
-        imageElement.style.transform = "scale(1.0)"; // ยกเลิกการซูมเมื่อ unhover
-    });
+    function closeLightbox() {
+        var lightbox = document.getElementById("lightbox");
+        lightbox.style.display = "none";
+
+        // เพิ่มเช็คว่า lightbox ถูกปิดด้วยการกดปุ่ม ESC
+        document.removeEventListener("keydown", function(event) {
+            if (event.key === "Escape") {
+                closeLightbox(); // เรียกฟังก์ชันปิด Lightbox เมื่อกดปุ่ม ESC
+            }
+        });
+    }
+
 </script>
