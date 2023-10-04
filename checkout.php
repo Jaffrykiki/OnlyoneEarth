@@ -91,10 +91,10 @@ fclose($file);
                                     <textarea name="address" id="address" required placeholder="ป้อนที่อยู่ของของคุณ" class="form-control" rows="6" minlength="20"></textarea>
                                     <smail class="text-danger address"></smail>
                                 </div>
-                                <!-- <div class="col-md-12 mb-">
-                                    <label class="mb-0">อัปโหลดหลักฐานการชำระเงิน</label>
-                                    <input type="file" required name="image" class="form-control mb-2">
-                                </div> -->
+                                <div class="col-md-12 mb-3">
+                                    <label class="fw-bold">หมายเหตุ</label>
+                                    <textarea name="comment" id="comment" placeholder="(ไม่บังคับ)ฝากข้อความถึงผู้ขายหรือบริษัทขนส่ง Somtuy Express" class="form-control" rows="1"></textarea>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-5">

@@ -81,6 +81,12 @@ $data = mysqli_fetch_array($orderData);
                                         <?= $data['pincode'] ?>
                                     </div>
                                 </div>
+                                <div class="col-md-12 mb-2">
+                                    <label class="fw-bold" style="color: red;">หมายเหตุจากลูกค้า</label>
+                                    <div class="border p-1">
+                                        <?= $data['comment'] ?>
+                                    </div>
+                                </div>
 
                             </div>
                         </div>

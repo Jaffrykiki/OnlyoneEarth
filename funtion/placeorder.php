@@ -28,6 +28,7 @@ if (isset($_POST['cancel_order']) && isset($_POST['tracking_no']) && isset($_POS
         $pincode = mysqli_real_escape_string($connection, $_POST['pincode']);
         $address = mysqli_real_escape_string($connection, $_POST['address']);
         $payment_mode = mysqli_real_escape_string($connection, $_POST['payment_mode']);
+        $comment = mysqli_real_escape_string($connection, $_POST['comment']);
         $payment_id = "";
 
         if ($payment_mode !== "COD") {
@@ -105,7 +106,7 @@ if (isset($_POST['cancel_order']) && isset($_POST['tracking_no']) && isset($_POS
 
             //เพิ่มข้อมูลเข้าไปในตาราง orders
             $tracking_no = "Somtuy" . rand(1111, 9999) . substr($phone, 2);
-            $insert_query = "INSERT INTO orders (user_id,sellerId,tracking_no, name, email, phone, address, pincode, total_price, payment_mode, payment_id) VALUES ('$userId','$sellerId','$tracking_no', '$name', '$email', '$phone', '$address', '$pincode', '$totalPrice', '$payment_mode', '$payment_id') ";
+            $insert_query = "INSERT INTO orders (user_id,sellerId,tracking_no, name, email, phone, address, pincode, total_price, payment_mode, payment_id,comment) VALUES ('$userId','$sellerId','$tracking_no', '$name', '$email', '$phone', '$address', '$pincode', '$totalPrice', '$payment_mode', '$payment_id','$comment') ";
             $insert_query_run = mysqli_query($connection, $insert_query);
 
             if ($insert_query_run) {
