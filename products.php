@@ -59,7 +59,7 @@ if (isset($_GET['category']))
                                             <div class="card shadow">
                                                 <div class="card-body">
                                                     <div class="shadow">
-                                                        <img src="uploads/<?= $item['image_filename']; ?>" width="300px" height="180px" alt="Product image" class="w-100">
+                                                        <img src="uploads/<?= $item['image_filename']; ?>" width="300px" height="300px" alt="Product image" class="w-100">
                                                         <h4 class="text-center"><?= $item['name']; ?></h4>
                                                     </div>
                                                 </div>
@@ -92,3 +92,19 @@ else
     echo "มีบางอย่างผิดพลาด ติดต่อแอดมินสมถุย";
 }
 include('includes/footer.php'); ?>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var titleElements = document.querySelectorAll(".text-center");
+        var maxTitleLength = 27; // จำนวนสูงสุดของตัวอักษรที่คุณต้องการแสดง
+
+        titleElements.forEach(function(titleElement) {
+            var titleText = titleElement.innerText;
+            if (titleText.length > maxTitleLength) {
+                titleElement.innerText = titleText.slice(0, maxTitleLength) + "...";
+            }
+        });
+    });
+</script>

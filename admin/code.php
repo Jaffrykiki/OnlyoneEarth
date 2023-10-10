@@ -101,71 +101,82 @@ else if (isset($_POST['delete_category_btn'])) {
 }
 // เมื่อกดปุ่ม "เพิ่มสินค้า"
 else if (isset($_POST['add_product_btn'])) {
-    // รับค่าต่าง ๆ จากฟอร์ม
-    $category_id = $_POST['category_id'];
-    $name = $_POST['name'];
-    $detail = $_POST['detail'];
-    $price = $_POST['price'];
-    $num = $_POST['num'];
-    $trending = isset($_POST['trending']) ? '1' : '0';
 
-    // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
-    $path = "../uploads";
+        // รับค่าต่าง ๆ จากฟอร์ม
+        $category_id = $_POST['category_id'];
+        // ตรวจสอบค่า category_id ว่าถูกต้องหรือไม่ (ต้องตรงกับค่าในฐานข้อมูล)
+        $category_check_query = "SELECT id FROM category WHERE id = '$category_id'";
+        $category_check_result = mysqli_query($connection, $category_check_query);
 
-    // ตรวจสอบว่ามีชื่อและรายละเอียดต้องไม่ว่าง
-    if ($name != "" && $detail != "") {
-        // ดึงค่า id ของผู้ใช้จาก session
-        $users_id = $_SESSION['auth_user']['id'];
+        if (mysqli_num_rows($category_check_result) > 0) {
+            // รับค่าอื่น ๆ และดำเนินการตามปกติ
+            $name = $_POST['name'];
+            $detail = $_POST['detail'];
+            $price = $_POST['price'];
+            $num = $_POST['num'];
+            $trending = isset($_POST['trending']) ? '1' : '0';
 
-        // สร้างคำสั่ง SQL เพื่อเพิ่มข้อมูลสินค้าในฐานข้อมูล
-        $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,trending) VALUES 
+            // กำหนดโฟลเดอร์ที่เก็บรูปภาพ
+            $path = "../uploads";
+
+            // ตรวจสอบว่ามีชื่อและรายละเอียดต้องไม่ว่าง
+            if ($name != "" && $detail != "") {
+                // ดึงค่า id ของผู้ใช้จาก session
+                $users_id = $_SESSION['auth_user']['id'];
+
+                // สร้างคำสั่ง SQL เพื่อเพิ่มข้อมูลสินค้าในฐานข้อมูล
+                $product_query = "INSERT INTO products (category_id,users_id,name,detail,price,num,trending) VALUES 
         ('$category_id', $users_id ,'$name','$detail','$price','$num','$trending') ";
 
-        // ทำการ query คำสั่ง SQL และเก็บผลลัพธ์ในตัวแปร $product_query_run
-        $product_query_run = mysqli_query($connection, $product_query);
+                // ทำการ query คำสั่ง SQL และเก็บผลลัพธ์ในตัวแปร $product_query_run
+                $product_query_run = mysqli_query($connection, $product_query);
 
-        // ตรวจสอบผลลัพธ์การ query เพื่อทำการเปลี่ยนเส้นทางหน้าเว็บ
-        if ($product_query_run) {
+                // ตรวจสอบผลลัพธ์การ query เพื่อทำการเปลี่ยนเส้นทางหน้าเว็บ
+                if ($product_query_run) {
 
-            $product_id = mysqli_insert_id($connection); // ได้ ID ของสินค้าที่เพิ่มล่าสุด
+                    $product_id = mysqli_insert_id($connection); // ได้ ID ของสินค้าที่เพิ่มล่าสุด
 
-            $allowed_extensions = array('png', 'jpg', 'jpeg', 'gif');
+                    $allowed_extensions = array('png', 'jpg', 'jpeg', 'gif');
 
-            foreach ($_FILES['images']['tmp_name'] as $index => $tmp_name) {
-                $image = $_FILES['images']['name'][$index];
-                $image_ext = pathinfo($image, PATHINFO_EXTENSION);
+                    foreach ($_FILES['images']['tmp_name'] as $index => $tmp_name) {
+                        $image = $_FILES['images']['name'][$index];
+                        $image_ext = pathinfo($image, PATHINFO_EXTENSION);
 
-                if (in_array(strtolower($image_ext), $allowed_extensions)) {
-                    $filename = time() . '_' . $index . '.' . $image_ext;
+                        if (in_array(strtolower($image_ext), $allowed_extensions)) {
+                            $filename = time() . '_' . $index . '.' . $image_ext;
 
-                    $product_image_query = "INSERT INTO product_images (product_id, image_filename) VALUES ('$product_id', '$filename')";
-                    $product_image_query_run = mysqli_query($connection, $product_image_query);
+                            $product_image_query = "INSERT INTO product_images (product_id, image_filename) VALUES ('$product_id', '$filename')";
+                            $product_image_query_run = mysqli_query($connection, $product_image_query);
 
-                    if ($product_image_query_run) {
+                            if ($product_image_query_run) {
 
-                        move_uploaded_file($tmp_name, $path . '/' . $filename);
-                    } else {
-                        // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
-                        redirect("add-product.php", "มีบางอย่างผิดพลาด");
+                                move_uploaded_file($tmp_name, $path . '/' . $filename);
+                            } else {
+                                // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
+                                redirect("add-product.php", "มีบางอย่างผิดพลาด");
+                            }
+                        } else {
+                            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
+                            redirect("add-product.php", "ประเภทไฟล์ไม่ถูกต้อง");
+                        }
                     }
+
+                    // เพิ่มข้อมูล logs ในตาราง products_logs
+                    $event = "เพิ่มสินค้าใหม่: $name";
+                    $logs_query = "INSERT INTO products_logs (u_id, p_id, event) VALUES ('$users_id','$product_id', '$event')";
+                    $logs_query_run = mysqli_query($connection, $logs_query);
+
+                    // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
+                    redirect("add-product.php", "เพิ่มสินค้าสำเร็จแล้ว");
                 } else {
                     // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
-                    redirect("add-product.php", "ประเภทไฟล์ไม่ถูกต้อง");
+                    redirect("add-product.php", "มีบางอย่างผิดพลาด");
                 }
             }
-
-            // เพิ่มข้อมูล logs ในตาราง products_logs
-            $event = "เพิ่มสินค้าใหม่: $name";
-            $logs_query = "INSERT INTO products_logs (u_id, p_id, event) VALUES ('$users_id','$product_id', '$event')";
-            $logs_query_run = mysqli_query($connection, $logs_query);
-
-            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
-            redirect("add-product.php", "เพิ่มสินค้าสำเร็จแล้ว");
         } else {
-            // ใช้ฟังก์ชัน redirect เพื่อเปลี่ยนเส้นทางหน้าไปยังหน้า "add-product.php" พร้อมกับข้อความแจ้งเตือน
-            redirect("add-product.php", "มีบางอย่างผิดพลาด");
+            // แสดงข้อความแจ้งเตือนหาก category_id ไม่ถูกต้อง
+            redirect("add-product.php", "กรุณาเลือกหมวดหมู่สินค้าก่อนทำรายการ");
         }
-    }
 }
 // เมื่อกดปุ่ม "อัปเดตสินค้า"
 else if (isset($_POST['update_product_btn'])) {

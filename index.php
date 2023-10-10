@@ -250,7 +250,7 @@ if ($last != 1) {
 
     document.addEventListener("DOMContentLoaded", function() {
         var titleElements = document.querySelectorAll(".card-title");
-        var maxTitleLength = 27; // จำนวนสูงสุดของตัวอักษรที่คุณต้องการแสดง
+        var maxTitleLength = 15; // จำนวนสูงสุดของตัวอักษรที่คุณต้องการแสดง
 
         titleElements.forEach(function(titleElement) {
             var titleText = titleElement.innerText;
