@@ -26,17 +26,24 @@ a{
     transition: none !important;
 }
 
-.product-image-container {
-    overflow: hidden; /* ซ่อนส่วนที่เกินขอบของรูปภาพ */
-    position: relative; /* ตั้งค่าเป็น relative เพื่อให้ absolute positioning ทำงาน */
-}
 
 .product-image {
     width: 100%;
-    height: auto;
-    transition: transform 0.3s; /* เพิ่มการเปลี่ยนแปลงแบบเรียบ Smooth ใน 0.3 วินาที */
-    transform: scale(1.0); /* ขนาดเริ่มต้น 100% */
+    height: 100%;
+    object-fit: cover; /* ปรับขนาดรูปให้เต็มพื้นที่ของคอนเทนเนอร์ */
 }
+
+.product-image-container {
+    width: 100%; /* ขนาดเต็มของพื้นที่ col-md-4 */
+    max-width: 100%;
+    height: auto; /* รักษาสัดส่วนด้านกว้าง */
+}
+
+.smaller-image {
+    width: 130px; /* ขนาดที่คุณต้องการสำหรับรูปเล็กลง */
+    height: 130px; /* ขนาดที่คุณต้องการสำหรับรูปเล็กลง */
+}
+
 
 
 

@@ -51,19 +51,20 @@ if (isset($_GET['product'])) {
                             $image_filenames[] = $image_row['image_filename'];
                         }
                         ?>
-                        <!-- แสดงรูปภาพแรก -->
+                        <!-- แสดงรูปแรก -->
                         <div class="product-image-container">
                             <img src="uploads/<?= $image_filenames[0]; ?>" alt="Product Image" class="product-image" id="productImage" onclick="openLightbox('uploads/<?= $image_filenames[0]; ?>', 0)">
                         </div>
                         <div class="image-container">
                             <!-- แสดงรูปภาพอื่นๆ -->
                             <?php for ($i = 1; $i < count($image_filenames); $i++) { ?>
-                                <div class="product-image-container">
+                                <div class="product-image-container smaller-image">
                                     <img src="uploads/<?= $image_filenames[$i]; ?>" alt="Product Image" class="product-image" id="productImage" onclick="openLightbox('uploads/<?= $image_filenames[$i]; ?>', <?= $i; ?>)">
                                 </div>
                             <?php } ?>
                         </div>
                     </div>
+
 
                     <!-- HTML สำหรับปุ่มปิดใน Lightbox Image -->
                     <div id="lightbox" class="lightbox">
