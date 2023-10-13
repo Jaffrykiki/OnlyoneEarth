@@ -12,7 +12,7 @@ $percentageIncrease = getPercentageIncrease_seller($sellerId); //ฟังก์
 $totleOrderComplete = getOrdersComplete_seller($sellerId); //ฟังก์ชั่นเรียกดูออเดอร์ที่ดำเนินการแล้ว
 $totleOrdercan = getOrdersCan_seller($sellerId); //ฟังก์ชั่นเรียกดูออเดอร์ที่ยกเลิก
 $totalPriceWithStatus1 = getTotalPriceWithStatus1_seller($sellerId); // ฟังก์ชั่นเรียกดูยอดขายทั้งหมด ที่มีสถานะดดำเนินการแล้ว
-$totalwithdraw = getTotalPriceWithdraw1_seller($sellerId);
+$totalwithdraw = getTotalPriceWithdraw1_seller($sellerId); // ฟังก์ชั่นเรียกดูยอดเงินที่สามารถถอนได้
 
 
 

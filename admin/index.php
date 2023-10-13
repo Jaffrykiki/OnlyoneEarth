@@ -4,12 +4,10 @@ include('../middleware/adminMiddleware.php');
 include('includes/header.php');
 
 $totalOrdersCount = getOrdersCount(); //ฟังก์ชั่นเรียกดูออเดอร์ที่กำลังดำเนินการ
-$percentageIncrease = getPercentageIncrease(); //ฟังก์ชันสำหรับการดึงข้อมูลเปอร์เซ็นต์เพิ่มขึ้นจากฐานข้อมูล
 $totleOrderComplete = getOrdersComplete(); //ฟังก์ชั่นเรียกดูออเดอร์ที่ดำเนินการแล้ว
+$percentageIncrease = getPercentageIncrease(); //ฟังก์ชันสำหรับการดึงข้อมูลเปอร์เซ็นต์เพิ่มขึ้นจากฐานข้อมูล
 $totleOrdercan = getOrdersCan(); //ฟังก์ชั่นเรียกดูออเดอร์ที่ยกเลิก
-
 $totalPriceWithStatus1 = getTotalPriceWithStatus1(); // ฟังก์ชั่นเรียกดูยอดขายทั้งหมด  ORder_item
-
 $seller = getUsersWithCondition();  // ฟังก์ชั่นเรียกดูผู้ขาย ที่มีสถานะ verify = 1 และ role = 2
 $userCount = getUser(); // ฟังก์ชั่นเรียกดูผ้ซื้อ ที่มีสถานะ role_as = 0
 
