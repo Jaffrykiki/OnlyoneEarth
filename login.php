@@ -144,9 +144,6 @@ else :
                                     <p>เพิ่งเคยเข้ามาใน Only One Earth ใช่หรือไม่? </p>
                                     <a href="register.php" class="btn btn-secondary">สมัครใหม่</a>
                                     <p>หรือล็อกอินด้วย:</p>
-                                    <button type="button" class="btn btn-link btn-floating mx-1">
-                                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                                    </button>
                                     <a type="button" class="login-with-google-btn" href="<?php echo $client->createAuthUrl(); ?>">
                                         <i class="fa fa-google"></i>
                                     </a>
