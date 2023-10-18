@@ -161,6 +161,7 @@ fclose($file);
             var phone = $('#phone').val();
             var pincode = $('#pincode').val();
             var address = $('#address').val();
+            var comment = $('#comment').val();
 
             if (name.length == 0) {
                 $('.name').text("*กรุณากรอกชื่อให้ครบถ้วน");
@@ -214,6 +215,7 @@ fclose($file);
                 var phone = $('#phone').val();
                 var pincode = $('#pincode').val();
                 var address = $('#address').val();
+                var comment = $('#comment').val();
 
                 var data = {
                     'name': name,
@@ -223,6 +225,7 @@ fclose($file);
                     'address': address,
                     'payment_mode': "จ่ายโดย PayPal",
                     'payment_id': transaction.id,
+                    'comment': comment,
                     'placeOrderBtn': true
                 };
 
