@@ -39,7 +39,7 @@ include('includes/header.php');
                         <form action="funtion/authcode.php" method="POST">
                             <div class="mb-3">
                                 <label class="form-label">ชื่อ</label>
-                                <input type="text" required name="name" class="form-control" placeholder="ป้อนชื่อที่คุณต้องการสร้าง">
+                                <input type="text" required name="name" class="form-control" placeholder="ป้อนชื่อที่คุณต้องการสร้าง" pattern="[A-Za-z]+" title="โปรดลองใหม่อีกครั้ง">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">เบอร์โทรศัพท์</label>

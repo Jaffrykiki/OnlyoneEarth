@@ -37,7 +37,7 @@ $query=mysqli_query($connection, "SELECT * FROM orders WHERE sellerId = '$seller
 
 	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
 
-	$nquery=mysqli_query($connection,"SELECT * from  orders $limit");
+	$nquery=mysqli_query($connection,"SELECT * from  orders WHERE sellerId = '$sellerId' $limit");
 
 	$paginationCtrls = '';
 

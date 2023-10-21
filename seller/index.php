@@ -8,7 +8,6 @@ $sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตาม�
 
 
 $totalOrdersCount = getOrdersCount_seller($sellerId); //ฟังก์ชั่นเรียกดูออเดอร์ที่กำลังดำเนินการ
-$percentageIncrease = getPercentageIncrease_seller($sellerId); //ฟังก์ชันสำหรับการดึงข้อมูลเปอร์เซ็นต์เพิ่มขึ้นจากฐานข้อมูล
 $totleOrderComplete = getOrdersComplete_seller($sellerId); //ฟังก์ชั่นเรียกดูออเดอร์ที่ดำเนินการแล้ว
 $totleOrdercan = getOrdersCan_seller($sellerId); //ฟังก์ชั่นเรียกดูออเดอร์ที่ยกเลิก
 $totalPriceWithStatus1 = getTotalPriceWithStatus1_seller($sellerId); // ฟังก์ชั่นเรียกดูยอดขายทั้งหมด ที่มีสถานะดดำเนินการแล้ว
@@ -38,8 +37,7 @@ $totalwithdraw = getTotalPriceWithdraw1_seller($sellerId); // ฟังก์ช
 
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">อัตราการซื้อ
-                        </span><?php echo $percentageIncrease; ?>%</p>
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">คุณมีออเดอร์ที่กำลังรอจัดส่ง
                 </div>
             </div>
         </div>

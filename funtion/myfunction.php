@@ -400,27 +400,6 @@ function calculatePercentageIncrease($previousValue, $currentValue) {
 }
 
 
-//ฟังก์ชันสำหรับการดึงข้อมูลเปอร์เซ็นต์เพิ่มขึ้นจากฐานข้อมูล
-function getPercentageIncrease() {
-
-    global $connection; // เชื่อมต่อฐานข้อมูล
-    $currentDate = date('Y-m'); // วันที่ปัจจุบัน
-    $previousDate = date('Y-m', strtotime('-1 month')); // วันที่ก่อนหน้า
-
-    $sqlCurrent = "SELECT SUM(total_price) AS total_sales FROM orders WHERE DATE(created_at) = '$currentDate'";
-    $sqlPrevious = "SELECT SUM(total_price) AS total_sales FROM orders WHERE DATE(created_at) = '$previousDate'";
-
-    $resultCurrent = $connection->query($sqlCurrent);
-    $resultPrevious = $connection->query($sqlPrevious);
-
-    $currentSales = $resultCurrent->fetch_assoc()["total_sales"];
-    $previousSales = $resultPrevious->fetch_assoc()["total_sales"];
-
-    $percentageIncrease = calculatePercentageIncrease($previousSales, $currentSales);
-    return number_format($percentageIncrease, 2);
-}
-
-
 // ฟังก์ชั่นสำหรับดึงข้อมูลผู้ใช้ตามเงื่อนไข role_as = 2 และ verify_status = 1
 
 function getUsersWithCondition() {
@@ -473,26 +452,6 @@ function getOrdersCount_seller($sellerId) {
     } else {
         return 0;
     }
-}
-
-//ฟังก์ชันสำหรับการดึงข้อมูลเปอร์เซ็นต์เพิ่มขึ้นจากฐานข้อมูลที่มีผู้ขายเป็นผู้ขายสินค้า
-function getPercentageIncrease_seller($sellerId) {
-
-    global $connection; // เชื่อมต่อฐานข้อมูล
-    $currentDate = date('Y-m'); // วันที่ปัจจุบัน
-    $previousDate = date('Y-m', strtotime('-1 month')); // วันที่ก่อนหน้า
-
-    $sqlCurrent = "SELECT SUM(total_price) AS total_sales FROM orders WHERE sellerId = '$sellerId' AND DATE(created_at) = '$currentDate'";
-    $sqlPrevious = "SELECT SUM(total_price) AS total_sales FROM orders WHERE sellerId = '$sellerId' AND DATE(created_at) = '$previousDate'";
-
-    $resultCurrent = $connection->query($sqlCurrent);
-    $resultPrevious = $connection->query($sqlPrevious);
-
-    $currentSales = $resultCurrent->fetch_assoc()["total_sales"];
-    $previousSales = $resultPrevious->fetch_assoc()["total_sales"];
-
-    $percentageIncrease = calculatePercentageIncrease($previousSales, $currentSales);
-    return number_format($percentageIncrease, 2);
 }
 
 //ฟังก์ชั่นเรียกดูออเดอร์ที่ดำเนินการแล้วของผู้ขาย
