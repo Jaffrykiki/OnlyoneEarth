@@ -6,8 +6,6 @@ include('includes/header.php');
 
 ?>
 
-
-
 <!-- เริ่มต้นส่วนของเนื้อหา -->
 <div class="container">
     <div class="row">
@@ -15,10 +13,10 @@ include('includes/header.php');
             <div class="card">
                 <div class="card-header">
                     <h4>เพิ่มหมวดหมู่สินค้า
-                </h4>
+                    </h4>
                 </div>
                 <div class="card-body">
-                     <!-- แบบฟอร์มสำหรับเพิ่มหมวดหมู่ -->
+                    <!-- แบบฟอร์มสำหรับเพิ่มหมวดหมู่ -->
                     <form action="code.php" method="POST" enctype="multipart/form-data">
                         <div class="row mb-3">
                             <div class="col-md-5">

@@ -1,18 +1,14 @@
 <?php
-
 include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ middleware ที่ใช้ตรวจสอบสิทธิ์ของผู้ดูแลระบบ
-include('includes/header.php'); 
-
-
+include('includes/header.php');
 ?>
-
 
 <div class="container">
     <div class="row">
         <div class="col-md-12">
             <!-- เริ่มต้นของการแสดงรายการคำสั่งซื้อ -->
             <div class="card">
-            <div class="card-header d-flex align-items-center justify-content-between">
+                <div class="card-header d-flex align-items-center justify-content-between">
                     <h4 class="m-0">ตรวจสอบบันทึก</h4>
                     <a href="category.php" class="btn btn-primary float-end">กลับ</a>
                 </div>
@@ -28,13 +24,13 @@ include('includes/header.php');
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             <?php
                             // เรียกใช้ฟังก์ชัน getAll("category_logs") เพื่อดึงข้อมูลรายการสินค้าทั้งหมด
                             $Logs = getLogs_Cat();
 
                             // ตรวจสอบว่ามีรายการสินค้าหรือไม่
-                         if (mysqli_num_rows($Logs) > 0) {
+                            if (mysqli_num_rows($Logs) > 0) {
                                 // วนลูปเพื่อแสดงข้อมูลรายการคำสั่งซื้อทั้งหมด
                                 foreach ($Logs as $item) {
                             ?>
@@ -43,7 +39,7 @@ include('includes/header.php');
                                         <td> <?= $item['user_id']; ?></td>
                                         <td> <?= $item['cat_id']; ?></td>
                                         <td> <?= $item['event']; ?></td>
-                                        <td> <?= $item['created_at']; ?> </td>   
+                                        <td> <?= $item['created_at']; ?> </td>
                                     </tr>
                                 <?php
                                 }
@@ -60,12 +56,9 @@ include('includes/header.php');
                     </table>
                 </div>
             </div>
-            <!-- สิ้นสุดการแสดงรายการคำสั่งซื้อ --> 
+            <!-- สิ้นสุดการแสดงรายการคำสั่งซื้อ -->
         </div>
     </div>
 </div>
-
-
-
 
 <?php include('includes/footer.php'); ?>

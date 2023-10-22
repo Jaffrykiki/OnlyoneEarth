@@ -1,11 +1,8 @@
 <?php
-
 include('../middleware/adminMiddleware.php'); // นำเข้าไฟล์ middleware ที่ใช้ตรวจสอบสิทธิ์ของผู้ดูแลระบบ
 include('includes/header.php');
 
-
 ?>
-
 
 <div class="container">
     <div class="row">

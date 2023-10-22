@@ -174,7 +174,7 @@ if ($last != 1) {
                             <div class="item">
                                 <a href="product-view.php?product=<?= $item['name']; ?>">
                                     <div class="card shadow" style="margin-bottom: 20px;">
-                                        <div class="card-body" >
+                                        <div class="card-body">
                                             <div class="shadow" style="margin-bottom: 20px;">
                                                 <img src="uploads/<?= $item['image_filename']; ?>" width="300" height="300" alt="Product image" class="w-100">
                                                 <h5 class="card-title"><?= $item['name']; ?></h5>
@@ -206,7 +206,7 @@ if ($last != 1) {
                 <h4>เกี่ยวกับฉัน</h4>
                 <div class="underline mb-2"></div>
                 <p>
-                ยินดีต้อนรับสู่ OnlyOneEarth ชุมชนการซื้อขายสินค้าสิ่งแวดล้อมและสินค้ารักษโลกออนไลน์ที่คัดสรรมาอย่างดีที่สุดในประเทศไทย! เราเกิดขึ้นจากความห่วงใยต่อสิ่งแวดล้อมและความคุ้มครองของโลกของเรา คือพื้นที่ที่ผู้ที่มองหาสินค้าที่ดีต่อสิ่งแวดล้อมและชุมชนของคนรักษ์โลกสามารถมาร่วมกันซื้อขายและสนับสนุนกันได้.
+                    ยินดีต้อนรับสู่ OnlyOneEarth ชุมชนการซื้อขายสินค้าสิ่งแวดล้อมและสินค้ารักษโลกออนไลน์ที่คัดสรรมาอย่างดีที่สุดในประเทศไทย! เราเกิดขึ้นจากความห่วงใยต่อสิ่งแวดล้อมและความคุ้มครองของโลกของเรา คือพื้นที่ที่ผู้ที่มองหาสินค้าที่ดีต่อสิ่งแวดล้อมและชุมชนของคนรักษ์โลกสามารถมาร่วมกันซื้อขายและสนับสนุนกันได้.
                 </p>
             </div>
         </div>
@@ -244,7 +244,6 @@ if ($last != 1) {
             }
         })
     });
-
 
     document.addEventListener("DOMContentLoaded", function() {
         var titleElements = document.querySelectorAll(".card-title");

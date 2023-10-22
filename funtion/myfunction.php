@@ -255,7 +255,7 @@ function getLogs_Cat()
     return $query;
  
 }
-//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง category_logs ในฐานข้อมูล
+//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง product_logs ในฐานข้อมูล
 function getLogs_Pro()
 {
     global $connection; // เชื่อมต่อฐานข้อมูล
@@ -268,7 +268,7 @@ function getLogs_Pro()
     return $query;
  
 }
-//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง category_logs ในฐานข้อมูล
+//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง users_logs ในฐานข้อมูล
 function getLogs_users()
 {
     global $connection; // เชื่อมต่อฐานข้อมูล
@@ -282,7 +282,7 @@ function getLogs_users()
     return $query;
  
 }
-//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง orders_categoryในฐานข้อมูล
+//ฟังก์ชันสำหรับดึงข้อมูล logs จากตาราง orders_logsในฐานข้อมูล
 function getLogs_Order()
 {
     global $connection; // เชื่อมต่อฐานข้อมูล
@@ -374,7 +374,7 @@ function getOrdersCan() {
     }
 }
 
-// ฟังก์ชั่นเรียกดูรายได้ใน orders โดยสถานะ = 1 
+// ฟังก์ชั่นเรียกดูรายได้ใน orders 
 function getTotalPriceWithStatus1() {
     global $connection; // เชื่อมต่อฐานข้อมูล
 

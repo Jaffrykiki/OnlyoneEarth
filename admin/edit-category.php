@@ -1,9 +1,6 @@
 <?php
-
 include('../middleware/adminMiddleware.php');
 include('includes/header.php');
-
-
 ?>
 
 <!-- เริ่มต้นเนื้อหา -->
