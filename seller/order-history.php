@@ -19,7 +19,7 @@ include('includes/header.php');
                 </div>
                 <div class="card-body" id="">
                     <!-- แสดงตารางประวัติคำสั่งซื้อ -->
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-success table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
