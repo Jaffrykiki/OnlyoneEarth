@@ -157,12 +157,15 @@ if ($last != 1) {
                                             <button type="button" class="btn btn-sm btn-danger delete_product_btn" value="<?= $item['id']; ?>">ลบ</button>
                                         </td>
                                     </tr>
-                            <?php
+                                <?php
                                 }
                             } else {
-
-                                // ถ้าไม่มีรายการสินค้า
-                                echo "ไม่พบบันทึก";
+                                // ถ้าไม่มีรายการคำสั่งซื้อ
+                                ?>
+                                <tr>
+                                    <td colspan="6">ยังไม่มีสินค้า</td>
+                                </tr>
+                            <?php
                             }
                             ?>
 

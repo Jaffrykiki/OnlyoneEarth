@@ -270,7 +270,8 @@ else if (isset($_POST['update_order_btn'])) {
         // ถ้าไม่สำเร็จ redirect ไปยังหน้า "edit-category.php" พร้อมแสดงข้อความ "มีบางอย่างผิดพลาด"
         redirect("view-order.php?t=$track_no", "บางอย่างผิดพลาด");
     }
-} else if (isset($_POST['add_withdraw_btn'])) {
+} 
+else if (isset($_POST['add_withdraw_btn'])) {
 
     $numbank = $_POST['numbank'];
     $name = $_POST['name'];
@@ -285,7 +286,7 @@ else if (isset($_POST['update_order_btn'])) {
     $availableWithdrawal = getTotalPriceWithdraw1_seller($users_id);
 
     // ตรวจสอบว่า numdraw ไม่เกินยอดรายได้ที่ผู้ขายขายได้
-    if ($numdraw <= $availableWithdrawal) {
+    if ($numdraw > 0 && $numdraw <= $availableWithdrawal) {
 
         // เตรียมคำสั่ง SQL สำหรับเพิ่มข้อมูล
         $sql = "INSERT INTO withdrawals (seller_id,email, numbank, name, namebank, numdraw) VALUES ('$users_id','$email', '$numbank', '$name', '$namebank', $numdraw)";
@@ -301,7 +302,7 @@ else if (isset($_POST['update_order_btn'])) {
         }
     } else {
         // จำนวนเงินถอนเกินยอดรายได้ที่ผู้ขายขายได้
-        redirect("withdraw.php", "ไม่สามารถถอนได้ เนื่องจากจำนวนเงินถอนเกินยอดรายได้");
+        redirect("withdraw.php", "ไม่สามารถถอนได้ เนื่องจากจำนวนเงินไม่ถูกต้อง");
     }
 }
 // ถ้าไม่เข้าเงื่อนไขใดเลย ให้เปลี่ยนเส้นทางไปยังหน้า ../index.php

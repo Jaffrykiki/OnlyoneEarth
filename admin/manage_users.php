@@ -70,16 +70,16 @@ if ($last != 1) {
     <div id="og" class="row">
         <div class="col-md-12">
             <div class="card">
-            <div class="card-header">
-                <!-- ส่วนหัวของการแสดงผู้ใช้งาน -->
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h4 class="m-0">ผู้ใช้ทั้งหมด</h4>
+                <div class="card-header">
+                    <!-- ส่วนหัวของการแสดงผู้ใช้งาน -->
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h4 class="m-0">ผู้ใช้ทั้งหมด</h4>
                         <form class="d-flex m-0" role="search" style="max-width: 550px; height: 50px;">
                             <input class="form-control me-2" type="search" name="searchTerm" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit" style="width: 200px; height: 50px;">ค้นหา</button>
                             <a href="manage_users.php" class="form-control me-4" style="width: 100px; height: 50px; border-radius: 5px; ">กลับ</a>
                         </form>
-                </div>
+                    </div>
                     <a href="logs_users.php" class="btn btn-warning float-end">ตรวจสอบบันทึก</a>
                 </div>
                 <!-- ตารางแสดงผู้ใช้ -->
@@ -184,10 +184,15 @@ if ($last != 1) {
                                             <button type="button" class="btn btn-sm btn-danger delete_users_btn" value="<?= $item['id']; ?>">ลบ</button>
                                         </td>
                                     </tr>
-                            <?php
+                                <?php
                                 }
                             } else {
-                                echo "ไม่มีผู้ใช้งาน";
+                                // ถ้าไม่มีรายการคำสั่งซื้อ
+                                ?>
+                                <tr>
+                                    <td colspan="9">ไม่มีผู้ใช้งาน</td>
+                                </tr>
+                            <?php
                             }
                             ?>
                         </tbody>

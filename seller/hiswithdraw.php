@@ -3,9 +3,12 @@
 include('../middleware/sellerMiddleware.php'); // เรียกใช้ middleware เพื่อตรวจสอบสิทธิ์ผู้ใช้
 include('includes/header.php');
 
+// ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
+$sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
+
 
 //query
-$query=mysqli_query($connection, "SELECT COUNT(id) FROM  withdrawals ");
+$query=mysqli_query($connection, "SELECT COUNT(id) FROM  withdrawals WHERE seller_id = $sellerId ");
 	$row = mysqli_fetch_row($query);
 
 	$rows = $row[0];

@@ -2,10 +2,11 @@
 include('../middleware/sellerMiddleware.php'); // เรียกใช้ middleware เพื่อตรวจสอบสิทธิ์ผู้ใช้
 include('includes/header.php');
 
-
+ // ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
+ $sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
 
 //query
-$query=mysqli_query($connection,"SELECT COUNT(id) FROM `products`");
+$query=mysqli_query($connection,"SELECT COUNT(id) FROM `products` WHERE users_id = $sellerId ");
 	$row = mysqli_fetch_row($query);
 
 	$rows = $row[0];
@@ -166,9 +167,12 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                             <?php
                                 }
                             } else {
-
-                                // ถ้าไม่มีรายการสินค้า
-                                echo "ไม่พบบันทึก";
+                                    // ถ้าไม่มีรายการคำสั่งซื้อ
+                                    ?>
+                                    <tr>
+                                        <td colspan="6"> ไม่มีสินค้า</td>
+                                    </tr>
+                                    <?php
                             }
                             ?>
 
