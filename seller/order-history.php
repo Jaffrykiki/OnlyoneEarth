@@ -3,7 +3,6 @@
 include('../middleware/sellerMiddleware.php'); // เรียกใช้ middleware เพื่อตรวจสอบสิทธิ์ผู้ใช้
 include('includes/header.php');
 
-
 ?>
 
 <!-- เริ่มส่วนของหน้าเว็บ -->

@@ -91,8 +91,10 @@ function getAllproduct_seller($sellerId)
 // ดึงคำสั่งซื้อที่ไม่มีสถานะ "0" (สำเร็จแล้ว)
 function getOrderHistroy()
 {
+    // ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
+    $sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
     global $connection;
-    $query = "SELECT * FROM orders  WHERE status !='0'"; // สร้างคำสั่ง SQL สำหรับการดึงคำสั่งซื้อที่ไม่มีสถานะ "0"
+    $query = "SELECT * FROM orders  WHERE status !='0' AND sellerId = '$sellerId'"; // สร้างคำสั่ง SQL สำหรับการดึงคำสั่งซื้อที่ไม่มีสถานะ "0"
     return $query_run = mysqli_query($connection, $query);
 }
 
