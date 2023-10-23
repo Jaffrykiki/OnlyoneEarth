@@ -97,6 +97,13 @@ function getOrderHistroy()
     $query = "SELECT * FROM orders  WHERE status !='0' AND sellerId = '$sellerId'"; // สร้างคำสั่ง SQL สำหรับการดึงคำสั่งซื้อที่ไม่มีสถานะ "0"
     return $query_run = mysqli_query($connection, $query);
 }
+// ดึงคำสั่งซื้อที่ไม่มีสถานะ "0" (สำเร็จแล้ว)
+function getOrderHistroy_admin()
+{
+    global $connection;
+    $query = "SELECT * FROM orders  WHERE status !='0'"; // สร้างคำสั่ง SQL สำหรับการดึงคำสั่งซื้อที่ไม่มีสถานะ "0"
+    return $query_run = mysqli_query($connection, $query);
+}
 
 // เช็คว่าเลขพัสดุถูกต้องหรือไม่
 function checkTrackingNoValid($trackingNo)

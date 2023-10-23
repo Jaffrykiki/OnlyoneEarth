@@ -4,12 +4,8 @@ include('../middleware/sellerMiddleware.php'); // เรียกใช้ middl
 include('includes/header.php');
 
 
-// ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
-$sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
-
-
 //query
-$query=mysqli_query($connection, "SELECT * FROM orders WHERE sellerId = '$sellerId' AND status = '0'");
+$query=mysqli_query($connection, "SELECT COUNT(id)  FROM orders");
 	$row = mysqli_fetch_row($query);
 
 	$rows = $row[0];
@@ -37,7 +33,12 @@ $query=mysqli_query($connection, "SELECT * FROM orders WHERE sellerId = '$seller
 
 	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
 
-	$nquery=mysqli_query($connection,"SELECT * from  orders WHERE sellerId = '$sellerId' $limit");
+     // ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
+     $sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
+
+     $query = " SELECT * from  orders WHERE sellerId = $sellerId $limit ";
+
+	$nquery=mysqli_query($connection,$query);
 
 	$paginationCtrls = '';
 
@@ -119,7 +120,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                 ?>
                                 <tr>
                                     <!-- แสดงข้อความเมื่อไม่มีรายการออเดอร์ -->
-                                    <td colspan="5"> ไม่มีคำสั่งซื้อ </td>
+                                    <td colspan="6"> ไม่มีคำสั่งซื้อ </td>
                                 </tr>
                             <?php
                             }

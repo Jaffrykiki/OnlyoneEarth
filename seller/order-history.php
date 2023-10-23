@@ -55,7 +55,7 @@ include('includes/header.php');
                                 ?>
                                 <!-- แสดงข้อความเมื่อไม่มีคำสั่งซื้อ -->
                                 <tr>
-                                    <td colspan="5"> ไม่มีคำสั่งซื้อ </td>
+                                    <td colspan="6"> ไม่มีคำสั่งซื้อ </td>
                                 </tr>
                             <?php
                             }

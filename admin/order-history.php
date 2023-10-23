@@ -37,7 +37,7 @@ include('includes/header.php');
 
                             <?php
                             // เรียกใช้ฟังก์ชัน getOrderHistroy() เพื่อดึงข้อมูลคำสั่งซื้อ
-                            $Orders = getOrderHistroy();
+                            $Orders = getOrderHistroy_admin();
 
                             // ตรวจสอบว่ามีรายการสินค้าหรือไม่
                             if (isset($_GET['searchTerm']) && !empty($_GET['searchTerm'])) {
@@ -84,7 +84,7 @@ include('includes/header.php');
                                 // ถ้าไม่มีคำสั่งซื้อ
                                 ?>
                                 <tr>
-                                    <td colspan="5"> ไม่มีคำสั่งซื้อ </td>
+                                    <td colspan="6"> ไม่มีคำสั่งซื้อ </td>
                                 </tr>
                             <?php
                             }

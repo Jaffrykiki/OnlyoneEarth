@@ -3,11 +3,9 @@
 include('../middleware/sellerMiddleware.php'); // เรียกใช้ middleware เพื่อตรวจสอบสิทธิ์ผู้ใช้
 include('includes/header.php');
 
-// ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
-$sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
 
 //query
-$query=mysqli_query($connection, "SELECT * from  withdrawals WHERE seller_id = '$sellerId' ");
+$query=mysqli_query($connection, "SELECT COUNT(id) FROM  withdrawals ");
 	$row = mysqli_fetch_row($query);
 
 	$rows = $row[0];
@@ -35,7 +33,12 @@ $query=mysqli_query($connection, "SELECT * from  withdrawals WHERE seller_id = '
 
 	$limit = 'LIMIT ' .($pagenum - 1) * $page_rows .',' .$page_rows;
 
-	$nquery=mysqli_query($connection,"SELECT * from  withdrawals $limit");
+    // ดึงข้อมูลผู้ขายที่เข้าสู่ระบบ เพื่อใช้เป็นเงื่อนไขในการดึงรายการออเดอร์
+    $sellerId = $_SESSION['auth_user']['id']; // ต้องปรับตามโครงสร้างของ session ที่ใช้ในระบบ
+
+    $query = " SELECT * from  withdrawals WHERE seller_id = $sellerId $limit";
+
+	$nquery=mysqli_query($connection,$query);
 
 	$paginationCtrls = '';
 
@@ -133,7 +136,7 @@ $paginationCtrls .= ' &nbsp; &nbsp; <a href="'.$_SERVER['PHP_SELF'].'?pn='.$next
                                 // ถ้าไม่มีรายการคำสั่งซื้อ
                                 ?>
                                 <tr>
-                                    <td colspan="5"> ไม่มีรายการถอนเงิน </td>
+                                    <td colspan="8"> ไม่มีรายการถอนเงิน </td>
                                 </tr>
                             <?php
                             }
