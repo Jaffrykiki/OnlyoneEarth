@@ -1,11 +1,11 @@
 /* กำหนดรูปแบบตัวอักษรสำหรับทั้งหน้าเว็บ */
-*{
-    font-family: 'Noto Sans Thai', sans-serif;
-
+* {
+  font-family: "Noto Sans Thai", sans-serif;
+}
+#pagination_controls {
+  margin-top: 20px;
 }
 
 #table-container {
-    overflow-x: auto;
+  overflow-x: auto;
 }
-
-

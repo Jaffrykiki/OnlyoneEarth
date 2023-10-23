@@ -22,7 +22,7 @@
   <link id="pagestyle" href="assets/css/material-dashboard.min.css" rel="stylesheet" />
 
   <!-- เรียกใช้ CSS ที่กำหนดเอง -->
-  <link href="assets/css/custom.css" rel="stylesheet">
+  <link href="assets/css/custom.css?v=2" rel="stylesheet">
 
   <!-- ลิงก์ไปยัง Alertify JS -->
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
