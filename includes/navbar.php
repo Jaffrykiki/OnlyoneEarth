@@ -1,22 +1,22 @@
 <!-- สร้าง Navbar ด้วย class ของ Bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-success shadow">
   <!-- แท็ก <ul> เป็นรายการของ Nav Links ทางซ้าย -->
-    
+
   <ul class="navbar-nav ms-auto">
-  <?php if (isset($_SESSION['auth_user']) && isset($_SESSION['auth_user']['verify_status']) && $_SESSION['auth_user']['verify_status'] == 1) { ?>
-    <li class="nav-item">
-      <a class="nav-link active" href="/OnlyoneEarth/seller/index.php">ไปที่ร้านของคุณ</a>
-    </li>
-  <?php } elseif (isset($_SESSION['auth_user']['role_as']) && $_SESSION['auth_user']['role_as'] == 1) { ?>
-    <li class="nav-item">
-      <a class="nav-link active" href="/OnlyoneEarth/admin/index.php">ไปที่หน้าแดชบอร์ด</a>
-    </li>
-  <?php } else { ?>
-    <li class="nav-item">
-      <a class="nav-link active" href="register_seller.php">เริ่มต้นเป็นผู้ขาย</a>
-    </li>
-  <?php } ?>
-</ul>
+    <?php if (isset($_SESSION['auth_user']) && isset($_SESSION['auth_user']['verify_status']) && $_SESSION['auth_user']['verify_status'] == 1) { ?>
+      <li class="nav-item">
+        <a class="nav-link active" href="/OnlyoneEarth/seller/index.php">ไปที่ร้านของคุณ</a>
+      </li>
+    <?php } elseif (isset($_SESSION['auth_user']['role_as']) && $_SESSION['auth_user']['role_as'] == 1) { ?>
+      <li class="nav-item">
+        <a class="nav-link active" href="/OnlyoneEarth/admin/index.php">ไปที่หน้าแดชบอร์ด</a>
+      </li>
+    <?php } else { ?>
+      <li class="nav-item">
+        <a class="nav-link active" href="register_seller.php">เริ่มต้นเป็นผู้ขาย</a>
+      </li>
+    <?php } ?>
+  </ul>
 
 
 
@@ -61,8 +61,13 @@
           <!-- แสดง Nav Item สำหรับผู้ใช้ที่ล็อกอินแล้ว -->
           <li class="nav-item dropdown ">
             <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <!-- แสดงรูปภาพผู้ใช้ -->
-              <img src="<?= isset($_SESSION['login_id']) ? $_SESSION['auth_user']['img'] : "uploads/" . $_SESSION['auth_user']['img'] ?>" alt="" class="user-profile-image" style="border-radius:50%;" width="35" height="35">
+              <?php if (isset($_SESSION['login_id']) || !empty($_SESSION['auth_user']['img'])) :?>
+                <!-- แสดงรูปภาพผู้ใช้ -->
+                <img src="<?= isset($_SESSION['login_id']) ? $_SESSION['auth_user']['img'] : "uploads/" . $_SESSION['auth_user']['img'] ?>" alt="" class="user-profile-image" style="border-radius:50%;" width="35" height="35">
+              <?php else : ?>
+                <!-- แสดงไอคอน user หรือไอคอนที่คุณต้องการ -->
+                <i class="fa fa-user-circle" style="font-size: 20px;"></i>
+              <?php endif; ?>
               <!-- แสดงชื่อผู้ใช้ -->
               <?= $_SESSION['auth_user']['name']; ?>
             </a>
@@ -86,8 +91,6 @@
         <?php
         }
         ?>
-
-
       </ul>
     </div>
   </div>

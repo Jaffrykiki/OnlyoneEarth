@@ -143,7 +143,7 @@ else :
                                 <div class="text-center mb-2">
                                     <p>เพิ่งเคยเข้ามาใน Only One Earth ใช่หรือไม่? </p>
                                     <a href="register.php" class="btn btn-secondary">สมัครใหม่</a>
-                                    <p>หรือล็อกอินด้วย:</p>
+                                    <p>หรือสมัครด้วย:</p>
                                     <a type="button" class="login-with-google-btn" href="<?php echo $client->createAuthUrl(); ?>">
                                         <i class="fa fa-google"></i>
                                     </a>

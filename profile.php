@@ -3,7 +3,7 @@
 include('funtion/userfunction.php');
 include('includes/header.php');
 include('authenticate.php');
-include('includes/navbar.php'); 
+include('includes/navbar.php');
 
 
 ?>
@@ -23,9 +23,9 @@ include('includes/navbar.php');
                             foreach ($items as $data) {
                             ?>
                                 <h5 class="fw-bold">ข้อมูลของฉัน</h5>
-                                <h5>จัดการข้อมูลส่วนตัวคุณเพื่อความปลอดภัยของบัญชีผู้ใช้นี้</h5> 
+                                <h5>จัดการข้อมูลส่วนตัวคุณเพื่อความปลอดภัยของบัญชีผู้ใช้นี้</h5>
                                 <br>
-                                <h12>หากต้องการเปลี่ยนรหัสผ่าน</h12>  <a href="resetpass.php">คลิกที่นี้</a>
+                                <h12>หากต้องการเปลี่ยนรหัสผ่าน</h12> <a href="resetpass.php">คลิกที่นี้</a>
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -59,10 +59,14 @@ include('includes/navbar.php');
                             <h5>รูปภาพของฉัน</h5>
                             <hr>
                             <div class="row align-items-center">
-                                    <div class="d-flex text-center justify-content-center align-items-center">
-                                        <!-- แสดงอีเมล์ผู้ใช้ที่สามารถแก้ไขได้ -->
+                                <div class="d-flex text-center justify-content-center align-items-center">
+                                    <!-- แสดงรูปภาพผู้ใช้ (หรือไอคอน user หากไม่มีรูปภาพ) -->
+                                    <?php if (!empty($data['img'])) : ?>
                                         <img src="uploads/<?= $data['img']; ?>" alt="Image" width="100" style="border-radius: 50%;">
-                                    </div>
+                                    <?php else : ?>
+                                        <i class="fa fa-user-circle" style="font-size: 100px;"></i>
+                                    <?php endif; ?>
+                                </div>
                                 <hr>
                                 <h5>ขนาดไฟล์: สูงสุด 1 MB</h5>
                                 <h5>ไฟล์ที่รองรับ: .JPEG, .PNG</h5>
@@ -71,11 +75,11 @@ include('includes/navbar.php');
                                     <!-- ส่งข้อมูลรูปภาพเดิมเพื่อนำไปใช้ในการอัปเดต -->
                                     <input type="hidden" name="old_image" value="<?= $data['img']; ?>">
                                     <!-- ส่งข้อมูลรูปภาพเดิมเพื่อนำไปใช้ในการอัปเดต -->
-                                    <input type="file"  name="img" accept=".jpeg, .jpg, .png" class="form-control mb-2">
+                                    <input type="file" name="img" accept=".jpeg, .jpg, .png" class="form-control mb-2">
                                 </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                 </form>
             </div>
         </div>
