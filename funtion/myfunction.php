@@ -83,7 +83,7 @@ function getAllproduct_seller($sellerId)
      WHERE product_images.product_id = products.id 
      LIMIT 1) AS image_filename
     FROM products
-    WHERE products.users_id = '$sellerId' AND products.num = 0;
+    WHERE products.users_id = '$sellerId' AND products.num  <=5;
     ";
     return $query_run = mysqli_query($connection, $query);
 }
@@ -526,6 +526,7 @@ function getTotalPriceWithdraw1_seller($sellerId) {
     $resultTotalWithdrawals = $connection->query($sqlTotalWithdrawals);
     $rowTotalWithdrawals = $resultTotalWithdrawals->fetch_assoc();
     $totalWithdrawals = $rowTotalWithdrawals['totalWithdrawals'];
+
 
     // หัก 6% จากยอดรายได้ที่ผู้ขายสามารถถอนได้
     $withdrawalPercentage = 0.06; // 6% เป็นเปอร์เซนต์
