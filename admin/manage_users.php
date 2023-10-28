@@ -168,13 +168,16 @@ if ($last != 1) {
                                             }
                                             ?>
                                         </td>
-
                                         <td><?= $item['name']; ?></td>
                                         <td><?= $item['email']; ?></td>
                                         <td><?= $item['phone']; ?></td>
                                         <td><?= $item['password']; ?></td>
                                         <td>
-                                            <img src="../uploads/<?= $item['img']; ?>" width="120px" height="120px" alt="<?= $item['name']; ?>">
+                                            <?php if (file_exists("../uploads/" . $item['img'])) : ?>
+                                                <img src="../uploads/<?= $item['img']; ?>" width="120px" height="120px" alt="<?= $item['name']; ?>">
+                                            <?php else : ?>
+                                                <i class="fas fa-user-circle" style="font-size: 120px;"></i>
+                                            <?php endif; ?>
                                         </td>
                                         <td>
                                             <a href="edit-users.php?id=<?= $item['id']; ?>" class="btn btn-primary">แก้ไข</a>

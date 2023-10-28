@@ -127,6 +127,23 @@ $totalwithdraw = getTotalPriceWithdraw1_seller($sellerId); // ฟังก์ช
     </div>
 </div>
 
+<?php
+include("into.php");
+// รับค่า parameter p จาก URL
+$p = (isset($_GET['p']) ? $_GET['p'] : '');
+// ใช้เงื่อนไขในการเลือกเนื้อหาที่จะแสดงตามค่า parameter p
+if ($p == 'daily') {
+    include('r_daily.php');
+} elseif ($p == 'monthy') {
+    include('r_monthy.php');
+} elseif ($p == 'yearly') {
+    include('r_yearly.php');
+} else {
+    // ถ้าไม่ตรงกับเงื่อนไขใดเลย ให้แสดงเนื้อหาจากไฟล์ 'r_daily.php'
+    include('r_daily.php');
+}
+?>
+
 
 
 
